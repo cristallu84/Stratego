@@ -23,9 +23,7 @@ void battle(Cell& initi, Cell& fighter);
 void playAbility(int ID, Cell& c);
 void printAbilities(); 
 Player& getPlayer(int n); 
-}
-
-
+};
 
 
 #endif
