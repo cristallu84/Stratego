@@ -1,6 +1,6 @@
 #ifndef __CELL_H__
 #define __CELL_H__
-//#include "subject.h"
+#include "subject.h"
 #include "link.h"
 #include "observer.h"
 #include <vector>
