@@ -1,5 +1,5 @@
-#ifndef __CELL_H__
-#define __CELL_H__
+#ifndef __LINK_H__
+#define __LINK_H__
 class Link{
     char name;
     char type; 
