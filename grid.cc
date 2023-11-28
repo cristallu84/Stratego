@@ -13,12 +13,12 @@ Grid::~Grid() {
  }
 
 // TODO: implement grid initition
-void Grid::init(int n) {
+void Grid::init(int n, std::vector<string> links) {
     //IMPL
 }
 
 // Returns the cell with link l
-Cell& Grid::findCell(char l) {
+Cell& Grid::findCell(char l) { //implement a case where cell cannot be found (e.g. the link has been eaten)
     for (int r = 0; r < gridSize; ++r) {
         for (int c = 0; c < gridSize; ++c) {
             if (theGrid[r][c].getType() == l) {
@@ -55,12 +55,15 @@ void Grid::download(Cell& c) {
 // TODO: Move fighter to init cell if fighter wins
 void Grid::battle(Cell& init, Cell& fighter) {
     // init = battle initiating player cell and link
+    //get strength of both links at the cells 
     int l1 = init.getLink().getStrength();
     int l2 = fighter.getLink().getStrength();
 
-    init.getLink().reveal();
+    //reveal the fighters 
+    init.getLink().reveal(); 
     fighter.getLink().reveal();
-
+    
+    //find which player initiated the battle 
     int pInit;
     int pFighter;
 
@@ -74,13 +77,14 @@ void Grid::battle(Cell& init, Cell& fighter) {
 
     if (l2 > l1) {
         // fighter wins
+        //get the type of the link to add it to OppLinks 
         string s = init.getLink().getType() + 
             std::to_string(init.getLink().getStrength());
 
         this->getPlayer(pFighter).addLink(s);
         init.download();
 
-        // MOVE FIGHTER TO INIT POSITION
+        // MOVE FIGHTER TO INIT POSITION - fighter stays and init is downloaded 
 
 
     } else {
@@ -90,6 +94,7 @@ void Grid::battle(Cell& init, Cell& fighter) {
 
         this->getPlayer(pInit).addLink(s);
         fighter.download();
+        //MOVE INIT TO FIGHTER POSITION 
     }
 }
 

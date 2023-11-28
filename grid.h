@@ -18,7 +18,7 @@ class Grid{
     ~Grid();
 
 
-    void init(int n);
+    void init(int n, std::vector<string> links);
     Cell& findCell(char l); // Returns the cell with link l
     int getTurn() const; // Returns the turn
     void nextTurn();  // Sets the whoseTurn to the next turn
@@ -30,6 +30,5 @@ class Grid{
     Player& getPlayer(int n); 
     friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };
-
 
 #endif

@@ -4,9 +4,21 @@
 #include <string>
 #include "observer.h"
 
+enum class CardType{
+    Linkboost,
+    Firewall, 
+    Download,
+    Polarize, 
+    Scan
+};
+
+struct Card{ //Represent the ability cards that Player holds
+    CardType type; 
+    bool used; 
+};
 
 class Player: public Observer{
-    std::vector<char> Abilities; 
+    std::vector<Card> Abilities; 
     std::vector<std::string> MyLinks;
     std::vector<std::string> OppLinks;
     
@@ -17,8 +29,9 @@ class Player: public Observer{
     int OppAbil;
 
     public: 
+    Player(); 
     void notify(Cell &c);
-    bool isWon();
+    bool isWon(); //checks if a player has downloaded 4 Data links
     int getMyD(); 
     int getMyV();
     int getOppD();
