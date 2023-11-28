@@ -6,6 +6,7 @@ class Link{
     int strength;
     bool revealed; 
     int moveLength; 
+
     public: 
     Link(); //default ctor
     char getName() const; //Returns the name of a Link (i.e. a-h, A-H)
@@ -13,6 +14,7 @@ class Link{
     int getStrength() const; //Returns the strength of a Link
     void giveBoost(); //increases moveLength by 1 
     void toggleType(); //changes a virus to a data and vice versa
+    void reveal(); // changes reveal to true
 };
 
 #endif

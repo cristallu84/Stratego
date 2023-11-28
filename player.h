@@ -9,11 +9,13 @@ class Player: public Observer{
     std::vector<char> Abilities; 
     std::vector<std::string> MyLinks;
     std::vector<std::string> OppLinks;
+    
     int MyD;
     int MyV;
     int OppD;
     int OppV;
     int OppAbil;
+
     public: 
     void notify(Cell &c);
     bool isWon();

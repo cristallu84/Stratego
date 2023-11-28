@@ -17,13 +17,13 @@ int main(int argc, char* argv[]) {
         if (arg == "-ability1") {
             // Set ability of P1
             string s = argv[i + 1];
-            g.getPlayer(1)->setAbility(s);
+            g.getPlayer(1).setAbility(s);
             ++i;
 
         } else if (arg == "-ability2") {
             // Set ability of P2
             string s = argv[i + 1];
-            g.getPlayer(2)->setAbility(s);
+            g.getPlayer(2).setAbility(s);
             ++i;
 
         } else if (arg == "-link1" || arg == "-link2") {
@@ -89,6 +89,9 @@ int main(int argc, char* argv[]) {
             string cmd;
             try {
                 while (getline(*in, s)) {
+
+                    g.nextTurn();
+                    
                     istringstream iss{s};
                     iss >> cmd;
 
@@ -109,7 +112,7 @@ int main(int argc, char* argv[]) {
                         // TODO: Implement execute ability
 
                     } else if (cmd == "board") {
-                        std::cout << g.theGrid;
+                        std::cout << g;
 
                     } else if (cmd == "quit") {
                         cout << "Game ended" << endl;

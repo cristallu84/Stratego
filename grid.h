@@ -13,14 +13,18 @@ class Grid{
     Player player2; 
     int whoseTurn; 
 
-    public: 
+    public:
+    Grid();
+    ~Grid();
+
+
     void init(int n);
-    Cell& findCell(char l);
-    int getTurn(); 
-    void nextTurn(); 
+    Cell& findCell(char l); // Returns the cell with link l
+    int getTurn() const; // Returns the turn
+    void nextTurn();  // Sets the whoseTurn to the next turn
     void move(char l, char dir); 
     void download(Cell& c); 
-    void battle(Cell& initi, Cell& fighter);
+    void battle(Cell& init, Cell& fighter); // Handles the battle feature
     void playAbility(int ID, Cell& c);
     void printAbilities(); 
     Player& getPlayer(int n); 

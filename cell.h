@@ -12,8 +12,10 @@ class Cell{
     const int col; 
     std::unique_ptr<Link> link;
     std::vector<Observer*> observers; 
+
     public: 
     Cell(); 
+    
     bool isLink(); //Returns true if a Link occupies the cell
     char getType() const; //Returns the type that occupies the link (a-h, A-H for link, w/m for firewall, n for empty)
     int getRow() const; //Returns the value of row
