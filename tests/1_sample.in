@@ -2,57 +2,58 @@
 -ability2 LFDSP
 -link1 default_placement
 -link2 default_placement
--abilities
--board
--move a S
--abilities
--board
 
--move A N
--move a S
--move A N
--move a S
--move A N
+abilities
+board
+move a S
+abilities
+board
 
--move d S
--move E N
--move d S
--move E N
--move h S
--move E W
+move A N
+move a S
+move A N
+move a S
+move A N
 
--move B N
--move h S
--move B N
--move h S
--move B E
--move h S
--move B E
--move h W
--move B E
--move h W
--move B E
+move d S
+move E N
+move d S
+move E N
+move h S
+move E W
 
--move c S
--move H N
--move c S
--move H N
--move c S
--move H N
--move c S
--move H N
--move c S
--move H N
--move c S
--move H N
--move c E
--move H N
--move c S
--move H N
+move B N
+move h S
+move B N
+move h S
+move B E
+move h S
+move B E
+move h W
+move B E
+move h W
+move B E
 
--move a S
--move E N
--move h S
+move c S
+move H N
+move c S
+move H N
+move c S
+move H N
+move c S
+move H N
+move c S
+move H N
+move c S
+move H N
+move c E
+move H N
+move c S
+move H N
+
+move a S
+move E N
+move h S
 
 -move b S
 -move C N

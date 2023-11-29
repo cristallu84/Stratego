@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
             // TODO: enable graphical interface
         }
     };
-
+    
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
     string s;

@@ -9,7 +9,7 @@ Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whos
 Grid::~Grid() {}
 
 // TODO: implement grid initition
-void Grid::init(int n, std::vector<string> links) {
+void Grid::init(int n) {
     //IMPL
 }
 
