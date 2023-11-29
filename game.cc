@@ -57,6 +57,13 @@ void Grid::move(char l, string dir){
     int player = this->getTurn(); //1 if p1 and 2 if p2
 
     //check for edge of board 
+    if (r >= gridSize){
+        this->download(cell, 1);
+        //p1 will download the cell
+    }else if(r < 0){
+        this->download(cell, 2);
+        //p2 will download the cell 
+    }
 
     //check for firewall
     if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 
@@ -111,6 +118,7 @@ void Grid::reveal(Cell& c){
     piece += c.getLink().getStrength();
 
     if (type >= 'a' && type <= 'h'){
+
         //reveal the cell to player 2 
     }else if (type >= 'A' && type <= 'H'){
         //reveal the cell to player 1
@@ -119,9 +127,8 @@ void Grid::reveal(Cell& c){
 
 // TODO: Implement
 void Grid::download(Cell& c, int player) {
+    this->reveal(c); //reveals cell c 
 
-    //reveal it
-    this->reveal(c); //reveal cell c 
     //adding it to the player's count of downloads
     if (c.getLink().getType() == 'V'){
         if (player == 1){
@@ -140,6 +147,7 @@ void Grid::download(Cell& c, int player) {
             //increase opp's number of data downloaded (p1)
         }
     }
+    //removes the link from the cell 
     c.download(); 
 }
 
