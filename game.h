@@ -53,7 +53,7 @@ class Grid{
     ~Grid();
 
 
-    void init(int n, std::vector<string> links);
+    void init(int n);
     Cell& findCell(char l); // Returns the cell with link l
     int getTurn() const; // Returns the turn
     void nextTurn();  // Sets the whoseTurn to the next turn

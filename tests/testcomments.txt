@@ -1,0 +1,73 @@
+1_sample - basic game with battles and no abilities (p2 win through p1 4V)
+2_abilitiesinit - tests overwriting ability initialization (p2 win through p1 4V)
+3_linkinit - tests overwriting link initialization (p1 win through p1 4D)
+4_moveerrors - tests all kinds of moving errors (no winner)
+5_linkboost - tests linkboost errors + linkboost jumping over server port (p2 win through p1 4V)
+6_download - tests download errors + correct downloading (p1 win through p1 4D)
+7_polarize - tests polarizing errors + correct polarizing (no winner)
+8_scan - tests scanning and correct scanning (no winner)
+9_firewall - currently unfinished
+
+In depth testing details:
+ability1 ability2
+-all the same abilities X
+-one of each abilities X
+-player 1 and 2 has the same abilities X
+-rewrite abilities X
+
+link1
+-rewrite links X
+
+move a <dir>
+-moving wrong piece X
+-moving already downloaded piece X
+-all four directions X
+-moving letter that doesn't exist X
+-move own piece to enemy edge X
+-move own piece off another edge (error) X
+-move own piece into server port X
+-move own piece into own server port (error) X
+
+abilities
+-call whenever ability is used X
+ 
+linkboost
+-call on wrong piece X
+-can't reach server port X
+
+firewall
+-call on empty square
+-call on square of own piece
+-call on square of other piece
+-own piece walks on
+-opponent data walks on
+-opponent virus walks on
+-firewall download before battle
+-firewall download (pass) before battle
+
+download
+-download virus X
+-download data X
+-download own data X
+
+polarize
+-change data to virus that already exists (like V1 to D1 even though D1 exists) X
+-change own piece X
+-change other piece X
+-download polarized data X
+-upload polarized data X
+-polarize piece that doesn't exist X
+
+scan
+-scan already revealed piece X
+-scan piece that doesn't exist X
+
+battle
+-virus beats data X
+-data beats virus X
+-tie X
+
+general
+-end on an ability use X
+-end on a move but no win X
+-end after calling a board / abilities etc etc... X
