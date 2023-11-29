@@ -4,41 +4,6 @@
 #include "player.h"
 #include "textdisplay.h"
 
-class Ability{
-public: 
-    virtual void execute(); 
-};
-
-class Firewall: public Ability{
-    Cell& cell; 
-    public: 
-    void execute() override; 
-};
-
-class Linkboost: public Ability{
-    Link& link; 
-    public: 
-    void execute() override; 
-};
-
-class Download: public Ability{
-    Link& link; 
-    public: 
-    void execute() override; 
-};
-
-class Polarize: public Ability{
-    Link& link; 
-    public: 
-    void execute() override; 
-};
-
-class Scan: public Ability{
-    Link& link; 
-    public: 
-    void execute() override; 
-};
-
 class Grid{
     std::vector<std::vector<Cell>> theGrid; 
     int gridSize;

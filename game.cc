@@ -2,7 +2,6 @@
 #include "game.h"
 using namespace std;
 
-
 // TODO: Add further init procedures
 Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
