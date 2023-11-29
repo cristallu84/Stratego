@@ -2,17 +2,30 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <algorithm>
+#include <random>
+#include <vector>
+#include <ctime>
 #include "game.h"
 
 using namespace std;
 
+// Produces a vector of random placements
+vector<string> randomPlacements() {
+    vector<string> d = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
+    unsigned random = unsigned(time(0));
+    shuffle(begin(d), end(d), default_random_engine(random));
+    return d;
+}
+
 int main(int argc, char* argv[]) {
 
     Grid g;
+    vector<string> p1_links;
+    vector<string> p2_links;
 
     // Handle cmd line
     for (int i = 0; i < argc; ++i) {
-
 		string arg = argv[i];
         if (arg == "-ability1") {
             // Set ability of P1
@@ -25,8 +38,15 @@ int main(int argc, char* argv[]) {
             string s = argv[i + 1];
             g.getPlayer(2).setAbility(s);
             ++i;
-
+        
         } else if (arg == "-link1" || arg == "-link2") {
+            // Clear the vectors before pushing back data into
+            if (arg == "-link1") {
+                p1_links.clear();
+            } else {
+                p2_links.clear();
+            }
+
             // Handle placement file
             string fileName = argv[i + 1];
             ifstream f(fileName);
@@ -35,50 +55,25 @@ int main(int argc, char* argv[]) {
             istringstream iss(line);
             string s;
 
-            int player;
-            //find which player 
-            if (arg == "-link1"){
-                player = 1; 
-            }else{
-                player = 2; 
-            }
+            // Determines which links to push back data into
+            vector<string>& current_links = (arg == "-link1")? p1_links : p2_links;
 
-            // Handle placement file contents
-            int i = 0; 
-            vector<string> links; 
             while (iss >> s){
-                links[i] = s; 
+                current_links.emplace_back(s);
             }
-            g.init(player, links);
-            // int i = 0;
-            // vector<int> strength;
-            // vector<bool> type;
-            // while (iss >> s) {
-            //     type[i] = (s[0] == 'V') ? false : true;
-            //     strength[i] = s[1] - '0';
-            //     ++i;
-            // }
-
-            // // Update board according to placement file
-            // vector<char> charVector;
-            // if (arg == "-link1") {
-            //     vector<char> charVector = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
-            // } else {
-            //     vector<char> charVector = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-            // }
-            // for (auto &element : charVector) {
-            //     char t;
-            //     int s;
-            //     iss >> s >> t;
-            //     // TODO: update cell at element to be type t and strength s
-            // }
             ++i;
 
         } else if (arg == "-graphics") {
             // TODO: enable graphical interface
         }
     };
-    //g.init()
+    
+    // Randomizing depending on empty links
+    if (p1_links.empty()) p1_links = randomPlacements();
+    if (p1_links.empty()) p2_links = randomPlacements();
+
+    g.init(8, p1_links, p2_links);
+
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
     string s;
