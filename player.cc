@@ -28,6 +28,14 @@ int Player::getMyV(){return MyV;}
 int Player::getOppD(){return OppD;}
 int Player::getOppV(){return OppV;}
 int Player::getOppAbil(){return OppAbil;}
+void Player::incrMyD(){++MyD;}
+void Player::incrMyV(){++MyV;}
+void Player::incrOppD(){++OppD;}
+void Player::incrOppV(){++OppV;}
+void Player::incrOppAbil(){++OppAbil;}
+void Player::revealed(int index, std::string piece){
+    OppLinks[index] = piece; 
+}
 
 void Player::setAbility(std::string s){ //adds abilities to hand 
 for (char c: s){
