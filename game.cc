@@ -1,16 +1,12 @@
 #include <iostream>
-#include "grid.h"
+#include "game.h"
 using namespace std;
 
 
 // TODO: Add further init procedures
-Grid::Grid() : theGrid{0, std::vector<Cell>(0)},
-    textDisplay{new TextDisplay(0)} {}
+Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
-Grid::~Grid() { 
-    delete textDisplay;
-    textDisplay = nullptr;
- }
+Grid::~Grid() {}
 
 // TODO: implement grid initition
 void Grid::init(int n, std::vector<string> links) {
@@ -41,14 +37,35 @@ void Grid::nextTurn() {
 }
 
 // TODO: Implement
-void Grid::move(char l, char dir){
-    // Implement calling subsequent responses to move here
-    // Ex. battle, download, upload, etc.
+void Grid::move(char l, string dir){
+    Cell& cell = this->findCell(l);
+    int r = cell.getRow();
+    int c = cell.getCol(); 
+    Link& link = cell.getLink(); 
+    int length = link.getMoveL();
+    if (dir == "up"){
+        r = r - 1;
+    }else if (dir == "down"){
+        r = r + 1;
+    }else if (dir == "left"){
+        c = c - 1;
+    }else if (dir == "right"){
+        c = c + 1;
+    }
+    Cell& nextcell = theGrid[r][c];
+
+    if (nextcell.isLink()){ //if a link occupies the cell then battle
+        battle(cell, theGrid[r][c]);
+    }else if (nextcell.getType() == 'w'){ //if the cell is occupied by a firewall from p1 
+
+    }else if (nextcell.getType() == 'm'){ //if the cell is occupied by a firewall from p2
+
+    }
 }
 
 // TODO: Implement
 void Grid::download(Cell& c) {
-    // Implement
+    c.download(); 
 }
 
 

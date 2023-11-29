@@ -1,8 +1,43 @@
-#ifndef __GRID_H__
-#define __GRID_H__
+#ifndef __GAME_H__
+#define __GAME_H__
 #include "cell.h"
 #include "player.h"
 #include "textdisplay.h"
+
+class Ability{
+public: 
+    virtual void execute(); 
+};
+
+class Firewall: public Ability{
+    Cell& cell; 
+    public: 
+    void execute() override; 
+};
+
+class Linkboost: public Ability{
+    Link& link; 
+    public: 
+    void execute() override; 
+};
+
+class Download: public Ability{
+    Link& link; 
+    public: 
+    void execute() override; 
+};
+
+class Polarize: public Ability{
+    Link& link; 
+    public: 
+    void execute() override; 
+};
+
+class Scan: public Ability{
+    Link& link; 
+    public: 
+    void execute() override; 
+};
 
 class Grid{
     std::vector<std::vector<Cell>> theGrid; 
@@ -22,7 +57,7 @@ class Grid{
     Cell& findCell(char l); // Returns the cell with link l
     int getTurn() const; // Returns the turn
     void nextTurn();  // Sets the whoseTurn to the next turn
-    void move(char l, char dir); 
+    void move(char l, string dir); 
     void download(Cell& c); 
     void battle(Cell& init, Cell& fighter); // Handles the battle feature
     void playAbility(int ID, Cell& c);
