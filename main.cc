@@ -2,7 +2,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-#include "grid.h"
+#include "game.h"
 
 using namespace std;
 
@@ -78,7 +78,7 @@ int main(int argc, char* argv[]) {
             // TODO: enable graphical interface
         }
     };
-
+    //g.init()
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
     string s;
