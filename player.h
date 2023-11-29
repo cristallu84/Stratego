@@ -37,6 +37,12 @@ class Player: public Observer{
     int getOppD();
     int getOppV();
     int getOppAbil();
+    void incrMyD();
+    void incrMyV();
+    void incrOppD();
+    void incrOppV();
+    void incrOppAbil();
+    void revealed(int index, std::string piece);
     void setAbility(std::string s);
     void addLink(std::string s);
 };
