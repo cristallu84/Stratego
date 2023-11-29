@@ -59,33 +59,43 @@ void Grid::move(char l, string dir){
     //check for edge of board 
 
     //check for firewall
-    if (nextcell == 'm'){ //if the cell is occupied by a firewall from p1 
+    if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 
         if (player != 1){ //if the player that goes through the firewall is an opp
             this->reveal(cell);
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 2); //player 2 downloads it 
-            }
+            }//if it is not a virus, it will continue to check if the cell is empty
+        }else{
+            //error
         }
-    }else if (nexttype == 'w'){ //if the cell is occupied by a firewall from p2
+    }else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
         if (player != 2){ //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 1); //player 1 downloads it 
-            }
+            } //if it is not a virus, it will continue to check if the cell is empty
+        }else{
+            //error
         }
     }
+
     //check for link 
     if (nextcell.isLink() && cell.isLink()){ //if a link occupies the next cell and the current cell didn't get downloaded from firewall
         battle(cell, theGrid[r][c]);
     }
+
     //check for serverport
     if (nexttype == 's'){
         if (player != 1){ //if the player that goes through the firewall is p2
             this->download(cell, 1); //player 1 downloads it 
+        }else{
+            //error
         }
     }else if (nexttype == 'S'){
         if (player != 2){ //if the player that goes through the firewall is p2
             this->download(cell, 2); //player 2 downloads it 
+        }else{
+            //error
         }
     }else if (nexttype == 'n'){ //cell is empty
         cell.download(); //link is removed from the current cell
@@ -96,6 +106,10 @@ void Grid::move(char l, string dir){
 
 void Grid::reveal(Cell& c){
     char type = c.getType();
+    string piece; 
+    piece += c.getLink().getType();
+    piece += c.getLink().getStrength();
+
     if (type >= 'a' && type <= 'h'){
         //reveal the cell to player 2 
     }else if (type >= 'A' && type <= 'H'){
@@ -138,8 +152,8 @@ void Grid::battle(Cell& init, Cell& fighter) {
     int l2 = fighter.getLink().getStrength();
 
     //reveal the fighters 
-    init.getLink().reveal(); 
-    fighter.getLink().reveal();
+    this->reveal(init);
+    this->reveal(fighter);
     
     //find which player initiated the battle 
     int pInit;
