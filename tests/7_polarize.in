@@ -1,0 +1,53 @@
+-ability1 PPPPP
+-ability2 LFDSP
+-link1 default_placement
+-link2 default_placement
+-abilities
+-board
+-move a S
+-abilities
+-board
+
+-move c S
+-move H N
+-move c S
+-move H N
+-move c S
+-move H N
+-move c S
+-move H N
+-move c S
+-move H N
+-move c S
+-move H N
+-move c E
+-move H N
+
+-ability 1 x
+-ability 1 c
+-move c S
+
+-ability 5 H
+-move H N
+
+-ability 2 F
+-move a S
+-move E N
+-move h S
+
+-move b S
+-move C N
+-move b S
+-move C N
+-move b S
+-move C N
+-move b S
+-move C N
+-move b S
+-move C N
+-move b S
+-move C N
+-move b S
+-move C E
+-move b S
+-move C N

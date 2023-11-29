@@ -1,0 +1,25 @@
+-ability1 DDDDD
+-ability2 DDDDD
+-link1 default_placement
+-link2 default_placement
+-abilities
+-board
+
+-move A S
+-move a E
+-move a S
+
+-move X N
+-move a N
+-move A N
+
+-ability 1 A
+-move b N
+-move b S
+
+-move A N
+-move C E
+-move C N
+
+-move h E
+-move h S
