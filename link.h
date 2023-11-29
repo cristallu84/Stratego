@@ -15,7 +15,7 @@ class Link{
     int getMoveL() const; 
     void giveBoost(); //increases moveLength by 1 
     void toggleType(); //changes a virus to a data and vice versa
-    void reveal(); // changes reveal to true
+    void revealbool(); // changes reveal to true
 };
 
 #endif

@@ -9,7 +9,9 @@ bool Cell::isLink(){
     return true; 
  }
 }
+
 char Cell::getType() const {return celltype;}
+char Cell::getFireWall() const {return firewall;}
 
 int Cell::getRow() const {return row;}
 
@@ -22,12 +24,13 @@ if (link){ //if the cell is occupied by a link
 }
 
 void Cell::download(){
-link = nullptr; 
+link = nullptr; //remove the link from the board 
 }
 
 void Cell::upload(std::unique_ptr<Link> l){
-link = std::move(l); 
+link = std::move(l); //attach a smart pointer to the cell 
 }
+
 void Cell::attach(Observer *o){
     observers.emplace_back(o);
 }

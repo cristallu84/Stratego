@@ -58,7 +58,8 @@ class Grid{
     int getTurn() const; // Returns the turn
     void nextTurn();  // Sets the whoseTurn to the next turn
     void move(char l, string dir); 
-    void download(Cell& c); 
+    void reveal(Cell& c);
+    void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
     void battle(Cell& init, Cell& fighter); // Handles the battle feature
     void playAbility(int ID, Cell& c);
     void printAbilities(); 

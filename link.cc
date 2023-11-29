@@ -14,3 +14,7 @@ void Link::toggleType() { //changes a virus to a data and vice versa
         type = 'V';
     }
 } 
+
+void Link::revealbool(){
+    revealed = true; 
+}

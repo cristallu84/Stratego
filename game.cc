@@ -53,20 +53,79 @@ void Grid::move(char l, string dir){
         c = c + length;
     }
     Cell& nextcell = theGrid[r][c];
+    char nexttype = nextcell.getType();
+    int player = this->getTurn(); //1 if p1 and 2 if p2
 
-    if (nextcell.isLink()){ //if a link occupies the cell then battle
+    //check for edge of board 
+
+    //check for firewall
+    if (nextcell == 'm'){ //if the cell is occupied by a firewall from p1 
+        if (player != 1){ //if the player that goes through the firewall is an opp
+            this->reveal(cell);
+            if (link.getType() == 'V'){ //if it is a virus
+                this->download(cell, 2); //player 2 downloads it 
+            }
+        }
+    }else if (nexttype == 'w'){ //if the cell is occupied by a firewall from p2
+        if (player != 2){ //if the player that goes through the firewall is an opp
+            this->reveal(cell); //reveal the link
+            if (link.getType() == 'V'){ //if it is a virus
+                this->download(cell, 1); //player 1 downloads it 
+            }
+        }
+    }
+    //check for link 
+    if (nextcell.isLink() && cell.isLink()){ //if a link occupies the next cell and the current cell didn't get downloaded from firewall
         battle(cell, theGrid[r][c]);
-    }else if (nextcell.getType() == 'm'){ //if the cell is occupied by a firewall from p1 
+    }
+    //check for serverport
+    if (nexttype == 's'){
+        if (player != 1){ //if the player that goes through the firewall is p2
+            this->download(cell, 1); //player 1 downloads it 
+        }
+    }else if (nexttype == 'S'){
+        if (player != 2){ //if the player that goes through the firewall is p2
+            this->download(cell, 2); //player 2 downloads it 
+        }
+    }else if (nexttype == 'n'){ //cell is empty
+        cell.download(); //link is removed from the current cell
+        nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
+    }
 
-    }else if (nextcell.getType() == 'w'){ //if the cell is occupied by a firewall from p2
+}
 
-    }else if (nextcell.getType() == 's'){
-        
+void Grid::reveal(Cell& c){
+    char type = c.getType();
+    if (type >= 'a' && type <= 'h'){
+        //reveal the cell to player 2 
+    }else if (type >= 'A' && type <= 'H'){
+        //reveal the cell to player 1
     }
 }
 
 // TODO: Implement
-void Grid::download(Cell& c) {
+void Grid::download(Cell& c, int player) {
+
+    //reveal it
+    this->reveal(c); //reveal cell c 
+    //adding it to the player's count of downloads
+    if (c.getLink().getType() == 'V'){
+        if (player == 1){
+            //increase player's number of virus downloaded in p1
+            //increase opp's number of virus downloaded (p2)
+        }else if (player == 2){
+            //increase player's number of virus downloaded in p2
+            //increase opp's number of virus downloaded (p1)
+        }
+    }else if (c.getLink().getType() == 'D'){
+        if (player == 1){
+            //increase player's number of data downloaded in p1
+            //increase opp's number of data downloaded (p2)
+        }else if (player == 2){
+            //increase player's number of data downloaded in p2
+            //increase opp's number of data downloaded (p1)
+        }
+    }
     c.download(); 
 }
 

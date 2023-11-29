@@ -7,7 +7,8 @@
 #include <memory>
 
 class Cell{ 
-    char celltype; 
+    char celltype; //a-h for link of p1, A-H for link of p2, s or S for server port, n for empty 
+    char firewall; //m for player1, w for player 2, n for empty
     const int row; 
     const int col; 
     std::unique_ptr<Link> link;
@@ -18,6 +19,7 @@ class Cell{
     
     bool isLink(); //Returns true if a Link occupies the cell
     char getType() const; //Returns the type that occupies the link (a-h, A-H for link, w/m for firewall, n for empty)
+    char getFireWall() const; 
     int getRow() const; //Returns the value of row
     int getCol() const; //Returns the value of col
     Link& getLink() const; //Returns a reference to the link that it points to
