@@ -120,8 +120,9 @@ int main(int argc, char* argv[]) {
                         g.printAbilities();
 
                     } else if (cmd == "ability") {
-                        char a;
-
+                        char ID; 
+                        iss >> ID; //will be 1-5 
+        
                         // TODO: Take in input for each ability
 
                         // TODO: Implement execute ability

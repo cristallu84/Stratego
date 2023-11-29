@@ -1,16 +1,12 @@
 #include <iostream>
-#include "grid.h"
+#include "game.h"
 using namespace std;
 
 
 // TODO: Add further init procedures
-Grid::Grid() : theGrid{0, std::vector<Cell>(0)},
-    textDisplay{new TextDisplay(0)} {}
+Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
-Grid::~Grid() { 
-    delete textDisplay;
-    textDisplay = nullptr;
- }
+Grid::~Grid() {}
 
 // TODO: implement grid initition
 void Grid::init(int n, std::vector<string> links) {
@@ -41,14 +37,25 @@ void Grid::nextTurn() {
 }
 
 // TODO: Implement
-void Grid::move(char l, char dir){
-    // Implement calling subsequent responses to move here
-    // Ex. battle, download, upload, etc.
+void Grid::move(char l, string dir){
+    Cell& cell = this->findCell(l);
+    int r = cell.getRow();
+    int c = cell.getCol(); 
+    Link& link = cell.getLink(); 
+    if (dir == "up"){
+
+    }else if (dir == "down"){
+        
+    }else if (dir == "left"){
+
+    }else if (dir == "right"){
+
+    }
 }
 
 // TODO: Implement
 void Grid::download(Cell& c) {
-    // Implement
+    c.download(); 
 }
 
 
