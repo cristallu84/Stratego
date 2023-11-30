@@ -3,6 +3,9 @@
 #include "cell.h"
 #include "player.h"
 #include "textdisplay.h"
+#include "ability.h"
+#include "exceptions.h"
+
 
 class Grid{
     std::vector<std::vector<Cell>> theGrid; 
@@ -29,7 +32,7 @@ class Grid{
         void reveal(Cell& c);
         void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
         void battle(Cell& init, Cell& fighter); // Handles the battle feature
-        void printAbilities(); 
+        std::vector<std::string>& printAbilities(); 
         Player& getPlayer(int n);
 
         void linkBoost(char c);
