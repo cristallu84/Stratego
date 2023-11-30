@@ -14,6 +14,8 @@ class Grid{
     int whoseTurn; 
     bool outBound(int r, int c); // Checks if out of bounds
     bool isLink(char l); // Check if link exists
+    bool onBoard(char l); // Check if cell is on the board
+    bool link_in_player(char l, int p); // Check if link is player's link
 
     public:
     Grid();

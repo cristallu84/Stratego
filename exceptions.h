@@ -20,8 +20,23 @@ public:
 class not_link : public std::exception {
 public:
     const char* what() const noexcept override {
+        return "The link selected does not exist.";
+    }
+};
+
+class not_on_board : public std::exception {
+public:
+    const char* what() const noexcept override {
         return "The link selected is not on the board.";
     }
 };
+
+class not_your_link : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "The link selected is the other player's.";
+    }
+};
+
 
 #endif

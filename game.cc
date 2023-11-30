@@ -38,8 +38,36 @@ bool Grid::isLink(char c) {
     }
 }
 
+// Checks if the link is currently on the board
+bool Grid::onBoard(char l) {
+    try {
+        Cell & c = this->findCell(l);
+    } catch (const not_on_board& e) {
+        return false;
+    }
+    return true;
+}
+
+bool Grid::link_in_player(char l, int p) {
+    if (p == 1) {
+        for (int i = 41; i <= 48; ++i) {
+            if (l == i) {
+                return true;
+            }
+        }
+        return false; 
+    } else {
+        for (int i = 61; i <= 68; ++i) {
+            if (l == i) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 // Returns the cell with link l
-Cell& Grid::findCell(char l) { //implement a case where cell cannot be found (e.g. the link has been eaten)
+Cell& Grid::findCell(char l) {
     for (int r = 0; r < gridSize; ++r) {
         for (int c = 0; c < gridSize; ++c) {
             if (theGrid[r][c].getType() == l) {
@@ -47,6 +75,9 @@ Cell& Grid::findCell(char l) { //implement a case where cell cannot be found (e.
             }
         }
     }
+
+    // Case where cell is not found
+    throw not_on_board();
 }
 
 // Returns the turn
@@ -241,14 +272,17 @@ void Grid::printAbilities() {
 
 void Grid::linkBoost(char c) {
     if (!(isLink(c))) { throw not_link(); }
+    if (!(onBoard(c))) {throw not_on_board(); }
+    if (!(link_in_player(c, this->getTurn()))) { throw not_your_link();}
+
     Linkboost lb(this->findCell(c).getLink());
     lb.execute();
 }
 
 
 void Grid::firewall(int r, int c) {
-    if (theGrid[r][c].getFireWall() != 'n') { throw already_exists(); }
     if (!(outBound(r, c))) { throw out_bounds();}
+    if (theGrid[r][c].getFireWall() != 'n') { throw already_exists(); }
 
     Firewall f(theGrid[r][c], this->getTurn());
     f.execute();
@@ -257,6 +291,7 @@ void Grid::firewall(int r, int c) {
 
 void Grid::download(char c) {
     if (!(isLink(c))) { throw not_link(); }
+
     if (this->getTurn() == 1) {
         Download d(this->findCell(c), player1, player2, 1);
         d.execute();
@@ -269,6 +304,7 @@ void Grid::download(char c) {
 
 void Grid::polarize(char c) {
     if (!(isLink(c))) { throw not_link(); }
+
     Polarize p(this->findCell(c).getLink());
     p.execute();
 }
@@ -276,6 +312,8 @@ void Grid::polarize(char c) {
 
 void Grid::scan(char c) {
     if (!(isLink(c))) { throw not_link(); }
+    if (!(onBoard(c))) {throw not_on_board(); }
+
     Scan s(this->findCell(c).getLink());
     s.execute();
 }

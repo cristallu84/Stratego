@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
             string s;
 
             // Determines which links to push back data into
-            vector<string>& current_links = (arg == "-link1")? p1_links : p2_links;
+            vector<string>& current_links = (arg == "-link1") ? p1_links : p2_links;
 
             while (iss >> s){
                 current_links.emplace_back(s);
@@ -145,6 +145,15 @@ int main(int argc, char* argv[]) {
                             } catch (const not_link& e) {
                                 cout << "Error occured: " << e.what() << endl;
                                 g.nextTurn();
+                            } catch (const not_on_board& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const not_your_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
                             }
                             
                             
@@ -156,6 +165,9 @@ int main(int argc, char* argv[]) {
                             } catch (const not_link& e) {
                                 cout << "Error occured: " << e.what() << endl;
                                 g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
                             }
                             
                         } else if (ID == 4) { // Polarize
@@ -166,6 +178,9 @@ int main(int argc, char* argv[]) {
                             } catch (const not_link& e) {
                                 cout << "Error occured: " << e.what() << endl;
                                 g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
                             }
 
                         } else if (ID == 5) { // Scan
@@ -175,6 +190,12 @@ int main(int argc, char* argv[]) {
                                 g.scan(c);
                             } catch (const not_link& e) {
                                 cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const not_on_board& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
                                 g.nextTurn();
                             }
 
