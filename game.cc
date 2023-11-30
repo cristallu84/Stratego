@@ -295,13 +295,13 @@ void Grid::firewall(int r, int c) {
 }
 
 
-void Grid::download(char c) {
+void Grid::download_ability(char c) {
    
     if (this->getTurn() == 1) {
-        Download d(this->findCell(c), player1, player2, 1);
+        Download d(this->findCell(c), player1, player2);
         d.execute();
     } else {
-        Download d (this->findCell(c), player1, player2, 2);
+        Download d (this->findCell(c), player2, player1);
         d.execute();
     }
 }

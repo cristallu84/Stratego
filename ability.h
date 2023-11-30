@@ -29,10 +29,9 @@ class Download: public Ability{
     Cell& cell; 
     Player player1;
     Player player2;
-    int player;
-
+    
     public: 
-        Download(Cell & cell, Player player1, Player player2, int player);
+        Download(Cell & cell, Player player1, Player player2);
         void execute() override; 
 };
 

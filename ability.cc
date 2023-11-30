@@ -6,29 +6,18 @@ void Firewall::execute() { cell.setFireWall(turn); }
 Linkboost::Linkboost(Link & l): link{link} {}
 void Linkboost::execute() { link.giveBoost(); }
 
-Download::Download(Cell & cell, Player player1, Player player2, int player) : 
-    cell{cell}, player1{player1}, player2{player2}, player{player}  {}
+Download::Download(Cell & cell, Player player1, Player player2) : 
+    cell{cell}, player1{player1}, player2{player2}  {}
 
 void Download::execute() {
 
     if (cell.getLink().getType() == 'V'){
-        if (player == 1){ 
-            player1.incrMyV();
-            player2.incrOppV();
-
-        } else if (player == 2){
-            player2.incrMyV();
-            player1.incrOppV();
-        }
+        player1.incrMyV();
+        player2.incrOppV();
         
     } else if (cell.getLink().getType() == 'D'){
-        if (player == 1){ 
-            player1.incrMyD();
-            player2.incrOppD();
-        } else if (player == 2) {
-            player2.incrMyD(); 
-            player1.incrOppD(); 
-        }
+        player1.incrMyD();
+        player2.incrOppD();
     }
     cell.download(); 
 }
