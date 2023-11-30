@@ -10,18 +10,12 @@ using namespace std;
 // TODO: Add further init procedures
 Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
-Grid::~Grid() {
-    theGrid.clear();
-    gridSize = 0;
-    delete textDisplay;
-}
+Grid::~Grid() {}
 
 // TODO: implement grid initition
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
     gridSize = n;
-    textDisplay = new TextDisplay(n);
-    // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
-    // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
+    // textDisplay = new TextDisplay(n); use unique ptrs here?
 
     // Player 1 initialization
     std::vector<Cell> row0;
@@ -75,19 +69,15 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
             // Creating empty row
             std::vector<Cell> row;
             for (int j = 0; j < n; j++) {
-                row.emplace_back('n', 'n', i, j, nullptr);
+                row('n', 'n', i, j, nullptr);
             }
             theGrid.emplace_back(row);
         }
     }
 
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            theGrid[i][j].attach(textDisplay);
-            // theGrid[i][j].attach(graphicsDisplay);
-        }
-    }
+    // Attach observers - UNFINISHED
 }
+
 
 // Checks if the coordinates given are within the board
 bool Grid::outBound(int r, int c) {
@@ -146,7 +136,9 @@ Cell& Grid::findCell(char l) {
             }
         }
     }
-    // case where cell is not found
+
+    // Case where cell is not found
+    throw not_on_board();
 }
 
 // Returns the turn
@@ -160,6 +152,7 @@ void Grid::nextTurn() {
         whoseTurn = 1;
     }
 }
+
 
 void Grid::move(char l, string dir){
     Cell& cell = this->findCell(l);
@@ -251,6 +244,7 @@ void Grid::reveal(Cell& c){
     }
 }
 
+
 void Grid::download(Cell& c, int player) {
     this->reveal(c); //reveals cell c 
 
@@ -338,6 +332,9 @@ void Grid::printAbilities() {
 }
 
 void Grid::linkBoost(char c) {
+    if (!(isLink(c))) { throw not_link(); }
+    if (!(onBoard(c))) {throw not_on_board(); }
+    if (!(link_in_player(c, this->getTurn()))) { throw not_your_link();}
 
     Linkboost lb(this->findCell(c).getLink());
     lb.execute();
@@ -345,25 +342,29 @@ void Grid::linkBoost(char c) {
 
 
 void Grid::firewall(int r, int c) {
+    if (!(outBound(r, c))) { throw out_bounds();}
+    if (theGrid[r][c].getFireWall() != 'n') { throw already_exists(); }
 
     Firewall f(theGrid[r][c], this->getTurn());
     f.execute();
 }
 
 
-void Grid::download_ability(char c) {
-   
+void Grid::download(char c) {
+    if (!(isLink(c))) { throw not_link(); }
+
     if (this->getTurn() == 1) {
-        Download d(this->findCell(c), player1, player2);
+        Download d(this->findCell(c), player1, player2, 1);
         d.execute();
     } else {
-        Download d (this->findCell(c), player2, player1);
+        Download d (this->findCell(c), player1, player2, 2);
         d.execute();
     }
 }
 
 
 void Grid::polarize(char c) {
+    if (!(isLink(c))) { throw not_link(); }
 
     Polarize p(this->findCell(c).getLink());
     p.execute();
@@ -371,6 +372,8 @@ void Grid::polarize(char c) {
 
 
 void Grid::scan(char c) {
+    if (!(isLink(c))) { throw not_link(); }
+    if (!(onBoard(c))) {throw not_on_board(); }
 
     Scan s(this->findCell(c).getLink());
     s.execute();

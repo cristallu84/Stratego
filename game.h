@@ -34,7 +34,7 @@ class Grid{
 
     void linkBoost(char c);
     void firewall(int r, int c);
-    void download(char c);
+    void download_ability(char c);
     void polarize(char c);
     void scan(char c);
 
