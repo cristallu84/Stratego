@@ -31,7 +31,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
         // Initializing player link vectors
         player1.addLink(p1_links[i]);
         player2.addLink(p2_links[i]);
-        
+
         // Creating a link
         char type = p1_links[i][0];
         int strength = p1_links[i][1];
@@ -322,7 +322,6 @@ void Grid::battle(Cell& init, Cell& fighter) {
 
         // MOVE FIGHTER TO INIT POSITION - fighter stays and init is downloaded 
 
-
     } else {
         // init wins
         string s = fighter.getLink().getType() + 
@@ -333,7 +332,6 @@ void Grid::battle(Cell& init, Cell& fighter) {
         //MOVE INIT TO FIGHTER POSITION 
     }
 }
-
 
 // TODO: Impl. and add method to fetch abilities from player
 void Grid::printAbilities() {
