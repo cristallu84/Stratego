@@ -7,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include "game.h"
+#include "exceptions.h"
 
 using namespace std;
 
@@ -56,7 +57,7 @@ int main(int argc, char* argv[]) {
             string s;
 
             // Determines which links to push back data into
-            vector<string>& current_links = (arg == "-link1")? p1_links : p2_links;
+            vector<string>& current_links = (arg == "-link1") ? p1_links : p2_links;
 
             while (iss >> s){
                 current_links.emplace_back(s);
@@ -106,7 +107,7 @@ int main(int argc, char* argv[]) {
 
                     if (cmd == "move") {
                         char c;
-                        char d;
+                        string d;
                         iss >> c >> d;
                         g.move(c, d);
 
@@ -114,12 +115,92 @@ int main(int argc, char* argv[]) {
                         g.printAbilities();
 
                     } else if (cmd == "ability") {
-                        char ID; 
-                        iss >> ID; //will be 1-5 
-        
-                        // TODO: Take in input for each ability
+                        int ID; 
+                        iss >> ID; // will be 1-5 
 
-                        // TODO: Implement execute ability
+                        if (ID == 1) { // Firewall
+                            int r;
+                            int c;
+                            iss >> r >> c;
+
+                            try {
+                                g.firewall(r,c);
+                            } catch (const already_exists& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const out_bounds& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
+                            }
+
+                        } else if (ID == 2) { // Linkboost
+                            char c;
+                            iss >> c;
+                            try {
+                                g.linkBoost(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const not_on_board& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const not_your_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
+                            }
+                            
+                            
+                        } else if (ID == 3) { // Download
+                            char c;
+                            iss >> c;
+                            try {
+                                g.download(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
+                            }
+                            
+                        } else if (ID == 4) { // Polarize
+                            char c;
+                            iss >> c;
+                            try {
+                                g.polarize(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
+                            }
+
+                        } else if (ID == 5) { // Scan
+                            char c;
+                            iss >> c;
+                            try {
+                                g.scan(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const not_on_board& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
+                            }
+
+                        } else {
+                            cout << "Please enter a valid ability." << endl;
+                        }
 
                     } else if (cmd == "board") {
                         std::cout << g;

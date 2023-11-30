@@ -12,6 +12,10 @@ class Grid{
     Player player1;
     Player player2; 
     int whoseTurn; 
+    bool outBound(int r, int c); // Checks if out of bounds
+    bool isLink(char l); // Check if link exists
+    bool onBoard(char l); // Check if cell is on the board
+    bool link_in_player(char l, int p); // Check if link is player's link
 
     public:
     Grid();
@@ -25,9 +29,15 @@ class Grid{
     void reveal(Cell& c);
     void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
     void battle(Cell& init, Cell& fighter); // Handles the battle feature
-    void playAbility(int ID, Cell& c);
     void printAbilities(); 
-    Player& getPlayer(int n); 
+    Player& getPlayer(int n);
+
+    void linkBoost(char c);
+    void firewall(int r, int c);
+    void download(char c);
+    void polarize(char c);
+    void scan(char c);
+
     friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };
 

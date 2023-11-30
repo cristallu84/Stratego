@@ -1,14 +1,14 @@
 #include "player.h"
 
 Player::Player(): 
-Abilities{}, 
-MyLinks{}, 
-OppLinks{}, 
-MyD{0},
-MyV{0},
-OppD{0},
-OppV{0},
-OppAbil{0}
+    Abilities{}, 
+    MyLinks{}, 
+    OppLinks{}, 
+    MyD{0},
+    MyV{0},
+    OppD{0},
+    OppV{0},
+    OppAbil{0}
 {}
 
 void Player::notify(Cell&c){
@@ -24,36 +24,48 @@ if (MyD == 4){
 }
 
 int Player::getMyD(){return MyD;}
+
 int Player::getMyV(){return MyV;}
+
 int Player::getOppD(){return OppD;}
+
 int Player::getOppV(){return OppV;}
+
 int Player::getOppAbil(){return OppAbil;}
+
 void Player::incrMyD(){++MyD;}
+
 void Player::incrMyV(){++MyV;}
+
 void Player::incrOppD(){++OppD;}
+
 void Player::incrOppV(){++OppV;}
+
 void Player::incrOppAbil(){++OppAbil;}
+
 void Player::revealed(int index, std::string piece){
     OppLinks[index] = piece; 
 }
 
 void Player::setAbility(std::string s){ //adds abilities to hand 
-for (char c: s){
-    Card abil;
-    if (c == 'L'){ //Linkboost card
-    abil =  {CardType::Linkboost, false};
-    }else if (c == 'F'){ //Firewall card
-    abil = {CardType::Firewall, false};
-    }else if (c == 'D'){ //Download card
-    abil = {CardType::Download, false};
-    }else if (c == 'S'){ //Polarize card
-    abil = {CardType::Polarize, false};
-    }else if (c == 'P'){//Scan card 
-    abil = {CardType::Scan, false};
-    }
+    
+    for (char c: s) {
+        Card abil;
 
-    Abilities.emplace_back(abil);
-}
+        if (c == 'L'){ //Linkboost card
+            abil =  {CardType::Linkboost, false};
+        } else if (c == 'F'){ //Firewall card
+            abil = {CardType::Firewall, false};
+        } else if (c == 'D'){ //Download card
+            abil = {CardType::Download, false};
+        } else if (c == 'S'){ //Polarize card
+            abil = {CardType::Polarize, false};
+        } else if (c == 'P'){//Scan card 
+            abil = {CardType::Scan, false};
+        }
+
+        Abilities.emplace_back(abil);
+    }
 }
 
 void Player::addLink(std::string s){
