@@ -111,7 +111,6 @@ int main(int argc, char* argv[]) {
                         g.move(c, d);
 
                     } else if (cmd == "abilities") {
-                        //check whose turn it is 
                         g.printAbilities();
 
                     } else if (cmd == "ability") {

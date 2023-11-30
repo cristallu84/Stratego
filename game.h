@@ -17,8 +17,7 @@ class Grid{
     Grid();
     ~Grid();
 
-
-    void init(int n);
+    void init(int n, vector<string> p1_links, vector<string> p2_links);
     Cell& findCell(char l); // Returns the cell with link l
     int getTurn() const; // Returns the turn
     void nextTurn();  // Sets the whoseTurn to the next turn

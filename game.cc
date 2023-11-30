@@ -8,8 +8,69 @@ Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whos
 Grid::~Grid() {}
 
 // TODO: implement grid initition
-void Grid::init(int n) {
-    //IMPL
+void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
+    gridSize = n;
+    // textDisplay = new TextDisplay(n); use unique ptrs here?
+
+    // Player 1 initialization
+    std::vector<Cell> row0;
+    std::vector<Cell> row1;
+    for (int i = 0; i < n; i++) {
+
+        // Creating a link
+        char type = p1_links[i][0];
+        int strength = p1_links[i][1];
+        unique_ptr<Link> link = make_unique<Link>('a' + i, type, strength, false, 1);
+
+        // Server ports
+        if (i == n/2 || i == n/2 + 1) {
+            row0.emplace_back('s', 'n', 0, i, nullptr);
+            row1.emplace_back('a' + i, 'n', 0, i, std::move(link));
+        }
+
+        // Creating cells
+        row0.emplace_back('a' + i, 'n', 0, i, std::move(link));
+        row1.emplace_back('n', 'n', 0, i, nullptr);
+    }
+
+    // Player 2 initialization
+    std::vector<Cell> rown_2; // row n - 2
+    std::vector<Cell> rown_1; // row n - 1
+    for (int i = 0; i < n; i++) {
+
+        // Creating a link
+        char type = p2_links[i][0];
+        int strength = p2_links[i][1];
+        unique_ptr<Link> link = make_unique<Link>('A' + i, type, strength, false, 1);
+
+        // Server ports
+        if (i == n/2 || i == n/2 + 1) {
+            rown_1.emplace_back('S', 'n', n-1, i, nullptr);
+            rown_2.emplace_back('A' + i, 'n', n, i, std::move(link));
+        }
+
+        // Creating cells
+        rown_2.emplace_back('n', 'n', 0, i, nullptr);
+        rown_1.emplace_back('A' + i, 'n', 0, i, std::move(link));
+    }
+
+    // Creating grid
+    for (int i = 0; i < n; i++) {
+        if (i == 0) theGrid.emplace_back(row0);
+        else if (i == 1) theGrid.emplace_back(row1);
+        else if (i == n - 2) theGrid.emplace_back(rown_2);
+        else if (i == n - 1) theGrid.emplace_back(rown_1);
+        else {
+            // Creating empty row
+            std::vector<Cell> row;
+            for (int j = 0; j < n; j++) {
+                row.('n', 'n', i, j, nullptr);
+            }
+            theGrid.emplace_back(row);
+        }
+    }
+
+    // Attach observers - UNFINISHED
 }
 
 // Returns the cell with link l
