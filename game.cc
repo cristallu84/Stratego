@@ -1,5 +1,8 @@
 #include <iostream>
+#include <stdexcept>
+#include "exceptions.h"
 #include "game.h"
+#include "exceptions.h"
 #include "ability.h"
 
 using namespace std;
@@ -12,6 +15,27 @@ Grid::~Grid() {}
 // TODO: implement grid initition
 void Grid::init(int n) {
     //IMPL
+}
+
+
+// Checks if the coordinates given are within the board
+bool Grid::outBound(int r, int c) {
+    if (r >= gridSize || c >= gridSize) {
+        return false;
+    }
+    return true;
+}
+
+
+// Checks if the link exists
+bool Grid::isLink(char c) {
+    if (c >= 41 && c <= 48) {
+        return true;
+    } else if (c >= 61 && c <= 68) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 // Returns the cell with link l
@@ -216,18 +240,23 @@ void Grid::printAbilities() {
 }
 
 void Grid::linkBoost(char c) {
+    if (!(isLink(c))) { throw not_link(); }
     Linkboost lb(this->findCell(c).getLink());
     lb.execute();
 }
 
 
 void Grid::firewall(int r, int c) {
+    if (theGrid[r][c].getFireWall() != 'n') { throw already_exists(); }
+    if (!(outBound(r, c))) { throw out_bounds();}
+
     Firewall f(theGrid[r][c], this->getTurn());
     f.execute();
 }
 
 
 void Grid::download(char c) {
+    if (!(isLink(c))) { throw not_link(); }
     if (this->getTurn() == 1) {
         Download d(this->findCell(c), player1, player2, 1);
         d.execute();
@@ -239,22 +268,20 @@ void Grid::download(char c) {
 
 
 void Grid::polarize(char c) {
+    if (!(isLink(c))) { throw not_link(); }
     Polarize p(this->findCell(c).getLink());
     p.execute();
 }
 
 
 void Grid::scan(char c) {
+    if (!(isLink(c))) { throw not_link(); }
     Scan s(this->findCell(c).getLink());
     s.execute();
 }
 
 Player& Grid::getPlayer(int n) {
-    if (n == 1) {
-        return this->player1;
-    } else {
-        return this->player2;
-    }
+    return (n == 1) ? player1 : player2;
 }
 
 ostream &operator<<(ostream &out, const Grid &g) {

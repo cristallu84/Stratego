@@ -10,32 +10,26 @@ Download::Download(Cell & cell, Player player1, Player player2, int player) :
     cell{cell}, player1{player1}, player2{player2}, player{player}  {}
 
 void Download::execute() {
-    //adding it to the player's count of downloads
+
     if (cell.getLink().getType() == 'V'){
-        if (player == 1){ //player 1 is downloading a V
+        if (player == 1){ 
             player1.incrMyV();
             player2.incrOppV();
-            //increase player's number of virus downloaded in p1
-            //increase opp's number of virus downloaded (p2)
-        }else if (player == 2){ //player 2 is downloading a V
+
+        } else if (player == 2){
             player2.incrMyV();
             player1.incrOppV();
-            //increase player's number of virus downloaded in p2
-            //increase opp's number of virus downloaded (p1)
         }
+        
     } else if (cell.getLink().getType() == 'D'){
-        if (player == 1){ //player 1 is downloading a D
+        if (player == 1){ 
             player1.incrMyD();
             player2.incrOppD();
-            //increase player's number of data downloaded in p1
-            //increase opp's number of data downloaded (p2)
-        }else if (player == 2){ //player 2 is downloading a D
-            player2.incrMyD();  //increase p2's number of data downloaded
-            player1.incrOppD(); //increase p1's opp number of data downloaded 
-
+        } else if (player == 2) {
+            player2.incrMyD(); 
+            player1.incrOppD(); 
         }
     }
-    //removes the link from the cell 
     cell.download(); 
 }
 

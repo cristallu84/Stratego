@@ -7,6 +7,7 @@
 #include <vector>
 #include <ctime>
 #include "game.h"
+#include "exceptions.h"
 
 using namespace std;
 
@@ -122,27 +123,60 @@ int main(int argc, char* argv[]) {
                             int r;
                             int c;
                             iss >> r >> c;
-                            g.firewall(r,c);
+
+                            try {
+                                g.firewall(r,c);
+                            } catch (const already_exists& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (const out_bounds& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            } catch (...) {
+                                cout << "Unknown error occured." << endl;
+                                g.nextTurn();
+                            }
 
                         } else if (ID == 2) { // Linkboost
                             char c;
                             iss >> c;
-                            g.linkBoost(c);
+                            try {
+                                g.linkBoost(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            }
+                            
                             
                         } else if (ID == 3) { // Download
                             char c;
                             iss >> c;
-                            g.download(c);
-
+                            try {
+                                g.download(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            }
+                            
                         } else if (ID == 4) { // Polarize
                             char c;
                             iss >> c;
-                            g.polarize(c);
+                            try {
+                                g.polarize(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            }
 
                         } else if (ID == 5) { // Scan
                             char c;
                             iss >> c;
-                            g.scan(c);
+                            try {
+                                g.scan(c);
+                            } catch (const not_link& e) {
+                                cout << "Error occured: " << e.what() << endl;
+                                g.nextTurn();
+                            }
 
                         } else {
                             cout << "Please enter a valid ability." << endl;

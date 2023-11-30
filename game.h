@@ -12,6 +12,8 @@ class Grid{
     Player player1;
     Player player2; 
     int whoseTurn; 
+    bool outBound(int r, int c); // Checks if out of bounds
+    bool isLink(char l); // Check if link exists
 
     public:
     Grid();
