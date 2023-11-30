@@ -6,10 +6,10 @@ void Firewall::execute() { cell.setFireWall(turn); }
 Linkboost::Linkboost(Link & l): link{link} {}
 void Linkboost::execute() { link.giveBoost(); }
 
-Download::Download(Cell & cell, Player player1, Player player2, int player) : 
-    cell{cell}, player1{player1}, player2{player2}, player{player}  {}
+Download::Download(Cell & cell, Player player1, Player player2, int player) : //wrong
+    cell{cell}, player1{player1}, player2{player2}, player{player}  {} 
 
-void Download::execute() {
+void Download::execute() { //wrong
 
     if (cell.getLink().getType() == 'V'){
         if (player == 1){ 
@@ -38,8 +38,8 @@ void Polarize::execute() {
     link.toggleType();
 }
 
-Scan::Scan(Link & link) : link{link} {}
+Scan::Scan(Link & link) : link{link} {} //wrong 
 void Scan::execute() { 
-    link.revealbool();
+    link.revealbool(); //need to use reveal on the cell which is in grid 
 }
 
