@@ -10,12 +10,18 @@ using namespace std;
 // TODO: Add further init procedures
 Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
-Grid::~Grid() {}
+Grid::~Grid() {
+    theGrid.clear();
+    gridSize = 0;
+    delete textDisplay;
+}
 
 // TODO: implement grid initition
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
     gridSize = n;
-    // textDisplay = new TextDisplay(n); use unique ptrs here?
+    textDisplay = new TextDisplay(n);
+    // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
+    // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
 
     // Player 1 initialization
     std::vector<Cell> row0;
@@ -69,15 +75,19 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
             // Creating empty row
             std::vector<Cell> row;
             for (int j = 0; j < n; j++) {
-                row.('n', 'n', i, j, nullptr);
+                row.emplace_back('n', 'n', i, j, nullptr);
             }
             theGrid.emplace_back(row);
         }
     }
 
-    // Attach observers - UNFINISHED
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            theGrid[i][j].attach(textDisplay);
+            // theGrid[i][j].attach(graphicsDisplay);
+        }
+    }
 }
-
 
 // Checks if the coordinates given are within the board
 bool Grid::outBound(int r, int c) {
@@ -152,7 +162,6 @@ void Grid::nextTurn() {
         whoseTurn = 1;
     }
 }
-
 
 void Grid::move(char l, string dir){
     Cell& cell = this->findCell(l);
@@ -243,7 +252,6 @@ void Grid::reveal(Cell& c){
         player1.revealed(index, piece); //reveal the cell to player 1
     }
 }
-
 
 void Grid::download(Cell& c, int player) {
     this->reveal(c); //reveals cell c 
