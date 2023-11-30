@@ -133,7 +133,7 @@ int main(int argc, char* argv[]) {
                         } else if (ID == 3) { // Download
                             char c;
                             iss >> c;
-                            g.download_ability(c);
+                            g.downloadAbility(c);
                             
                         } else if (ID == 4) { // Polarize
                             char c;
