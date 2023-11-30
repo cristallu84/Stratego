@@ -28,6 +28,10 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
     std::vector<Cell> row1;
     for (int i = 0; i < n; i++) {
 
+        // Initializing player link vectors
+        player1.addLink(p1_links[i]);
+        player2.addLink(p2_links[i]);
+        
         // Creating a link
         char type = p1_links[i][0];
         int strength = p1_links[i][1];
