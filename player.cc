@@ -43,6 +43,8 @@ void Player::incrOppV(){++OppV;}
 
 void Player::incrOppAbil(){++OppAbil;}
 
+std::vector<Card> Player::getAbilities() { return Abilities; }
+
 void Player::usedAbility(const char c) {
     for (auto &card: Abilities) {
         if (card.used) {

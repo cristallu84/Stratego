@@ -2,8 +2,6 @@
 #include <stdexcept>
 #include "exceptions.h"
 #include "game.h"
-#include "exceptions.h"
-#include "ability.h"
 
 using namespace std;
 
@@ -157,7 +155,7 @@ void Grid::move(char l, string dir){
             //error
         }
     } else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
-        if (player != 2){ //if the player that goes through the firewall is an opp
+        if (player != 2) { //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 1); //player 1 downloads it 
@@ -286,10 +284,26 @@ void Grid::battle(Cell& init, Cell& fighter) {
     }
 }
 
-// TODO: Impl. and add method to fetch abilities from player
-void Grid::printAbilities() {
-    int p = this->getTurn();
-    // UNFINISHED 
+
+std::vector<std::string>& Grid::printAbilities() {
+    // Return a vector of strings
+    std::vector<std::string> cards;
+    for (auto &card: this->getPlayer(this->getTurn()).getAbilities()) {
+        if (card.type == CardType::Linkboost) {
+            cards.emplace_back("Linkboost");
+        } else if (card.type == CardType::Download) {
+            cards.emplace_back("Download");
+        } else if (card.type == CardType::Firewall) {
+            cards.emplace_back("Firewall");
+        } else if (card.type == CardType::Polarize) {
+            cards.emplace_back("Polarize");
+        } else if (card.type == CardType::Scan) {
+            cards.emplace_back("Scan");
+        }       
+        card.used ? cards.emplace_back("Used") : cards.emplace_back("Unused");
+    }
+
+    return cards;
 }
 
 
