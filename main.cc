@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
                     if (cmd == "move") {
                         char c;
-                        char d;
+                        string d;
                         iss >> c >> d;
                         g.move(c, d);
 
@@ -115,12 +115,38 @@ int main(int argc, char* argv[]) {
                         g.printAbilities();
 
                     } else if (cmd == "ability") {
-                        char ID; 
-                        iss >> ID; //will be 1-5 
-        
-                        // TODO: Take in input for each ability
+                        int ID; 
+                        iss >> ID; // will be 1-5 
 
-                        // TODO: Implement execute ability
+                        if (ID == 1) { // Firewall
+                            int r;
+                            int c;
+                            iss >> r >> c;
+                            g.firewall(r,c);
+
+                        } else if (ID == 2) { // Linkboost
+                            char c;
+                            iss >> c;
+                            g.linkBoost(c);
+                            
+                        } else if (ID == 3) { // Download
+                            char c;
+                            iss >> c;
+                            g.download(c);
+
+                        } else if (ID == 4) { // Polarize
+                            char c;
+                            iss >> c;
+                            g.polarize(c);
+
+                        } else if (ID == 5) { // Scan
+                            char c;
+                            iss >> c;
+                            g.scan(c);
+
+                        } else {
+                            cout << "Please enter a valid ability." << endl;
+                        }
 
                     } else if (cmd == "board") {
                         std::cout << g;

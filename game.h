@@ -26,9 +26,15 @@ class Grid{
     void reveal(Cell& c);
     void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
     void battle(Cell& init, Cell& fighter); // Handles the battle feature
-    void playAbility(int ID, Cell& c);
     void printAbilities(); 
-    Player& getPlayer(int n); 
+    Player& getPlayer(int n);
+
+    void linkBoost(char c);
+    void firewall(int r, int c);
+    void download(char c);
+    void polarize(char c);
+    void scan(char c);
+
     friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };
 

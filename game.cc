@@ -1,5 +1,7 @@
 #include <iostream>
 #include "game.h"
+#include "ability.h"
+
 using namespace std;
 
 // TODO: Add further init procedures
@@ -35,7 +37,7 @@ void Grid::nextTurn() {
     }
 }
 
-// TODO: Implement
+
 void Grid::move(char l, string dir){
     Cell& cell = this->findCell(l);
     int r = cell.getRow();
@@ -44,11 +46,11 @@ void Grid::move(char l, string dir){
     int length = link.getMoveL();
     if (dir == "up"){
         r = r - length;
-    }else if (dir == "down"){
+    } else if (dir == "down"){
         r = r + length;
-    }else if (dir == "left"){
+    } else if (dir == "left"){
         c = c - length;
-    }else if (dir == "right"){
+    } else if (dir == "right"){
         c = c + length;
     }
     Cell& nextcell = theGrid[r][c];
@@ -71,39 +73,39 @@ void Grid::move(char l, string dir){
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 2); //player 2 downloads it 
             }//if it is not a virus, it will continue to check if the cell is empty
-        }else{
+        } else {
             //error
         }
-    }else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
+    } else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
         if (player != 2){ //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 1); //player 1 downloads it 
             } //if it is not a virus, it will continue to check if the cell is empty
-        }else{
+        } else {
             //error
         }
     }
 
     //check for link 
-    if (nextcell.isLink() && cell.isLink()){ //if a link occupies the next cell and the current cell didn't get downloaded from firewall
+    if (nextcell.isLink() && cell.isLink()) { //if a link occupies the next cell and the current cell didn't get downloaded from firewall
         battle(cell, theGrid[r][c]);
     }
 
     //check for serverport
-    if (nexttype == 's'){
-        if (player != 1){ //if the player that goes through the firewall is p2
+    if (nexttype == 's') {
+        if (player != 1) { //if the player that goes through the firewall is p2
             this->download(cell, 1); //player 1 downloads it 
-        }else{
+        } else {
             //error
         }
-    }else if (nexttype == 'S'){
+    } else if (nexttype == 'S') {
         if (player != 2){ //if the player that goes through the firewall is p2
             this->download(cell, 2); //player 2 downloads it 
         }else{
             //error
         }
-    }else if (nexttype == 'n'){ //cell is empty
+    } else if (nexttype == 'n') { //cell is empty
         cell.download(); //link is removed from the current cell
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
     }
@@ -120,13 +122,13 @@ void Grid::reveal(Cell& c){
     if (type >= 'a' && type <= 'h'){
         index = type - 61; 
         player2.revealed(index, piece); //reveal the cell to player 2 
-    }else if (type >= 'A' && type <= 'H'){
+    } else if (type >= 'A' && type <= 'H'){
         index = type - 41;
-        player1.revealed(index, piece);//reveal the cell to player 1
+        player1.revealed(index, piece); //reveal the cell to player 1
     }
 }
 
-// TODO: Implement
+
 void Grid::download(Cell& c, int player) {
     this->reveal(c); //reveals cell c 
 
@@ -143,7 +145,7 @@ void Grid::download(Cell& c, int player) {
             //increase player's number of virus downloaded in p2
             //increase opp's number of virus downloaded (p1)
         }
-    }else if (c.getLink().getType() == 'D'){
+    } else if (c.getLink().getType() == 'D'){
         if (player == 1){ //player 1 is downloading a D
             player1.incrMyD();
             player2.incrOppD();
@@ -206,15 +208,45 @@ void Grid::battle(Cell& init, Cell& fighter) {
     }
 }
 
-// TODO: Implement
-void Grid::playAbility(int ID, Cell& c) {
-    // IMPL
-}
 
 // TODO: Impl. and add method to fetch abilities from player
 void Grid::printAbilities() {
     int p = this->getTurn();
     // UNFINISHED 
+}
+
+void Grid::linkBoost(char c) {
+    Linkboost lb(this->findCell(c).getLink());
+    lb.execute();
+}
+
+
+void Grid::firewall(int r, int c) {
+    Firewall f(theGrid[r][c], this->getTurn());
+    f.execute();
+}
+
+
+void Grid::download(char c) {
+    if (this->getTurn() == 1) {
+        Download d(this->findCell(c), player1, player2, 1);
+        d.execute();
+    } else {
+        Download d (this->findCell(c), player1, player2, 2);
+        d.execute();
+    }
+}
+
+
+void Grid::polarize(char c) {
+    Polarize p(this->findCell(c).getLink());
+    p.execute();
+}
+
+
+void Grid::scan(char c) {
+    Scan s(this->findCell(c).getLink());
+    s.execute();
 }
 
 Player& Grid::getPlayer(int n) {

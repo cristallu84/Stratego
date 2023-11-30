@@ -1,6 +1,7 @@
 #ifndef __ABILITY_H__
 #define __ABILITY_H__
 #include "cell.h"
+#include "player.h"
 
 class Ability{
 public: 
@@ -8,38 +9,47 @@ public:
 };
 
 class Firewall: public Ability{
+    int turn;
     Cell& cell; 
+
     public: 
-    Firewall();
-    void execute() override; 
+        Firewall(Cell & cell, int turn);
+        void execute() override; 
 };
 
-class Linkboost: public Ability{
-    Link& link; 
+class Linkboost: public Ability {
+    Link& link;
+
     public: 
-    Linkboost();
-    void execute() override; 
+        Linkboost(Link & link);
+        void execute() override; 
 };
 
 class Download: public Ability{
-    Link& link; 
+    Cell& cell; 
+    Player player1;
+    Player player2;
+    int player;
+
     public: 
-    Download();
-    void execute() override; 
+        Download(Cell & cell, Player player1, Player player2, int player);
+        void execute() override; 
 };
 
 class Polarize: public Ability{
     Link& link; 
+
     public: 
-    Polarize();
-    void execute() override; 
+        Polarize(Link & link);
+        void execute() override; 
 };
 
 class Scan: public Ability{
     Link& link; 
+
     public: 
-    Scan();
-    void execute() override; 
+        Scan(Link & link);
+        void execute() override; 
 };
 
 #endif
