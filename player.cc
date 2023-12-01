@@ -8,7 +8,8 @@ Player::Player():
     MyV{0},
     OppD{0},
     OppV{0},
-    OppAbil{0}
+    MyAbil{5},
+    OppAbil{5}
 {
     std::vector<string> v(8,"?");
     OppLinks = v;
@@ -40,7 +41,9 @@ void Player::incrOppD(){++OppD;}
 
 void Player::incrOppV(){++OppV;}
 
-void Player::incrOppAbil(){++OppAbil;}
+void Player::decrMyAbil(){--MyAbil;}
+
+void Player::decrOppAbil(){--OppAbil;}
 
 Card Player::getCard(int ID){
     return Abilities[ID - 1];

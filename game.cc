@@ -300,7 +300,7 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         for (int i = 0; i < g.gridSize; i++) {
             if (i = g.gridSize / 2) out << "\n";
-            out << 'a' + i << ": " << p2.getOppLinks()[i] << " ";
+            out << 'a' + i << ": " << p2.getOppLink(i) << " ";
         }
 
         out << *g.textDisplay << endl;
@@ -311,7 +311,7 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         for (int i = 0; i < g.gridSize; i++) {
             if (i = g.gridSize / 2) out << "\n";
-            out << 'A' + i << ": " << p2.getMyLinks()[i] << " ";
+            out << 'A' + i << ": " << p2.getMyLink(i) << " ";
         }
     }
     

@@ -25,6 +25,7 @@ class Player{
     int MyV;
     int OppD;
     int OppV;
+    int MyAbil;
     int OppAbil;
 
     public: 
@@ -41,7 +42,8 @@ class Player{
         void incrMyV();
         void incrOppD();
         void incrOppV();
-        void incrOppAbil();
+        void decrMyAbil();
+        void decrOppAbil();
 
         Card getCard(int ID); 
         std::string getMyLink(const int n);

@@ -169,6 +169,17 @@ int main(int argc, char* argv[]) {
                             cout << "Please enter a valid ability." << endl; 
                         }
 
+                        if (c.used == true) {
+                            if (player == 1) {
+                                g.getPlayer(1).decrMyAbil();
+                                g.getPlayer(2).decrOppAbil();
+                            }
+                            if (player == 2) {
+                                g.getPlayer(2).decrMyAbil();
+                                g.getPlayer(1).decrOppAbil();
+                            }
+                        }
+
                     } else if (cmd == "board") {
                         std::cout << g;
 
