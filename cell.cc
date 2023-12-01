@@ -18,6 +18,8 @@ bool Cell::isLink(){
  }
 }
 
+
+
 char Cell::getType() const {return celltype;}
 
 char Cell::getFireWall() const {return firewall;}
@@ -53,3 +55,4 @@ void Cell::notifyObservers(){
         o->notify(*this);
     }
 }
+

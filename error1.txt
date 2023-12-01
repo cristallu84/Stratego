@@ -1,0 +1,37 @@
+main.cc: In function ‘int main(int, char**)’:
+main.cc:91:26: warning: unused variable ‘in’ [-Wunused-variable]
+   91 |                 istream *in = &cin;
+      |                          ^~
+main.cc:95:27: warning: unused variable ‘in’ [-Wunused-variable]
+   95 |                 ifstream *in = new ifstream(fname.c_str());
+      |                           ^~
+main.cc:193:25: warning: catching polymorphic type ‘class std::ios_base::failure’ by value [-Wcatch-value=]
+  193 |             catch (ios::failure) {}
+      |                         ^~~~~~~
+main.cc:198:17: warning: catching polymorphic type ‘class std::ios_base::failure’ by value [-Wcatch-value=]
+  198 |     catch (ios::failure) {}
+      |                 ^~~~~~~
+In file included from /usr/include/c++/11/memory:76,
+                 from cell.h:7,
+                 from game.h:3,
+                 from main.cc:9:
+/usr/include/c++/11/bits/unique_ptr.h: In instantiation of ‘typename std::_MakeUniq<_Tp>::__single_object std::make_unique(_Args&& ...) [with _Tp = Download; _Args = {Link&, int&, Player&, Player&}; typename std::_MakeUniq<_Tp>::__single_object = std::unique_ptr<Download>]’:
+main.cc:140:81:   required from here
+/usr/include/c++/11/bits/unique_ptr.h:962:30: error: no matching function for call to ‘Download::Download(Link&, int&, Player&, Player&)’
+  962 |     { return unique_ptr<_Tp>(new _Tp(std::forward<_Args>(__args)...)); }
+      |                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from game.h:6,
+                 from main.cc:9:
+ability.h:36:9: note: candidate: ‘Download::Download(Cell&, int, Player&, Player&)’
+   36 |         Download(Cell & cell, int turn, Player& Player1, Player& Player2);
+      |         ^~~~~~~~
+ability.h:36:25: note:   no known conversion for argument 1 from ‘Link’ to ‘Cell&’
+   36 |         Download(Cell & cell, int turn, Player& Player1, Player& Player2);
+      |                  ~~~~~~~^~~~
+ability.h:28:7: note: candidate: ‘constexpr Download::Download(const Download&)’
+   28 | class Download: public Ability{
+      |       ^~~~~~~~
+ability.h:28:7: note:   candidate expects 1 argument, 4 provided
+ability.h:28:7: note: candidate: ‘constexpr Download::Download(Download&&)’
+ability.h:28:7: note:   candidate expects 1 argument, 4 provided
+make: *** [Makefile:14: main.o] Error 1

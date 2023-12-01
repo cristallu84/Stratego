@@ -114,7 +114,7 @@ int main(int argc, char* argv[]) {
                     } else if (cmd == "abilities") {
 
                         vector<string> cards = g.printAbilities();
-                        for (int i = 0; i < cards.size(); i += 2) {
+                        for (std::vector<std::string>::size_type i = 0; i < cards.size(); i += 2) {
                             cout << cards[i] << " - " << cards[i + 1] << endl;
                         }
 
@@ -125,45 +125,45 @@ int main(int argc, char* argv[]) {
                         Card c = g.getPlayer(player).getCard(ID);
 
                         if (c.type == CardType::Firewall && c.used == false){ //going to get r and c
-                        int row; 
-                        int col;
-                        iss >> row >> col; 
-                        Cell& cell = g.findCoord(row, col);
-                        std::unique_ptr<Firewall> f = std::make_unique<Firewall>(cell, player);
-                        f->execute();
-                        c.used = true;
+                            int row; 
+                            int col;
+                            iss >> row >> col; 
+                            Cell& cell = g.findCoord(row, col);
+                            std::unique_ptr<Firewall> f = std::make_unique<Firewall>(cell, player);
+                            f->execute();
+                            c.used = true;
 
-                        }else if (c.type == CardType::Download && c.used == false){
-                        char link;
-                        iss >> link;
-                        Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Download> d = std::make_unique<Download>(l, player, g.getPlayer(1), g.getPlayer(2));
-                        d->execute();
-                        c.used = true;
+                        } else if (c.type == CardType::Download && c.used == false){
+                            char link;
+                            iss >> link;
+                            Link& l = g.findCell(link).getLink();
+                            std::unique_ptr<Download> d = std::make_unique<Download>(l, player, g.getPlayer(1), g.getPlayer(2));
+                            d->execute();
+                            c.used = true;
 
-                        }else if (c.type == CardType::Linkboost && c.used == false){
-                        char link;
-                        iss >> link;
-                        Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
-                        L->execute();
-                        c.used = true;
+                        } else if (c.type == CardType::Linkboost && c.used == false){
+                            char link;
+                            iss >> link;
+                            Link& l = g.findCell(link).getLink();
+                            std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
+                            L->execute();
+                            c.used = true;
 
                         }else if (c.type == CardType::Polarize && c.used == false){
-                        char link;
-                        iss >> link;
-                        Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l);
-                        p->execute();
-                        c.used = true;
+                            char link;
+                            iss >> link;
+                            Link& l = g.findCell(link).getLink();
+                            std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l);
+                            p->execute();
+                            c.used = true;
 
                         }else if (c.type == CardType::Scan && c.used == false){
-                        char link;
-                        iss >> link;
-                        Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Scan> s = std::make_unique<Scan>(l, g.getPlayer(1), g.getPlayer(2));
-                        s->execute();
-                        c.used = true;
+                            char link;
+                            iss >> link;
+                            Link& l = g.findCell(link).getLink();
+                            std::unique_ptr<Scan> s = std::make_unique<Scan>(l, g.getPlayer(1), g.getPlayer(2));
+                            s->execute();
+                            c.used = true;
 
                         }else{
                             cout << "Please enter a valid ability." << endl; 

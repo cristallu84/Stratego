@@ -1,0 +1,25 @@
+cell.cc: In member function ‘Link& Cell::getLink() const’:
+cell.cc:37:1: warning: control reaches end of non-void function [-Wreturn-type]
+   37 | }
+      | ^
+In file included from /usr/include/c++/11/vector:66,
+                 from subject.h:4,
+                 from cell.h:3,
+                 from game.h:3,
+                 from game.cc:4:
+/usr/include/c++/11/bits/stl_uninitialized.h: In instantiation of ‘_ForwardIterator std::uninitialized_copy(_InputIterator, _InputIterator, _ForwardIterator) [with _InputIterator = __gnu_cxx::__normal_iterator<const Cell*, std::vector<Cell> >; _ForwardIterator = Cell*]’:
+/usr/include/c++/11/bits/stl_uninitialized.h:333:37:   required from ‘_ForwardIterator std::__uninitialized_copy_a(_InputIterator, _InputIterator, _ForwardIterator, std::allocator<_Tp>&) [with _InputIterator = __gnu_cxx::__normal_iterator<const Cell*, std::vector<Cell> >; _ForwardIterator = Cell*; _Tp = Cell]’
+/usr/include/c++/11/bits/stl_vector.h:558:31:   required from ‘std::vector<_Tp, _Alloc>::vector(const std::vector<_Tp, _Alloc>&) [with _Tp = Cell; _Alloc = std::allocator<Cell>]’
+/usr/include/c++/11/bits/stl_construct.h:97:14:   required from ‘constexpr decltype (::new(void*(0)) _Tp) std::construct_at(_Tp*, _Args&& ...) [with _Tp = std::vector<Cell>; _Args = {std::vector<Cell, std::allocator<Cell> >&}; decltype (::new(void*(0)) _Tp) = std::vector<Cell>*]’
+/usr/include/c++/11/bits/alloc_traits.h:518:4:   required from ‘static constexpr void std::allocator_traits<std::allocator<_CharT> >::construct(std::allocator_traits<std::allocator<_CharT> >::allocator_type&, _Up*, _Args&& ...) [with _Up = std::vector<Cell>; _Args = {std::vector<Cell, std::allocator<Cell> >&}; _Tp = std::vector<Cell>; std::allocator_traits<std::allocator<_CharT> >::allocator_type = std::allocator<std::vector<Cell> >]’
+/usr/include/c++/11/bits/vector.tcc:115:30:   required from ‘std::vector<_Tp, _Alloc>::reference std::vector<_Tp, _Alloc>::emplace_back(_Args&& ...) [with _Args = {std::vector<Cell, std::allocator<Cell> >&}; _Tp = std::vector<Cell>; _Alloc = std::allocator<std::vector<Cell> >; std::vector<_Tp, _Alloc>::reference = std::vector<Cell>&]’
+game.cc:72:41:   required from here
+/usr/include/c++/11/bits/stl_uninitialized.h:138:72: error: static assertion failed: result type must be constructible from value type of input range
+  138 |       static_assert(is_constructible<_ValueType2, decltype(*__first)>::value,
+      |                                                                        ^~~~~
+/usr/include/c++/11/bits/stl_uninitialized.h:138:72: note: ‘std::integral_constant<bool, false>::value’ evaluates to false
+game.cc: In member function ‘Cell& Grid::findCell(char)’:
+game.cc:105:1: warning: control reaches end of non-void function [-Wreturn-type]
+  105 | }
+      | ^
+make: *** [Makefile:14: game.o] Error 1

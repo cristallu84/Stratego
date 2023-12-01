@@ -9,8 +9,8 @@
 class Cell{ 
     char celltype; //a-h for link of p1, A-H for link of p2, s or S for server port, n for empty 
     char firewall; //m for player1, w for player 2, n for empty
-    const int row; 
-    const int col; 
+    int row; 
+    int col; 
     std::unique_ptr<Link> link;
     std::vector<Observer*> observers; 
 
@@ -28,6 +28,54 @@ class Cell{
         void upload(std::unique_ptr<Link> l); //uploads a link to the cell (attaches a link object to the link ptr)
         void attach(Observer *o);
         void notifyObservers(); //Alert observers of the new state of the cell 
+        
+
+        #include "cell.h"
+
+    // Copy constructor
+    Cell(const Cell& other)
+        : celltype(other.celltype), firewall(other.firewall),
+        row(other.row), col(other.col) {
+        // Perform a deep copy of the Link object
+        if (other.link) {
+            link = std::make_unique<Link>(*other.link);
+        } else {
+            link.reset();
+        }
+
+        // Copy observers (assuming Observer objects are not polymorphic)
+        observers.clear();
+        for (Observer* observer : other.observers) {
+            observers.push_back(observer);
+        }
+    }
+
+    // Copy assignment operator
+    Cell& operator=(const Cell& other) {
+    if (this != &other) { // Avoid self-assignment
+        // Copy primitive types
+        celltype = other.celltype;
+        firewall = other.firewall;
+        row = other.row;
+        col = other.col;
+
+        // Perform a deep copy of the Link object
+        if (other.link) {
+            link = std::make_unique<Link>(*other.link);
+        } else {
+            link.reset();
+        }
+
+        // Copy observers (assuming Observer objects are not polymorphic)
+        observers.clear();
+        for (Observer* observer : other.observers) {
+            observers.push_back(observer);
+        }
+    }
+    return *this;
+}
+
 };
+
 
 #endif
