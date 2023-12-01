@@ -134,10 +134,10 @@ int main(int argc, char* argv[]) {
                             c.used = true;
 
                         } else if (c.type == CardType::Download && c.used == false){
-                            char link;
-                            iss >> link;
-                            Link& l = g.findCell(link).getLink();
-                            std::unique_ptr<Download> d = std::make_unique<Download>(l, player, g.getPlayer(1), g.getPlayer(2));
+                            char cellname;
+                            iss >> cellname;
+                            Cell& cell = g.findCell(cellname);
+                            std::unique_ptr<Download> d = std::make_unique<Download>(cell, player, g.getPlayer(1), g.getPlayer(2));
                             d->execute();
                             c.used = true;
 
