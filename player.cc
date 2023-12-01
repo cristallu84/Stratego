@@ -31,6 +31,8 @@ int Player::getOppD(){return OppD;}
 
 int Player::getOppV(){return OppV;}
 
+int Player::getMyAbil(){return MyAbil;}
+
 int Player::getOppAbil(){return OppAbil;}
 
 void Player::incrMyD(){++MyD;}

@@ -274,10 +274,10 @@ ostream &operator<<(ostream &out, const Grid &g) {
         
         out << "Player 1:" << endl;
         out << "Downloaded: " << p1.getMyD() << "D, " << p1.getMyV() << "V" << endl;
-        out << "Abilities: " << p1.getAbilities().size() << endl; // currently no ability counter
+        out << "Abilities: " << p1.getMyAbil() << endl; // currently no ability counter
 
         for (int i = 0; i < g.gridSize; i++) {
-            if (i = g.gridSize / 2) out << "\n";
+            if (i == g.gridSize / 2) out << "\n";
             out << 'a' + i << ": " << p1.getMyLink(i) << " ";
         }
 
@@ -288,7 +288,7 @@ ostream &operator<<(ostream &out, const Grid &g) {
         out << "Abilities: " << p1.getOppAbil() << endl; // currently no ability counter
 
         for (int i = 0; i < g.gridSize; i++) {
-            if (i = g.gridSize / 2) out << "\n";
+            if (i == g.gridSize / 2) out << "\n";
             out << 'A' + i << ": " << p1.getOppLink(i)<< " ";
         }
 
@@ -299,7 +299,7 @@ ostream &operator<<(ostream &out, const Grid &g) {
         out << "Abilities: " << p2.getOppAbil() << endl; // currently no ability counter
 
         for (int i = 0; i < g.gridSize; i++) {
-            if (i = g.gridSize / 2) out << "\n";
+            if (i == g.gridSize / 2) out << "\n";
             out << 'a' + i << ": " << p2.getOppLink(i) << " ";
         }
 
@@ -307,10 +307,10 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         out << "Player 2:" << endl;
         out << "Downloaded: " << p2.getMyD() << "D, " << p2.getMyV() << "V" << endl;
-        out << "Abilities: " << p2.getAbilities().size() << endl; // currently no ability counter
+        out << "Abilities: " << p2.getMyAbil() << endl; // currently no ability counter
 
         for (int i = 0; i < g.gridSize; i++) {
-            if (i = g.gridSize / 2) out << "\n";
+            if (i == g.gridSize / 2) out << "\n";
             out << 'A' + i << ": " << p2.getMyLink(i) << " ";
         }
     }

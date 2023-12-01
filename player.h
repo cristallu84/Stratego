@@ -36,6 +36,7 @@ class Player{
         int getMyV();
         int getOppD();
         int getOppV();
+        int getMyAbil();
         int getOppAbil();
         
         void incrMyD();
