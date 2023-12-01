@@ -126,27 +126,32 @@ int main(int argc, char* argv[]) {
                         int r; 
                         int c;
                         iss >> r >> c; 
-                        std::unique_ptr<Firewall> f = std::make_unique<Firewall>(r,c);
+                        Cell& c = g.findCoord(r, c);
+                        std::unique_ptr<Firewall> f = std::make_unique<Firewall>(c);
                         f->execute();
                         }else if (c.type == CardType::Download && c.used == false){
                         char link;
                         iss >> link;
-                        std::unique_ptr<Download> d = std::make_unique<Download>(link);
+                        Link& l = g.findCell(link).getLink();
+                        std::unique_ptr<Download> d = std::make_unique<Download>(l);
                         d->execute();
                         }else if (c.type == CardType::Linkboost && c.used == false){
                         char link;
                         iss >> link;
-                        std::unique_ptr<Linkboost> l = std::make_unique<Linkboost>(link);
+                        Link& l = g.findCell(link).getLink();
+                        std::unique_ptr<Linkboost> l = std::make_unique<Linkboost>(l);
                         l->execute();
                         }else if (c.type == CardType::Polarize && c.used == false){
                         char link;
                         iss >> link;
-                        std::unique_ptr<Polarize> p = std::make_unique<Polarize>(link);
+                        Link& l = g.findCell(link).getLink();
+                        std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l);
                         p->execute();
                         }else if (c.type == CardType::Scan && c.used == false){
                         char link;
                         iss >> link;
-                        std::unique_ptr<Scan> s = std::make_unique<Scan>(link);
+                        Link& l = g.findCell(link).getLink();
+                        std::unique_ptr<Scan> s = std::make_unique<Scan>(l);
                         s->execute();
                         }else{
                             cout << "Please enter a valid ability." << endl; 
