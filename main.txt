@@ -81,8 +81,20 @@ int main(int argc, char* argv[]) {
 
     try {
         while (1) {
+            getline(cin, s);
+            istringstream iss{s};
+            iss.exceptions(ios::failbit);
+            string stream_type;
+            iss >> stream_type;
             istream *in = nullptr;
-            in = &cin; 
+            if (stream_type != "sequence") {
+                in = &cin;
+            } else {
+                string fname;
+                iss >> fname;
+                in = new ifstream(fname.c_str());
+            }
+            in->exceptions(ios::failbit|ios::eofbit);
 
             string cmd;
             try {
@@ -91,12 +103,8 @@ int main(int argc, char* argv[]) {
                     
                     istringstream iss{s};
                     iss >> cmd;
-                    if (cmd == "sequence"){
-                        string fname;
-                        iss >> fname;
-                        in = new ifstream(fname.c_str());
-                        continue; 
-                    }else if (cmd == "move") {
+
+                    if (cmd == "move") {
                         char c;
                         string d;
                         iss >> c >> d;
