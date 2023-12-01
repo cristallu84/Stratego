@@ -92,6 +92,54 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
 }
 
 
+// Checks if the coordinates given are within the board
+bool Grid::outBound(int r, int c) {
+    if (r >= gridSize || c >= gridSize) {
+        return false;
+    }
+    return true;
+}
+
+
+// Checks if the link exists
+bool Grid::isLink(char c) {
+    if (c >= 41 && c <= 48) {
+        return true;
+    } else if (c >= 61 && c <= 68) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Checks if the link is currently on the board
+bool Grid::onBoard(char l) {
+    try {
+        Cell & c = this->findCell(l);
+    } catch (const not_on_board& e) {
+        return false;
+    }
+    return true;
+}
+
+bool Grid::link_in_player(char l, int p) {
+    if (p == 1) {
+        for (int i = 41; i <= 48; ++i) {
+            if (l == i) {
+                return true;
+            }
+        }
+        return false; 
+    } else {
+        for (int i = 61; i <= 68; ++i) {
+            if (l == i) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
 // Returns the cell with link l
 Cell& Grid::findCell(char l) {
     for (int r = 0; r < gridSize; ++r) {
@@ -183,7 +231,7 @@ void Grid::move(char l, string dir){
         }else{
             //error
         }
-    } else if (nexttype == 'n') { //cell is empty
+    } else if (nexttype == 'n' && cell.isLink()) { //nextcell is empty and cell hasn't been downloaded yet
         cell.download(); //link is removed from the current cell
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
     }
@@ -240,7 +288,7 @@ void Grid::download(Cell& c, int player) {
 
 
 // TODO: Move fighter to init cell if fighter wins
-void Grid::battle(Cell& init, Cell& fighter) {
+void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     // init = battle initiating player cell and link
     //get strength of both links at the cells 
     int l1 = init.getLink().getStrength();
@@ -263,24 +311,11 @@ void Grid::battle(Cell& init, Cell& fighter) {
     }
 
     if (l2 > l1) {
-        // fighter wins
-        //get the type of the link to add it to OppLinks 
-        string s = init.getLink().getType() + 
-            std::to_string(init.getLink().getStrength());
-
-        this->getPlayer(pFighter).addLink(s);
-        init.download();
-
-        // MOVE FIGHTER TO INIT POSITION - fighter stays and init is downloaded 
-
-    } else {
+        // fighter wins - pFighter downloads the init
+        this->download(init, pFighter);
+    }else { //l1 > l2 or its a tie
         // init wins
-        string s = fighter.getLink().getType() + 
-            std::to_string(fighter.getLink().getStrength());
-
-        this->getPlayer(pInit).addLink(s);
-        fighter.download();
-        //MOVE INIT TO FIGHTER POSITION 
+        this->download(fighter, pInit);
     }
 }
 
