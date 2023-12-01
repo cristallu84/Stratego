@@ -103,6 +103,7 @@ Cell& Grid::findCell(char l) {
     }
     // case where cell is not found
 }
+
 Cell& Grid::findCoord(int r, int c){
     return theGrid[r][c]; 
 }

@@ -7,6 +7,8 @@ strength{strength},
 revealed{revealed}, 
 moveLength{moveLength} {}
 
+Link::Link() : name{' '}, type{' '}, strength{0}, revealed{false}, moveLength{1} {}
+
 char Link::getName() const { return name;}//Returns the name of a Link (i.e. a-h, A-H)
 char Link::getType() const { return type;} //Returns the type of a Link
 int Link::getStrength() const {return strength;} //Returns the strength of a Link

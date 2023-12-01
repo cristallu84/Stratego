@@ -16,7 +16,7 @@ class Cell{
 
     public: 
         Cell(char celltype, char firewall, int row, int col, std::unique_ptr<Link> link); 
-        
+        Cell(); //default ctor
         bool isLink(); //Returns true if a Link occupies the cell
         char getType() const; //Returns the type that occupies the link (a-h, A-H for link, w/m for firewall, n for empty)
         char getFireWall() const; //Returns w/m for firewall,  and n if no firewall

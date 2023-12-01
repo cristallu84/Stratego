@@ -8,6 +8,8 @@ col{col},
 link{std::move(link)}, 
 observers{} {}
 
+Cell::Cell() : celltype{' '}, firewall{' '}, row{ 0 }, col{ 0 }, link{ nullptr }, observers{} {}
+
 bool Cell::isLink(){
  if (link.get() == nullptr){
     return false;
