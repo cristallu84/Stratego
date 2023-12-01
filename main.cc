@@ -122,39 +122,30 @@ int main(int argc, char* argv[]) {
                         iss >> ID; // will be 1-5 
                         Card c = g.getPlayer(g.getTurn()).getCard(ID);
 
-                        if (c.type == CardType::Firewall){
-                            
-                        }
-
-                        if (ID == 1) { // Firewall
-                            int r;
-                            int c;
-                            iss >> r >> c;
-                            f = make_unique<Firewall>();
-                            g.firewall(r,c);
-
-                        } else if (ID == 2) { // Linkboost
-                            char c;
-                            iss >> c;
-                            g.linkBoost(c);                            
-                            
-                        } else if (ID == 3) { // Download
-                            char c;
-                            iss >> c;
-                            g.downloadAbility(c);
-                            
-                        } else if (ID == 4) { // Polarize
-                            char c;
-                            iss >> c;
-                            g.polarize(c);
-                    
-                        } else if (ID == 5) { // Scan
-                            char c;
-                            iss >> c;
-                            g.scan(c);
-
-                        } else {
-                            cout << "Please enter a valid ability." << endl;
+                        if (c.type == CardType::Firewall && c.used == false){ //going to get r and c
+                        int r; 
+                        int c;
+                        iss >> r >> c; 
+                        std::unique_ptr<Firewall> f = std::make_unique<Firewall>(r,c);
+                        f->execute();
+                        }else if (c.type == CardType::Download && c.used == false){
+                        char link;
+                        iss >> link;
+                        std::unique_ptr<Download> d = std::make_unique<Download>(link);
+                        }else if (c.type == CardType::Linkboost && c.used == false){
+                        char link;
+                        iss >> link;
+                        std::unique_ptr<Linkboost> l = std::make_unique<Linkboost>(link);
+                        }else if (c.type == CardType::Polarize && c.used == false){
+                        char link;
+                        iss >> link;
+                        std::unique_ptr<Polarize> d = std::make_unique<Polarize>(link);
+                        }else if (c.type == CardType::Scan && c.used == false){
+                        char link;
+                        iss >> link;
+                        std::unique_ptr<Scan> s = std::make_unique<Scan>(link);
+                        }else{
+                            cout << "Please enter a valid ability." << endl; 
                         }
 
                     } else if (cmd == "board") {
