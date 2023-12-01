@@ -12,23 +12,12 @@ Download::Download(Cell & cell, Player player1, Player player2, int player) : //
 void Download::execute() { //wrong
 
     if (cell.getLink().getType() == 'V'){
-        if (player == 1){ 
-            player1.incrMyV();
-            player2.incrOppV();
-
-        } else if (player == 2){
-            player2.incrMyV();
-            player1.incrOppV();
-        }
+        player1.incrMyV();
+        player2.incrOppV();
         
     } else if (cell.getLink().getType() == 'D'){
-        if (player == 1){ 
-            player1.incrMyD();
-            player2.incrOppD();
-        } else if (player == 2) {
-            player2.incrMyD(); 
-            player1.incrOppD(); 
-        }
+        player1.incrMyD();
+        player2.incrOppD();
     }
     cell.download(); 
 }

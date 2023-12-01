@@ -136,7 +136,9 @@ Cell& Grid::findCell(char l) {
             }
         }
     }
-    // case where cell is not found
+
+    // Case where cell is not found
+    throw not_on_board();
 }
 
 // Returns the turn
@@ -219,7 +221,7 @@ void Grid::move(char l, string dir){
         }else{
             //error
         }
-    } else if (nexttype == 'n' && cell.isLink()) { //nextcell is empty and cell hasn't been downloaded yet
+    } else if (nexttype == 'n') { //cell is empty
         cell.download(); //link is removed from the current cell
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
     }
@@ -277,7 +279,7 @@ void Grid::download(Cell& c, int player) {
 
 
 // TODO: Move fighter to init cell if fighter wins
-void Grid::battle(Cell& init, Cell& fighter) { //need to update this
+void Grid::battle(Cell& init, Cell& fighter) {
     // init = battle initiating player cell and link
     //get strength of both links at the cells 
     int l1 = init.getLink().getStrength();
@@ -300,11 +302,25 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     }
 
     if (l2 > l1) {
-        // fighter wins - pFighter downloads the init
-        this->download(init, pFighter);
-    } else { //l1 > l2 or its a tie
+        // fighter wins
+        //get the type of the link to add it to OppLinks 
+        string s = init.getLink().getType() + 
+            std::to_string(init.getLink().getStrength());
+
+        this->getPlayer(pFighter).addLink(s);
+        init.download();
+
+        // MOVE FIGHTER TO INIT POSITION - fighter stays and init is downloaded 
+
+
+    } else {
         // init wins
-        this->download(fighter, pInit);
+        string s = fighter.getLink().getType() + 
+            std::to_string(fighter.getLink().getStrength());
+
+        this->getPlayer(pInit).addLink(s);
+        fighter.download();
+        //MOVE INIT TO FIGHTER POSITION 
     }
 }
 
@@ -316,6 +332,9 @@ void Grid::printAbilities() {
 }
 
 void Grid::linkBoost(char c) {
+    if (!(isLink(c))) { throw not_link(); }
+    if (!(onBoard(c))) {throw not_on_board(); }
+    if (!(link_in_player(c, this->getTurn()))) { throw not_your_link();}
 
     Linkboost lb(this->findCell(c).getLink());
     lb.execute();
@@ -323,25 +342,29 @@ void Grid::linkBoost(char c) {
 
 
 void Grid::firewall(int r, int c) {
+    if (!(outBound(r, c))) { throw out_bounds();}
+    if (theGrid[r][c].getFireWall() != 'n') { throw already_exists(); }
 
     Firewall f(theGrid[r][c], this->getTurn());
     f.execute();
 }
 
 
-void Grid::download_ability(char c) {
-   
+void Grid::download(char c) {
+    if (!(isLink(c))) { throw not_link(); }
+
     if (this->getTurn() == 1) {
-        Download d(this->findCell(c), player1, player2);
+        Download d(this->findCell(c), player1, player2, 1);
         d.execute();
     } else {
-        Download d (this->findCell(c), player2, player1);
+        Download d (this->findCell(c), player1, player2, 2);
         d.execute();
     }
 }
 
 
 void Grid::polarize(char c) {
+    if (!(isLink(c))) { throw not_link(); }
 
     Polarize p(this->findCell(c).getLink());
     p.execute();
@@ -349,6 +372,8 @@ void Grid::polarize(char c) {
 
 
 void Grid::scan(char c) {
+    if (!(isLink(c))) { throw not_link(); }
+    if (!(onBoard(c))) {throw not_on_board(); }
 
     Scan s(this->findCell(c).getLink());
     s.execute();
