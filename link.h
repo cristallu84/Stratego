@@ -8,7 +8,7 @@ class Link{
     int moveLength; 
 
     public: 
-    Link(); //default ctor
+    Link(char name, char type, int strength, bool revealed, int moveLength); //default ctor
     char getName() const; //Returns the name of a Link (i.e. a-h, A-H)
     char getType() const; //Returns the type of a Link
     int getStrength() const; //Returns the strength of a Link

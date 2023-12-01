@@ -1,6 +1,12 @@
 #include "cell.h"
 
-Cell::Cell(): celltype{' '}, row{}, col{}, link{nullptr}, observers{} {}
+Cell::Cell(char celltype, char firewall, int row, int col, std::unique_ptr<Link> link): 
+celltype{celltype}, 
+firewall{firewall},
+row{row}, 
+col{col}, 
+link{std::move(link)}, 
+observers{} {}
 
 bool Cell::isLink(){
  if (link.get() == nullptr){

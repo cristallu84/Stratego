@@ -38,11 +38,11 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
         // Server ports
         if (i == n/2 || i == n/2 + 1) {
             row0.emplace_back('s', 'n', 0, i, nullptr);
-            row1.emplace_back('a' + i, 'n', 0, i, std::move(link));
+            row1.emplace_back('a' + i, 'n', 0, i, link);
         }
 
         // Creating cells
-        row0.emplace_back('a' + i, 'n', 0, i, std::move(link));
+        row0.emplace_back('a' + i, 'n', 0, i, link);
         row1.emplace_back('n', 'n', 0, i, nullptr);
     }
 

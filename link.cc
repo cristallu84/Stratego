@@ -1,6 +1,11 @@
 #include "link.h"
 
-Link::Link(): name{' '}, type{' '}, strength{0}, revealed{false}, moveLength{1} {}
+Link::Link(char name, char type, int strength, bool revealed, int moveLength): 
+name{name}, 
+type{type}, 
+strength{strength}, 
+revealed{revealed}, 
+moveLength{moveLength} {}
 
 char Link::getName() const { return name;}//Returns the name of a Link (i.e. a-h, A-H)
 char Link::getType() const { return type;} //Returns the type of a Link
