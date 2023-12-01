@@ -409,7 +409,26 @@ Player& Grid::getPlayer(int n) {
 }
 
 ostream &operator<<(ostream &out, const Grid &g) {
-    // Output players
+    if (g.whoseTurn == 1) {
+        Player p = g.player1;
+
+        out << "Player 1:" << endl;
+        out << "Downloaded: " << p.getMyD() << "D, " << p.getMyV() << "V" << endl;
+        out << "Abilities: " << p.getMyAbilities() << endl; // currently no ability counter
+
+        for (int i = 0; i < g.gridSize; i++) {
+            out << 'a' + i << ": " << 
+        }
+
+    } else {
+        Player p = g.player2;
+
+    }
+
+
+    
+    
+    getPlayer(1).getMyD() << "D, ";
     out << *g.textDisplay << endl;
     return out;
 };
