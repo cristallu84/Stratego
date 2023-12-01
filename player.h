@@ -2,6 +2,7 @@
 #define __PLAYER_H__
 #include <vector>
 #include <string>
+#include "ability.h"
 #include "observer.h"
 
 enum class CardType {
@@ -44,7 +45,7 @@ class Player: public Observer{
         void incrOppV();
         void incrOppAbil();
 
-        std::vector<Card> getAbilities();
+        Card getCard(int ID); 
         std::string getMyLink(const int n);
         std::string getOppLink(const int n);
         void usedAbility(const char c);

@@ -39,7 +39,9 @@ void Player::incrOppV(){++OppV;}
 
 void Player::incrOppAbil(){++OppAbil;}
 
-std::vector<Card> Player::getAbilities() { return Abilities; }
+Card Player::getCard(int ID){
+    return Abilities[ID - 1];
+}
 
 std::string Player::getMyLink(const int n) { return MyLinks[n]; }
 

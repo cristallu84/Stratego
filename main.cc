@@ -120,7 +120,11 @@ int main(int argc, char* argv[]) {
                     } else if (cmd == "ability") {
                         int ID; 
                         iss >> ID; // will be 1-5 
-                        g.getPlayer(g.getTurn()).
+                        Card c = g.getPlayer(g.getTurn()).getCard(ID);
+
+                        if (c.type == CardType::Firewall){
+                            
+                        }
 
                         if (ID == 1) { // Firewall
                             int r;
