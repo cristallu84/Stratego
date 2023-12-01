@@ -11,10 +11,6 @@ Player::Player():
     OppAbil{0}
 {}
 
-void Player::notify(Cell&c){
-
-}
-
 bool Player::isWon(){
 if (MyD == 4){
     return true; 

@@ -30,7 +30,6 @@ class Player: public Observer{
 
     public: 
         Player(); 
-        void notify(Cell &c);
         bool isWon(); //checks if a player has downloaded 4 Data links
         
         int getMyD(); 
