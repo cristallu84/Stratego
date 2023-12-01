@@ -35,7 +35,6 @@ void Download::execute() {
         }else if (turn == 2){ //player 2 is downloading a D
             Player2.incrMyD();  //increase p2's number of data downloaded
             Player1.incrOppD(); //increase p1's opp number of data downloaded 
-
         }
     }
     //removes the link from the cell 
