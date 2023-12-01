@@ -11,7 +11,7 @@ Player::Player():
     MyAbil{5},
     OppAbil{5}
 {
-    std::vector<string> v(8,"?");
+    std::vector<std::string> v(8,"?");
     OppLinks = v;
 }
 
