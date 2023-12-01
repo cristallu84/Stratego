@@ -86,6 +86,7 @@ int main(int argc, char* argv[]) {
             iss.exceptions(ios::failbit);
             string stream_type;
             iss >> stream_type;
+
             istream *in = nullptr;
             if (stream_type != "sequence") {
                 in = &cin;
@@ -94,10 +95,12 @@ int main(int argc, char* argv[]) {
                 iss >> fname;
                 in = new ifstream(fname.c_str());
             }
+
             in->exceptions(ios::failbit|ios::eofbit);
 
             string cmd;
             try {
+
                 while (getline(*in, s)) {
 
                     g.nextTurn();

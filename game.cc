@@ -279,8 +279,11 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         for (int i = 0; i < g.gridSize; i++) {
             if (i == g.gridSize / 2) out << "\n";
-            out << 'a' + i << ": " << p1.getMyLink(i) << " ";
+            char temp = 'a' + i;
+            out << temp << ": " << p1.getMyLink(i) << " ";
         }
+
+        out << '\n';
 
         out << *g.textDisplay << endl;
 
@@ -290,7 +293,8 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         for (int i = 0; i < g.gridSize; i++) {
             if (i == g.gridSize / 2) out << "\n";
-            out << 'A' + i << ": " << p1.getOppLink(i)<< " ";
+            char temp = 'A' + i;
+            out << temp << ": " << p1.getOppLink(i)<< " ";
         }
 
     } else {
@@ -301,8 +305,11 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         for (int i = 0; i < g.gridSize; i++) {
             if (i == g.gridSize / 2) out << "\n";
-            out << 'a' + i << ": " << p2.getOppLink(i) << " ";
+            char temp = 'a' + i;
+            out << temp << ": " << p2.getOppLink(i) << " ";
         }
+        
+        out << '\n';
 
         out << *g.textDisplay << endl;
 
@@ -312,7 +319,8 @@ ostream &operator<<(ostream &out, const Grid &g) {
 
         for (int i = 0; i < g.gridSize; i++) {
             if (i == g.gridSize / 2) out << "\n";
-            out << 'A' + i << ": " << p2.getMyLink(i) << " ";
+            char temp = 'A' + i;
+            out << temp << ": " << p2.getMyLink(i) << " ";
         }
     }
     
