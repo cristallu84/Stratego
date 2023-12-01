@@ -9,7 +9,10 @@ Player::Player():
     OppD{0},
     OppV{0},
     OppAbil{0}
-{}
+{
+    std::vector<string> v(8,"?");
+    OppLinks = v;
+}
 
 bool Player::isWon(){
 if (MyD == 4){
