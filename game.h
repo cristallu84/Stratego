@@ -3,12 +3,15 @@
 #include "cell.h"
 #include "player.h"
 #include "textdisplay.h"
+#include "ability.h"
+#include "exceptions.h"
+
 
 class Grid{
     std::vector<std::vector<Cell>> theGrid; 
     int gridSize;
     TextDisplay *textDisplay; 
-    //GraphicsDisplay *GraphicsDisplay;
+    //GraphicsDisplay *graphicsDisplay;
     Player player1;
     Player player2; 
     int whoseTurn; 
@@ -18,27 +21,27 @@ class Grid{
     bool link_in_player(char l, int p); // Check if link is player's link
 
     public:
-    Grid();
-    ~Grid();
+        Grid();
+        ~Grid();
 
-    void init(int n, vector<string> p1_links, vector<string> p2_links);
-    Cell& findCell(char l); // Returns the cell with link l
-    int getTurn() const; // Returns the turn
-    void nextTurn();  // Sets the whoseTurn to the next turn
-    void move(char l, string dir); 
-    void reveal(Cell& c);
-    void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
-    void battle(Cell& init, Cell& fighter); // Handles the battle feature
-    void printAbilities(); 
-    Player& getPlayer(int n);
+        void init(int n, vector<string> p1_links, vector<string> p2_links);
+        Cell& findCell(char l); // Returns the cell with link l
+        int getTurn() const; // Returns the turn
+        void nextTurn();  // Sets the whoseTurn to the next turn
+        void move(char l, string dir); 
+        void reveal(Cell& c);
+        void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
+        void battle(Cell& init, Cell& fighter); // Handles the battle feature
+        std::vector<std::string>& printAbilities(); 
+        Player& getPlayer(int n);
 
-    void linkBoost(char c);
-    void firewall(int r, int c);
-    void download_ability(char c);
-    void polarize(char c);
-    void scan(char c);
+        void linkBoost(char c);
+        void firewall(int r, int c);
+        void downloadAbility(char c);
+        void polarize(char c);
+        void scan(char c);
 
-    friend std::ostream &operator<<(std::ostream &out, const Grid &g);
+        friend std::ostream &operator<<(std::ostream &out, const Grid &g);
 };
 
 #endif

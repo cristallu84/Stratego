@@ -2,25 +2,33 @@
 #include <stdexcept>
 #include "exceptions.h"
 #include "game.h"
-#include "exceptions.h"
-#include "ability.h"
 
 using namespace std;
 
 // TODO: Add further init procedures
 Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
-Grid::~Grid() {}
+Grid::~Grid() {
+    theGrid.clear();
+    gridSize = 0;
+    delete textDisplay;
+}
 
 // TODO: implement grid initition
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
     gridSize = n;
-    // textDisplay = new TextDisplay(n); use unique ptrs here?
+    textDisplay = new TextDisplay(n);
+    // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
+    // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
 
     // Player 1 initialization
     std::vector<Cell> row0;
     std::vector<Cell> row1;
     for (int i = 0; i < n; i++) {
+
+        // Initializing player link vectors
+        player1.addLink(p1_links[i]);
+        player2.addLink(p2_links[i]);
 
         // Creating a link
         char type = p1_links[i][0];
@@ -69,13 +77,18 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
             // Creating empty row
             std::vector<Cell> row;
             for (int j = 0; j < n; j++) {
-                row('n', 'n', i, j, nullptr);
+                row.emplace_back('n', 'n', i, j, nullptr);
             }
             theGrid.emplace_back(row);
         }
     }
 
-    // Attach observers - UNFINISHED
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            theGrid[i][j].attach(textDisplay);
+            // theGrid[i][j].attach(graphicsDisplay);
+        }
+    }
 }
 
 
@@ -151,7 +164,6 @@ void Grid::nextTurn() {
     }
 }
 
-
 void Grid::move(char l, string dir){
     Cell& cell = this->findCell(l);
     int r = cell.getRow();
@@ -191,7 +203,7 @@ void Grid::move(char l, string dir){
             //error
         }
     } else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
-        if (player != 2){ //if the player that goes through the firewall is an opp
+        if (player != 2) { //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 1); //player 1 downloads it 
@@ -241,7 +253,6 @@ void Grid::reveal(Cell& c){
         player1.revealed(index, piece); //reveal the cell to player 1
     }
 }
-
 
 void Grid::download(Cell& c, int player) {
     this->reveal(c); //reveals cell c 
@@ -300,6 +311,17 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     }
 
     if (l2 > l1) {
+        // fighter wins
+        //get the type of the link to add it to OppLinks 
+        string s = init.getLink().getType() + 
+            std::to_string(init.getLink().getStrength());
+
+        this->getPlayer(pFighter).addLink(s);
+        init.download();
+
+        // MOVE FIGHTER TO INIT POSITION - fighter stays and init is downloaded 
+
+    } else {
         // fighter wins - pFighter downloads the init
         this->download(init, pFighter);
     } else { //l1 > l2 or its a tie
@@ -309,13 +331,31 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
 }
 
 
-// TODO: Impl. and add method to fetch abilities from player
-void Grid::printAbilities() {
-    int p = this->getTurn();
-    // UNFINISHED 
+std::vector<std::string>& Grid::printAbilities() {
+    // Return a vector of strings
+    std::vector<std::string> cards;
+    for (auto &card: this->getPlayer(this->getTurn()).getAbilities()) {
+        if (card.type == CardType::Linkboost) {
+            cards.emplace_back("Linkboost");
+        } else if (card.type == CardType::Download) {
+            cards.emplace_back("Download");
+        } else if (card.type == CardType::Firewall) {
+            cards.emplace_back("Firewall");
+        } else if (card.type == CardType::Polarize) {
+            cards.emplace_back("Polarize");
+        } else if (card.type == CardType::Scan) {
+            cards.emplace_back("Scan");
+        }       
+        card.used ? cards.emplace_back("Used") : cards.emplace_back("Unused");
+    }
+
+    return cards;
 }
 
+
 void Grid::linkBoost(char c) {
+    
+    this->getPlayer(this->getTurn()).usedAbility('L');
 
     Linkboost lb(this->findCell(c).getLink());
     lb.execute();
@@ -324,12 +364,18 @@ void Grid::linkBoost(char c) {
 
 void Grid::firewall(int r, int c) {
 
+    this->getPlayer(this->getTurn()).usedAbility('F');
+
+    this->getPlayer(this->getTurn()).usedAbility(c);
+
     Firewall f(theGrid[r][c], this->getTurn());
     f.execute();
 }
 
 
-void Grid::download_ability(char c) {
+void Grid::downloadAbility(char c) {
+
+    this->getPlayer(this->getTurn()).usedAbility('D');
    
     if (this->getTurn() == 1) {
         Download d(this->findCell(c), player1, player2);
@@ -343,12 +389,16 @@ void Grid::download_ability(char c) {
 
 void Grid::polarize(char c) {
 
+    this->getPlayer(this->getTurn()).usedAbility('P');
+
     Polarize p(this->findCell(c).getLink());
     p.execute();
 }
 
 
 void Grid::scan(char c) {
+
+    this->getPlayer(this->getTurn()).usedAbility('S');
 
     Scan s(this->findCell(c).getLink());
     s.execute();
@@ -359,6 +409,7 @@ Player& Grid::getPlayer(int n) {
 }
 
 ostream &operator<<(ostream &out, const Grid &g) {
-  out << *g.textDisplay << endl;
-  return out;
+    // Output players
+    out << *g.textDisplay << endl;
+    return out;
 };

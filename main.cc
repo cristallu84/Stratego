@@ -112,7 +112,10 @@ int main(int argc, char* argv[]) {
                         g.move(c, d);
 
                     } else if (cmd == "abilities") {
-                        g.printAbilities();
+                        vector<string> cards = g.printAbilities();
+                        for (int i = 0; i < cards.size(); i += 2) {
+                            cout << cards[i] << " - " << cards[i + 1] << endl;
+                        }
 
                     } else if (cmd == "ability") {
                         int ID; 
@@ -133,7 +136,7 @@ int main(int argc, char* argv[]) {
                         } else if (ID == 3) { // Download
                             char c;
                             iss >> c;
-                            g.download_ability(c);
+                            g.downloadAbility(c);
                             
                         } else if (ID == 4) { // Polarize
                             char c;

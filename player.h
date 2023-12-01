@@ -4,7 +4,7 @@
 #include <string>
 #include "observer.h"
 
-enum class CardType{
+enum class CardType {
     Linkboost,
     Firewall, 
     Download,
@@ -12,7 +12,7 @@ enum class CardType{
     Scan
 };
 
-struct Card{ //Represent the ability cards that Player holds
+struct Card { //Represent the ability cards that Player holds
     CardType type; 
     bool used; 
 };
@@ -29,22 +29,27 @@ class Player: public Observer{
     int OppAbil;
 
     public: 
-    Player(); 
-    void notify(Cell &c);
-    bool isWon(); //checks if a player has downloaded 4 Data links
-    int getMyD(); 
-    int getMyV();
-    int getOppD();
-    int getOppV();
-    int getOppAbil();
-    void incrMyD();
-    void incrMyV();
-    void incrOppD();
-    void incrOppV();
-    void incrOppAbil();
-    void revealed(int index, std::string piece);
-    void setAbility(std::string s);
-    void addLink(std::string s);
+        Player(); 
+        void notify(Cell &c);
+        bool isWon(); //checks if a player has downloaded 4 Data links
+        
+        int getMyD(); 
+        int getMyV();
+        int getOppD();
+        int getOppV();
+        int getOppAbil();
+        
+        void incrMyD();
+        void incrMyV();
+        void incrOppD();
+        void incrOppV();
+        void incrOppAbil();
+
+        std::vector<Card> getAbilities();
+        void usedAbility(char c);
+        void revealed(int index, std::string piece);
+        void setAbility(std::string s);
+        void addLink(std::string s);
 };
 
 #endif

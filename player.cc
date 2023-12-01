@@ -43,6 +43,32 @@ void Player::incrOppV(){++OppV;}
 
 void Player::incrOppAbil(){++OppAbil;}
 
+std::vector<Card> Player::getAbilities() { return Abilities; }
+
+void Player::usedAbility(const char c) {
+    for (auto &card: Abilities) {
+        if (card.used) {
+            continue;
+        } else if (c == 'L' && card.type == CardType::Linkboost) {
+            card.used = true;
+            break;
+        } else if (c == 'F' && card.type == CardType::Firewall) {
+            card.used = true;
+            break;
+        } else if (c == 'D' && card.type == CardType::Download) {
+            card.used = true;
+            break;
+        } else if (c == 'P' && card.type == CardType::Polarize) {
+            card.used = true;
+            break;
+        } else if (c == 'S' && card.type == CardType::Scan) {
+            card.used = true;
+            break;
+        }
+    }
+}
+
+
 void Player::revealed(int index, std::string piece){
     OppLinks[index] = piece; 
 }
@@ -58,9 +84,9 @@ void Player::setAbility(std::string s){ //adds abilities to hand
             abil = {CardType::Firewall, false};
         } else if (c == 'D'){ //Download card
             abil = {CardType::Download, false};
-        } else if (c == 'S'){ //Polarize card
+        } else if (c == 'P'){ //Polarize card
             abil = {CardType::Polarize, false};
-        } else if (c == 'P'){//Scan card 
+        } else if (c == 'S'){//Scan card 
             abil = {CardType::Scan, false};
         }
 
