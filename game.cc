@@ -16,6 +16,7 @@ Grid::~Grid() {
 
 // TODO: implement grid initition
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
+
     gridSize = n;
     textDisplay = new TextDisplay(n);
     // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
@@ -36,14 +37,15 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
         unique_ptr<Link> link = make_unique<Link>('a' + i, type, strength, false, 1);
 
         // Server ports
-        if (i == n/2 || i == n/2 + 1) {
+        if (i == n/2 - 1 || i == n/2) {
             row0.emplace_back('s', 'n', 0, i, nullptr);
-            row1.emplace_back('a' + i, 'n', 0, i, std::move(link));
+            row1.emplace_back('a' + i, 'n', 1, i, std::move(link));
+            continue;
         }
 
         // Creating cells
         row0.emplace_back('a' + i, 'n', 0, i, std::move(link));
-        row1.emplace_back('n', 'n', 0, i, nullptr);
+        row1.emplace_back('n', 'n', 1, i, nullptr);
     }
 
     // Player 2 initialization
@@ -57,14 +59,15 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
         unique_ptr<Link> link = make_unique<Link>('A' + i, type, strength, false, 1);
 
         // Server ports
-        if (i == n/2 || i == n/2 + 1) {
-            rown_1.emplace_back('S', 'n', n-1, i, nullptr);
-            rown_2.emplace_back('A' + i, 'n', n, i, std::move(link));
+        if (i == n/2 - 1|| i == n/2) {
+            rown_1.emplace_back('S', 'n', n - 1, i, nullptr);
+            rown_2.emplace_back('A' + i, 'n', n - 2, i, std::move(link));
+            continue;
         }
 
         // Creating cells
-        rown_2.emplace_back('n', 'n', 0, i, nullptr);
-        rown_1.emplace_back('A' + i, 'n', 0, i, std::move(link));
+        rown_2.emplace_back('n', 'n', n - 2, i, nullptr);
+        rown_1.emplace_back('A' + i, 'n', n - 1, i, std::move(link));
     }
 
     // Creating grid
@@ -87,8 +90,9 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
         for (int j = 0; j < n; j++) {
             theGrid[i][j].attach(textDisplay);
             // theGrid[i][j].attach(graphicsDisplay);
+            theGrid[i][j].notifyObservers();
         }
-    }
+    }    
 }
 
 
