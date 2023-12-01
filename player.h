@@ -46,6 +46,8 @@ class Player: public Observer{
         void incrOppAbil();
 
         std::vector<Card> getAbilities();
+        std::vector<std::string> getMyLinks();
+        std::vector<std::string> getOppLinks();
         void usedAbility(char c);
         void revealed(int index, std::string piece);
         void setAbility(std::string s);
