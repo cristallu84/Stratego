@@ -2,7 +2,6 @@
 #define __PLAYER_H__
 #include <vector>
 #include <string>
-#include "observer.h"
 
 enum class CardType {
     Linkboost,
@@ -17,7 +16,7 @@ struct Card { //Represent the ability cards that Player holds
     bool used; 
 };
 
-class Player: public Observer{
+class Player{
     std::vector<Card> Abilities; 
     std::vector<std::string> MyLinks;
     std::vector<std::string> OppLinks;
