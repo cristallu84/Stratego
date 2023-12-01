@@ -196,6 +196,9 @@ void Grid::move(char l, string dir){
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
     }
 
+    // cout << theGrid[1][0].getType();
+    cell.notifyObservers();
+    nextcell.notifyObservers();
 }
 
 void Grid::reveal(Cell& c){

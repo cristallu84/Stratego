@@ -24,6 +24,8 @@ int main(int argc, char* argv[]) {
     Grid g;
     vector<string> p1_links;
     vector<string> p2_links;
+    bool ability1 = false;
+    bool ability2 = false;
 
     // Handle cmd line
     for (int i = 0; i < argc; ++i) {
@@ -73,6 +75,16 @@ int main(int argc, char* argv[]) {
     if (p1_links.empty()) p1_links = randomPlacements();
     if (p2_links.empty()) p2_links = randomPlacements();
 
+    // Default abilities
+    if (!ability1) {
+        string s = "LFDSP";
+        g.getPlayer(1).setAbility(s);
+    }
+    if (!ability2) {
+        string s = "LFDSP";
+        g.getPlayer(2).setAbility(s);
+    }
+
     g.init(8, p1_links, p2_links);
 
     // Handling playing the game
@@ -87,8 +99,9 @@ int main(int argc, char* argv[]) {
             string cmd;
             try {
 
+                cout << g << endl;
+
                 while (getline(*in, s)) {
-                    g.nextTurn();
                     
                     istringstream iss{s};
                     iss >> cmd;
@@ -102,6 +115,9 @@ int main(int argc, char* argv[]) {
                         string d;
                         iss >> c >> d;
                         g.move(c, d);
+
+                        g.nextTurn();
+                        cout << g << endl;
 
                     } else if (cmd == "abilities") {
 
@@ -173,13 +189,12 @@ int main(int argc, char* argv[]) {
                         }
 
                     } else if (cmd == "board") {
-                        std::cout << g;
+                        cout << g << endl;
 
                     } else if (cmd == "quit") {
                         cout << "Game ended" << endl;
                         break;
                     }
-                    g.nextTurn();
                 }
             }
             catch (ios::failure) {}
