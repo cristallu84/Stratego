@@ -56,7 +56,8 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
         // Creating a link
         char type = p2_links[i][0];
         int strength = p2_links[i][1];
-        unique_ptr<Link> link = make_unique<Link>('A' + i, type, strength, false, 1);
+        char name = 'A' + i;
+        unique_ptr<Link> link = make_unique<Link>(name, type, strength, false, 1);
 
         // Server ports
         if (i == n/2 - 1|| i == n/2) {
@@ -130,6 +131,7 @@ void Grid::move(char l, string dir){
     int c = cell.getCol(); 
     Link& link = cell.getLink(); 
     int length = link.getMoveL();
+
     if (dir == "up"){
         r = r - length;
     } else if (dir == "down"){
@@ -139,9 +141,6 @@ void Grid::move(char l, string dir){
     } else if (dir == "right"){
         c = c + length;
     }
-    Cell& nextcell = theGrid[r][c];
-    char nexttype = nextcell.getType();
-    int player = this->getTurn(); //1 if p1 and 2 if p2
 
     //check for edge of board 
     if (r >= gridSize){
@@ -151,6 +150,14 @@ void Grid::move(char l, string dir){
         this->download(cell, 2);
         //p2 will download the cell 
     }
+
+    if (c < 0 || c >= gridSize){
+        cout << "error";
+    }
+
+    Cell& nextcell = theGrid[r][c];
+    char nexttype = nextcell.getType();
+    int player = this->getTurn(); //1 if p1 and 2 if p2
 
     //check for firewall
     if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 
@@ -196,7 +203,6 @@ void Grid::move(char l, string dir){
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
     }
 
-    // cout << theGrid[1][0].getType();
     cell.notifyObservers();
     nextcell.notifyObservers();
 }

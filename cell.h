@@ -3,6 +3,7 @@
 #include "subject.h"
 #include "link.h"
 #include "observer.h"
+#include <iostream>
 #include <vector>
 #include <memory>
 
