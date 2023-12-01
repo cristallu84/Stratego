@@ -200,7 +200,6 @@ void Grid::reveal(Cell& c){
 }
 
 void Grid::download(Cell& c, int player) {
-    int turn = this->getTurn();
     std::unique_ptr<Download> d = std::make_unique<Download>(c, player, player1, player2);
     d->execute();
 }
@@ -239,7 +238,7 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
 }
 
 
-std::vector<std::string>& Grid::printAbilities() {
+std::vector<std::string> Grid::printAbilities() {
     // Return a vector of strings
     std::vector<std::string> cards;
     for (int i = 1; i <= 5; i++){
