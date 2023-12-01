@@ -118,41 +118,49 @@ int main(int argc, char* argv[]) {
                         }
 
                     } else if (cmd == "ability") {
+                        int player = g.getTurn();
                         int ID; 
                         iss >> ID; // will be 1-5 
-                        Card c = g.getPlayer(g.getTurn()).getCard(ID);
+                        Card c = g.getPlayer(player).getCard(ID);
 
                         if (c.type == CardType::Firewall && c.used == false){ //going to get r and c
-                        int r; 
-                        int c;
-                        iss >> r >> c; 
-                        Cell& c = g.findCoord(r, c);
-                        std::unique_ptr<Firewall> f = std::make_unique<Firewall>(c);
+                        int row; 
+                        int col;
+                        iss >> row >> col; 
+                        Cell& cell = g.findCoord(row, col);
+                        std::unique_ptr<Firewall> f = std::make_unique<Firewall>(cell, player);
                         f->execute();
+                        c.used = true;
+
                         }else if (c.type == CardType::Download && c.used == false){
                         char link;
                         iss >> link;
                         Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Download> d = std::make_unique<Download>(l);
+                        std::unique_ptr<Download> d = std::make_unique<Download>(l, player, g.getPlayer(1), g.getPlayer(2));
                         d->execute();
+                        c.used = true;
+
                         }else if (c.type == CardType::Linkboost && c.used == false){
                         char link;
                         iss >> link;
                         Link& l = g.findCell(link).getLink();
                         std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
                         L->execute();
+                        c.used = true;
                         }else if (c.type == CardType::Polarize && c.used == false){
                         char link;
                         iss >> link;
                         Link& l = g.findCell(link).getLink();
                         std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l);
                         p->execute();
+                        c.used = true;
                         }else if (c.type == CardType::Scan && c.used == false){
                         char link;
                         iss >> link;
                         Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Scan> s = std::make_unique<Scan>(l);
+                        std::unique_ptr<Scan> s = std::make_unique<Scan>(l, g.getPlayer(1), g.getPlayer(2));
                         s->execute();
+                        c.used = true;
                         }else{
                             cout << "Please enter a valid ability." << endl; 
                         }

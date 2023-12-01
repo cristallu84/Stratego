@@ -9,8 +9,8 @@ public:
 };
 
 class Firewall: public Ability{
-    int turn;
     Cell& cell; 
+    int turn;
 
     public: 
         Firewall(Cell & cell, int turn);
@@ -27,11 +27,13 @@ class Linkboost: public Ability {
 
 class Download: public Ability{
     Cell& cell; 
-    Player player1;
-    Player player2;
+    int turn;
+    Player& Player1;
+    Player& Player2;
+    
     
     public: 
-        Download(Cell & cell, Player player1, Player player2);
+        Download(Cell & cell, int turn, Player& Player1, Player& Player2);
         void execute() override; 
 };
 
@@ -45,9 +47,11 @@ class Polarize: public Ability{
 
 class Scan: public Ability{
     Link& link; 
+    Player& Player1;
+    Player& Player2;
 
     public: 
-        Scan(Link & link);
+        Scan(Link & link, Player& Player1, Player& Player2);
         void execute() override; 
 };
 

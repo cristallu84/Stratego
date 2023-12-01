@@ -242,51 +242,15 @@ void Grid::move(char l, string dir){
 }
 
 void Grid::reveal(Cell& c){
-    char type = c.getType();
-    string piece; 
-    piece += c.getLink().getType();
-    piece += c.getLink().getStrength();
-    int index; 
-
-    if (type >= 'a' && type <= 'h'){
-        index = type - 61; 
-        player2.revealed(index, piece); //reveal the cell to player 2 
-    } else if (type >= 'A' && type <= 'H'){
-        index = type - 41;
-        player1.revealed(index, piece); //reveal the cell to player 1
-    }
+    Link& l = c.getLink(); 
+    std::unique_ptr<Scan> s = std::make_unique<Scan>(l, player1, player2);
+    s->execute();
 }
 
 void Grid::download(Cell& c, int player) {
-    this->reveal(c); //reveals cell c 
-
-    //adding it to the player's count of downloads
-    if (c.getLink().getType() == 'V'){
-        if (player == 1){ //player 1 is downloading a V
-            player1.incrMyV();
-            player2.incrOppV();
-            //increase player's number of virus downloaded in p1
-            //increase opp's number of virus downloaded (p2)
-        }else if (player == 2){ //player 2 is downloading a V
-            player2.incrMyV();
-            player1.incrOppV();
-            //increase player's number of virus downloaded in p2
-            //increase opp's number of virus downloaded (p1)
-        }
-    } else if (c.getLink().getType() == 'D'){
-        if (player == 1){ //player 1 is downloading a D
-            player1.incrMyD();
-            player2.incrOppD();
-            //increase player's number of data downloaded in p1
-            //increase opp's number of data downloaded (p2)
-        }else if (player == 2){ //player 2 is downloading a D
-            player2.incrMyD();  //increase p2's number of data downloaded
-            player1.incrOppD(); //increase p1's opp number of data downloaded 
-
-        }
-    }
-    //removes the link from the cell 
-    c.download(); 
+    int turn = this->getTurn();
+    std::unique_ptr<Download> d = std::make_unique<Download>(c, player, player1, player2);
+    d->execute();
 }
 
 
