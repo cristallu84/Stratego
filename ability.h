@@ -39,9 +39,11 @@ class Download: public Ability{
 
 class Polarize: public Ability{
     Link& link; 
-
+    Player& Player1;
+    Player& Player2;
+    
     public: 
-        Polarize(Link & link);
+        Polarize(Link & link, Player& Player1, Player& Player2);
         void execute() override; 
 };
 

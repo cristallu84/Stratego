@@ -160,7 +160,7 @@ int main(int argc, char* argv[]) {
                             char link;
                             iss >> link;
                             Link& l = g.findCell(link).getLink();
-                            std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l);
+                            std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l, g.getPlayer(1), g.getPlayer(2));
                             p->execute();
                             c.used = true;
 

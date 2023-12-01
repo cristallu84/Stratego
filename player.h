@@ -46,6 +46,8 @@ class Player{
         void decrMyAbil();
         void decrOppAbil();
 
+        void polarizeUpdate(char newtype, int ID, bool mine);
+
         Card getCard(int ID); 
         std::string getMyLink(const int n);
         std::string getOppLink(const int n);

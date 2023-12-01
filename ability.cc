@@ -41,9 +41,25 @@ void Download::execute() {
     cell.download(); 
 }
 
-Polarize::Polarize(Link & link) : link{link} {}
+Polarize::Polarize(Link & link, Player& Player1, Player& Player2) : link{link}, Player1{Player1}, Player2{Player2} {}
 void Polarize::execute() {
     link.toggleType();
+    char newtype = link.getType(); 
+    char linkname = link.getName(); 
+    if (linkname >= 'a' && linkname <= 'h'){ //the link is player 1's link 
+        int ID = linkname - 97;
+        Player1.polarizeUpdate(newtype, ID, true);
+        Player2.polarizeUpdate(newtype, ID, false);
+        //update p1's MyLinks
+        //update p1's OppLinks if it isn't a Q
+    }else{ //the link is player2's link 
+        int ID = linkname - 65;
+        Player1.polarizeUpdate(newtype, ID, false);
+        Player2.polarizeUpdate(newtype, ID, true);
+        //update p2's MyLinks
+        //update p2's OppLinks 
+
+    }
 }
 
 Scan::Scan(Link & link, Player& Player1, Player& Player2) : link{link}, Player1{Player1}, Player2{Player2} {} 

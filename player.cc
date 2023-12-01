@@ -47,6 +47,16 @@ void Player::decrMyAbil(){--MyAbil;}
 
 void Player::decrOppAbil(){--OppAbil;}
 
+void Player::polarizeUpdate(char newtype, int ID, bool mine){
+if (mine){
+    MyLinks[ID][0] = newtype;
+}else{
+    if (OppLinks[ID][0] != '?'){ //it has been revealed
+    OppLinks[ID][0] = newtype; 
+    }
+}
+}
+
 Card Player::getCard(int ID){
     return Abilities[ID - 1];
 }
