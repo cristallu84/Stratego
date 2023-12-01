@@ -125,7 +125,7 @@ int main(int argc, char* argv[]) {
                             int r;
                             int c;
                             iss >> r >> c;
-
+                            f = make_unique<Firewall>();
                             g.firewall(r,c);
 
                         } else if (ID == 2) { // Linkboost
