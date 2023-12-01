@@ -92,54 +92,6 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
 }
 
 
-// Checks if the coordinates given are within the board
-bool Grid::outBound(int r, int c) {
-    if (r >= gridSize || c >= gridSize) {
-        return false;
-    }
-    return true;
-}
-
-
-// Checks if the link exists
-bool Grid::isLink(char c) {
-    if (c >= 41 && c <= 48) {
-        return true;
-    } else if (c >= 61 && c <= 68) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-// Checks if the link is currently on the board
-bool Grid::onBoard(char l) {
-    try {
-        Cell & c = this->findCell(l);
-    } catch (const not_on_board& e) {
-        return false;
-    }
-    return true;
-}
-
-bool Grid::link_in_player(char l, int p) {
-    if (p == 1) {
-        for (int i = 41; i <= 48; ++i) {
-            if (l == i) {
-                return true;
-            }
-        }
-        return false; 
-    } else {
-        for (int i = 61; i <= 68; ++i) {
-            if (l == i) {
-                return true;
-            }
-        }
-        return false;
-    }
-}
-
 // Returns the cell with link l
 Cell& Grid::findCell(char l) {
     for (int r = 0; r < gridSize; ++r) {
