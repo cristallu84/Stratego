@@ -14,9 +14,18 @@ void TextDisplay::notify(Cell &c){
 
     int row = c.getRow();
     int col = c.getCol();
-    int t = c.getType();
+    char t = c.getType();
+    char firewall = c.getFireWall();
 
-    theDisplay[row][col] = (t == 'n') ? '.' : t;
+    if (t == 'n'){
+        if (firewall != 'n'){
+            theDisplay[row][col] = firewall;
+        }else{
+            theDisplay[row][col] = '.';
+        }
+    }else{
+        theDisplay[row][col] = t; 
+    }
 }
 
 

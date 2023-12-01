@@ -199,8 +199,8 @@ void Grid::move(char l, string dir){
             //error
         }
     } else if (nexttype == 'n' && cell.isLink()) { //nextcell is empty and cell hasn't been downloaded yet
-        cell.download(); //link is removed from the current cell
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
+        cell.download(); //link is removed from the current cell
     }
 
     cell.notifyObservers();

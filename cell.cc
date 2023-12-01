@@ -8,7 +8,7 @@ col{col},
 link{std::move(link)}, 
 observers{} {}
 
-Cell::Cell() : celltype{' '}, firewall{' '}, row{ 0 }, col{ 0 }, link{ nullptr }, observers{} {}
+Cell::Cell() : celltype{'n'}, firewall{'n'}, row{ 0 }, col{ 0 }, link{ nullptr }, observers{} {}
 
 bool Cell::isLink(){
  if (link.get() == nullptr){
@@ -41,7 +41,8 @@ char Cell::getType() const {return celltype;}
 char Cell::getFireWall() const {return firewall;}
 
 void Cell::setFireWall(int n) {
-    firewall = (n == 1) ? 'w' : 'm';    
+    firewall = (n == 1) ? 'w' : 'm';
+    this->notifyObservers(); 
 }
 
 int Cell::getRow() const {return row;}
