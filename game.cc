@@ -363,26 +363,53 @@ Player& Grid::getPlayer(int n) {
 }
 
 ostream &operator<<(ostream &out, const Grid &g) {
-    if (g.whoseTurn == 1) {
-        Player p = g.player1;
+    Player p1 = g.player2;
+    Player p2 = g.player2;
 
+    if (g.whoseTurn == 1) {
+        
         out << "Player 1:" << endl;
-        out << "Downloaded: " << p.getMyD() << "D, " << p.getMyV() << "V" << endl;
-        out << "Abilities: " << p.getMyAbilities() << endl; // currently no ability counter
+        out << "Downloaded: " << p1.getMyD() << "D, " << p1.getMyV() << "V" << endl;
+        out << "Abilities: " << p1.getAbilities().size() << endl; // currently no ability counter
 
         for (int i = 0; i < g.gridSize; i++) {
-            out << 'a' + i << ": " << 
+            if (i = g.gridSize / 2) out << "\n";
+            out << 'a' + i << ": " << p1.getMyLinks()[i] << " ";
+        }
+
+        out << *g.textDisplay << endl;
+
+        out << "Player 2:" << endl;
+        out << "Downloaded: " << p1.getOppD() << "D, " << p1.getOppV() << "V" << endl;
+        out << "Abilities: " << p1.getOppAbil() << endl; // currently no ability counter
+
+        for (int i = 0; i < g.gridSize; i++) {
+            if (i = g.gridSize / 2) out << "\n";
+            out << 'A' + i << ": " << p1.getOppLinks()[i] << " ";
         }
 
     } else {
-        Player p = g.player2;
+        
+        out << "Player 1:" << endl;
+        out << "Downloaded: " << p2.getOppD() << "D, " << p2.getOppV() << "V" << endl;
+        out << "Abilities: " << p2.getOppAbil() << endl; // currently no ability counter
 
+        for (int i = 0; i < g.gridSize; i++) {
+            if (i = g.gridSize / 2) out << "\n";
+            out << 'a' + i << ": " << p2.getOppLinks()[i] << " ";
+        }
+
+        out << *g.textDisplay << endl;
+
+        out << "Player 2:" << endl;
+        out << "Downloaded: " << p2.getMyD() << "D, " << p2.getMyV() << "V" << endl;
+        out << "Abilities: " << p2.getAbilities().size() << endl; // currently no ability counter
+
+        for (int i = 0; i < g.gridSize; i++) {
+            if (i = g.gridSize / 2) out << "\n";
+            out << 'A' + i << ": " << p2.getMyLinks()[i] << " ";
+        }
     }
-
-
     
-    
-    getPlayer(1).getMyD() << "D, ";
-    out << *g.textDisplay << endl;
     return out;
 };
