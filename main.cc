@@ -102,7 +102,7 @@ int main(int argc, char* argv[]) {
                 cout << g << endl;
 
                 while (getline(*in, s)) {
-                    
+                    int player = g.getTurn();
                     istringstream iss{s};
                     iss >> cmd;
                     if (cmd == "sequence"){
@@ -127,7 +127,6 @@ int main(int argc, char* argv[]) {
                         }
 
                     } else if (cmd == "ability") {
-                        int player = g.getTurn();
                         int ID; 
                         iss >> ID; // will be 1-5 
                         Card c = g.getPlayer(player).getCard(ID);
@@ -176,7 +175,7 @@ int main(int argc, char* argv[]) {
                         }else{
                             cout << "Please enter a valid ability." << endl; 
                         }
-
+                
                         if (c.used == true) {
                             if (player == 1) {
                                 g.getPlayer(1).decrMyAbil();

@@ -57,11 +57,13 @@ if (link){ //if the cell is occupied by a link
 void Cell::download(){
 link = nullptr; //remove the link from the board 
 celltype = 'n';
+this->notifyObservers();
 }
 
 void Cell::upload(std::unique_ptr<Link> l){
 link = std::move(l); //attach a smart pointer to the cell 
 celltype = link->getName();
+this->notifyObservers();
 }
 
 void Cell::attach(Observer *o){

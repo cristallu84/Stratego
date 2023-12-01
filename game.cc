@@ -281,7 +281,7 @@ Player& Grid::getPlayer(int n) {
 }
 
 ostream &operator<<(ostream &out, const Grid &g) {
-    Player p1 = g.player2;
+    Player p1 = g.player1;
     Player p2 = g.player2;
 
     if (g.whoseTurn == 1) {
