@@ -132,18 +132,22 @@ int main(int argc, char* argv[]) {
                         char link;
                         iss >> link;
                         std::unique_ptr<Download> d = std::make_unique<Download>(link);
+                        d->execute();
                         }else if (c.type == CardType::Linkboost && c.used == false){
                         char link;
                         iss >> link;
                         std::unique_ptr<Linkboost> l = std::make_unique<Linkboost>(link);
+                        l->execute();
                         }else if (c.type == CardType::Polarize && c.used == false){
                         char link;
                         iss >> link;
-                        std::unique_ptr<Polarize> d = std::make_unique<Polarize>(link);
+                        std::unique_ptr<Polarize> p = std::make_unique<Polarize>(link);
+                        p->execute();
                         }else if (c.type == CardType::Scan && c.used == false){
                         char link;
                         iss >> link;
                         std::unique_ptr<Scan> s = std::make_unique<Scan>(link);
+                        s->execute();
                         }else{
                             cout << "Please enter a valid ability." << endl; 
                         }
