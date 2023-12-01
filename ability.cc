@@ -71,10 +71,10 @@ void Scan::execute() {
     int index;
 
     if (type >= 'a' && type <= 'h'){
-        index = type - 61; 
+        index = type - 97; 
         Player2.revealed(index, piece); //reveal the cell to player 2 
     } else if (type >= 'A' && type <= 'H'){
-        index = type - 41;
+        index = type - 65;
         Player1.revealed(index, piece); //reveal the cell to player 1
     }
     link.revealbool(); //need to use reveal on the cell which is in grid 
