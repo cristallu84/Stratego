@@ -2,7 +2,6 @@
 #define __PLAYER_H__
 #include <vector>
 #include <string>
-#include "ability.h"
 #include "observer.h"
 
 enum class CardType {
