@@ -18,6 +18,22 @@ bool Cell::isLink(){
  }
 }
 
+Cell::Cell(const Cell & other) : celltype(other.celltype), firewall(other.firewall),
+    row(other.row), col(other.col) {
+
+    if (other.link) {
+        link = std::make_unique<Link>(*other.link);
+    } else {
+        link.reset();
+    }
+
+    // Copy observers (assuming Observer objects are not polymorphic)
+    observers.clear();
+    for (Observer* observer : other.observers) {
+        observers.push_back(observer);
+    }
+}
+
 
 
 char Cell::getType() const {return celltype;}
