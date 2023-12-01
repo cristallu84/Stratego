@@ -20,7 +20,7 @@ vector<string> randomPlacements() {
 }
 
 int main(int argc, char* argv[]) {
-
+    
     Grid g;
     vector<string> p1_links;
     vector<string> p2_links;
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]) {
     
     // Randomizing depending on empty links
     if (p1_links.empty()) p1_links = randomPlacements();
-    if (p1_links.empty()) p2_links = randomPlacements();
+    if (p2_links.empty()) p2_links = randomPlacements();
 
     g.init(8, p1_links, p2_links);
 
