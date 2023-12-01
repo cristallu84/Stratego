@@ -139,8 +139,8 @@ int main(int argc, char* argv[]) {
                         char link;
                         iss >> link;
                         Link& l = g.findCell(link).getLink();
-                        std::unique_ptr<Linkboost> l = std::make_unique<Linkboost>(l);
-                        l->execute();
+                        std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
+                        L->execute();
                         }else if (c.type == CardType::Polarize && c.used == false){
                         char link;
                         iss >> link;
