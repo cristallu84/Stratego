@@ -290,75 +290,26 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
 std::vector<std::string>& Grid::printAbilities() {
     // Return a vector of strings
     std::vector<std::string> cards;
-    for (auto &card: this->getPlayer(this->getTurn()).getAbilities()) {
-        if (card.type == CardType::Linkboost) {
+    for (int i = 1; i <= 5; i++){
+        CardType cardtype = this->getPlayer(this->getTurn()).getCard(i).type;
+        bool cardused = this->getPlayer(this->getTurn()).getCard(i).used;
+        if (cardtype == CardType::Linkboost) {
             cards.emplace_back("Linkboost");
-        } else if (card.type == CardType::Download) {
+        } else if (cardtype == CardType::Download) {
             cards.emplace_back("Download");
-        } else if (card.type == CardType::Firewall) {
+        } else if (cardtype == CardType::Firewall) {
             cards.emplace_back("Firewall");
-        } else if (card.type == CardType::Polarize) {
+        } else if (cardtype == CardType::Polarize) {
             cards.emplace_back("Polarize");
-        } else if (card.type == CardType::Scan) {
+        } else if (cardtype == CardType::Scan) {
             cards.emplace_back("Scan");
         }       
-        card.used ? cards.emplace_back("Used") : cards.emplace_back("Unused");
+        cardused ? cards.emplace_back("Used") : cards.emplace_back("Unused");
     }
-
     return cards;
 }
 
 
-void Grid::linkBoost(char c) {
-    
-    this->getPlayer(this->getTurn()).usedAbility('L');
-
-    Linkboost lb(this->findCell(c).getLink());
-    lb.execute();
-}
-
-
-void Grid::firewall(int r, int c) {
-
-    this->getPlayer(this->getTurn()).usedAbility('F');
-
-    this->getPlayer(this->getTurn()).usedAbility(c);
-
-    Firewall f(theGrid[r][c], this->getTurn());
-    f.execute();
-}
-
-
-void Grid::downloadAbility(char c) {
-
-    this->getPlayer(this->getTurn()).usedAbility('D');
-   
-    if (this->getTurn() == 1) {
-        Download d(this->findCell(c), player1, player2);
-        d.execute();
-    } else {
-        Download d (this->findCell(c), player2, player1);
-        d.execute();
-    }
-}
-
-
-void Grid::polarize(char c) {
-
-    this->getPlayer(this->getTurn()).usedAbility('P');
-
-    Polarize p(this->findCell(c).getLink());
-    p.execute();
-}
-
-
-void Grid::scan(char c) {
-
-    this->getPlayer(this->getTurn()).usedAbility('S');
-
-    Scan s(this->findCell(c).getLink());
-    s.execute();
-}
 
 Player& Grid::getPlayer(int n) {
     return (n == 1) ? player1 : player2;

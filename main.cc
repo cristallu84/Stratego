@@ -112,6 +112,7 @@ int main(int argc, char* argv[]) {
                         g.move(c, d);
 
                     } else if (cmd == "abilities") {
+
                         vector<string> cards = g.printAbilities();
                         for (int i = 0; i < cards.size(); i += 2) {
                             cout << cards[i] << " - " << cards[i + 1] << endl;
@@ -147,6 +148,7 @@ int main(int argc, char* argv[]) {
                         std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
                         L->execute();
                         c.used = true;
+
                         }else if (c.type == CardType::Polarize && c.used == false){
                         char link;
                         iss >> link;
@@ -154,6 +156,7 @@ int main(int argc, char* argv[]) {
                         std::unique_ptr<Polarize> p = std::make_unique<Polarize>(l);
                         p->execute();
                         c.used = true;
+
                         }else if (c.type == CardType::Scan && c.used == false){
                         char link;
                         iss >> link;
@@ -161,6 +164,7 @@ int main(int argc, char* argv[]) {
                         std::unique_ptr<Scan> s = std::make_unique<Scan>(l, g.getPlayer(1), g.getPlayer(2));
                         s->execute();
                         c.used = true;
+
                         }else{
                             cout << "Please enter a valid ability." << endl; 
                         }
