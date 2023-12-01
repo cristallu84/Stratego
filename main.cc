@@ -86,6 +86,7 @@ int main(int argc, char* argv[]) {
 
             string cmd;
             try {
+
                 while (getline(*in, s)) {
                     g.nextTurn();
                     

@@ -24,16 +24,20 @@ std::ostream &operator<<(std::ostream &out, const TextDisplay &td){
     
     int n = td.gridSize + 2;
 
-    for (int r = 0; r < n; ++r) {
+    for (int i = 0; i < n; ++i) {
+        out << "=";
+    }
+
+    for (int r = 1; r < n; ++r) {
+        out << "\n";
         for (int c = 0; c < n; ++c) {
-            if (r == 0 || r == (n - 1)) {
+            if (r == (n - 1)) {
                 out << "="; 
             } else {
                 int r_temp = r - 1;
                 out << td.theDisplay[r_temp][c];
             }
         }
-        out << "\n";
     }
     return out; 
 }
