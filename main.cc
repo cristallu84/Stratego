@@ -88,11 +88,11 @@ int main(int argc, char* argv[]) {
             iss >> stream_type;
             istream *in = nullptr;
             if (stream_type != "sequence") {
-                istream *in = &cin;
+                in = &cin;
             } else {
                 string fname;
                 iss >> fname;
-                ifstream *in = new ifstream(fname.c_str());
+                in = new ifstream(fname.c_str());
             }
             in->exceptions(ios::failbit|ios::eofbit);
 
