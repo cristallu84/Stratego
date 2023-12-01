@@ -15,24 +15,24 @@ void Download::execute() {
     s->execute();
 
     if (cell.getLink().getType() == 'V'){
-        if (turn == 1){
+        if (turn == 2){
             Player1.incrMyV();
             Player2.incrOppV();
             //increase player's number of virus downloaded in p1
             //increase opp's number of virus downloaded (p2)
-        }else if (turn == 2){ //player 2 is downloading a V
+        }else if (turn == 1){ //player 2 is downloading a V
             Player2.incrMyV();
             Player1.incrOppV();
             //increase player's number of virus downloaded in p2
             //increase opp's number of virus downloaded (p1)
         }
     } else if (cell.getLink().getType() == 'D'){
-        if (turn == 1){ //player 1 is downloading a D
+        if (turn == 2){ //player 1 is downloading a D
             Player1.incrMyD();
             Player2.incrOppD();
             //increase player's number of data downloaded in p1
             //increase opp's number of data downloaded (p2)
-        }else if (turn == 2){ //player 2 is downloading a D
+        }else if (turn == 1){ //player 2 is downloading a D
             Player2.incrMyD();  //increase p2's number of data downloaded
             Player1.incrOppD(); //increase p1's opp number of data downloaded 
         }
