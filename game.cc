@@ -311,20 +311,9 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     }
 
     if (l2 > l1) {
-        // fighter wins
-        //get the type of the link to add it to OppLinks 
-        string s = init.getLink().getType() + 
-            std::to_string(init.getLink().getStrength());
-
-        this->getPlayer(pFighter).addLink(s);
-        init.download();
-
-        // MOVE FIGHTER TO INIT POSITION - fighter stays and init is downloaded 
-
-    } else {
         // fighter wins - pFighter downloads the init
         this->download(init, pFighter);
-    } else { //l1 > l2 or its a tie
+    }else { //l1 > l2 or its a tie
         // init wins
         this->download(fighter, pInit);
     }
