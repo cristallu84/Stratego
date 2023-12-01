@@ -83,11 +83,9 @@ int main(int argc, char* argv[]) {
         while (1) {
             istream *in = nullptr;
             in = &cin; 
-
             string cmd;
             try {
-
-                while (getline(*in, s)) {
+                while (getline(*in, s)) { 
                     g.nextTurn();
                     
                     istringstream iss{s};
