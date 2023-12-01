@@ -22,8 +22,8 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
     // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
 
     // Player 1 initialization
-    std::vector<Cell> row0;
-    std::vector<Cell> row1;
+    vector<Cell> row0;
+    vector<Cell> row1;
     for (int i = 0; i < n; i++) {
 
         // Initializing player link vectors
@@ -47,8 +47,8 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
     }
 
     // Player 2 initialization
-    std::vector<Cell> rown_2; // row n - 2
-    std::vector<Cell> rown_1; // row n - 1
+    vector<Cell> rown_2; // row n - 2
+    vector<Cell> rown_1; // row n - 1
     for (int i = 0; i < n; i++) {
 
         // Creating a link
