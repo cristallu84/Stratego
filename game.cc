@@ -200,20 +200,20 @@ void Grid::move(char l, string dir){
         c = c + length;
     }   else if (link.isDiagonal()){
         if (dir == "up-right"){
-        r = r + length;
+        r = r - length;
         c = c + length;
         }else if (dir == "up-left"){
-        r = r + length;
+        r = r - length;
         c = c - length;
         }else if (dir == "down-right"){
-        r = r - length;
+        r = r + length;
         c = c + length;
         }else if (dir == "down-left"){
-        r = r - length;
+        r = r + length;
         c = c - length;
         }
     }else{
-        //invalid move
+        throw not_diagonal_link(); 
     }
 
     if (outBound(r, c, this->getTurn())) { throw out_bounds(); }

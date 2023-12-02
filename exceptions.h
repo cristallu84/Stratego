@@ -38,5 +38,11 @@ public:
     }
 };
 
+class not_diagonal_link : public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "This link does not have a diagonal ability";
+    }
+};
 
 #endif
