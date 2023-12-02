@@ -57,4 +57,28 @@ class Scan: public Ability{
         void execute() override; 
 };
 
+class Diagonal: public Ability{
+    Link& link; 
+
+    public: 
+        Diagonal(Link & link);
+        void execute() override; 
+};
+
+class PlayerSwap: public Ability{
+    Player& Player1;
+    Player& Player2;
+    public: 
+        PlayerSwap(Player& Player1, Player& Player2);
+        void execute() override; 
+};
+
+class MoveSPort: public Ability{
+    Cell& cell; 
+    int turn;
+
+    public: 
+        MoveSPort(Cell & cell, int turn);
+        void execute() override; 
+};
 #endif
