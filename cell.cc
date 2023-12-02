@@ -43,6 +43,7 @@ char Cell::getFireWall() const {return firewall;}
 void Cell::setFireWall(int n) {
     firewall = (n == 1) ? 'w' : 'm';
     this->notifyObservers(); 
+    
 }
 
 int Cell::getRow() const {return row;}

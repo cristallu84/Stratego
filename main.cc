@@ -146,7 +146,12 @@ int main(int argc, char* argv[]) {
 
                     } else if (cmd == "ability") {
                         int ID; 
-                        iss >> ID; // will be 1-5 
+                        iss >> ID;
+                        //checks that ID inputed is valid 
+                        if (!(ID >= 0 && ID <= 5)){
+                            throw invalid_input();
+                        }
+
                         Card &c = g.getPlayer(player).getCard(ID);
                         if (c.type == CardType::Firewall && c.used == false){ //going to get r and c
                             int row; 
@@ -161,6 +166,10 @@ int main(int argc, char* argv[]) {
                             char cellname;
                             iss >> cellname;
                             Cell& cell = g.findCell(cellname);
+                            //player is trying to use download on their own link:
+                            if ((cellname <= 'h' && player == 1) || (cellname >= 'A' && player == 2)){
+                                throw wrong_player();
+                            }
                             std::unique_ptr<Download> d = std::make_unique<Download>(cell, player, g.getPlayer(1), g.getPlayer(2));
                             d->execute();
                             c.used = true;
@@ -168,6 +177,10 @@ int main(int argc, char* argv[]) {
                         } else if (c.type == CardType::Linkboost && c.used == false){
                             char link;
                             iss >> link;
+                            //player is trying to use linkboost on their opponent's link 
+                            if ((link <= 'h' && player == 2) || (link >= 'A' && player == 1)){
+                                throw wrong_player();
+                            }
                             Link& l = g.findCell(link).getLink();
                             std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
                             L->execute();
@@ -192,6 +205,10 @@ int main(int argc, char* argv[]) {
                         }else if (c.type == CardType::Diagonal && c.used == false){
                             char link;
                             iss >> link;
+                            //player is trying to use linkboost on their opponent's link 
+                            if ((link <= 'h' && player == 2) || (link >= 'A' && player == 1)){
+                                throw wrong_player();
+                            }
                             Link& l = g.findCell(link).getLink();
                             std::unique_ptr<Diagonal> Di = std::make_unique<Diagonal>(l);
                             Di->execute();
@@ -212,7 +229,7 @@ int main(int argc, char* argv[]) {
                             Ps->execute();
                             c.used = true;
                         }else{
-                            cout << "Please enter a valid ability." << endl; 
+                            throw cant_use_card();
                         }
                 
                         if (c.used == true) {
@@ -246,9 +263,7 @@ int main(int argc, char* argv[]) {
                         continue;
                     }
                 }
-            }
-            catch (ios::failure) {}
-
+            }catch (ios::failure) {}
             if (in != &cin) delete in;
         }
     }
