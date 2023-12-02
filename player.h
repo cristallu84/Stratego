@@ -33,7 +33,8 @@ class Player{
 
     public: 
         Player(); 
-        bool isWon(); //checks if a player has downloaded 4 Data links
+        std::string gameState(); //returns whether player has won, lost or none
+        
         
         int getMyD(); 
         int getMyV();

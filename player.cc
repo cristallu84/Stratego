@@ -15,11 +15,13 @@ Player::Player():
     OppLinks = v;
 }
 
-bool Player::isWon(){
+std::string Player::gameState(){
 if (MyD == 4){
-    return true; 
+    return "Won"; 
+}else if (MyV == 4){
+    return "Lost"; 
 }else{
-    return false; 
+    return "None";
 }
 }
 
