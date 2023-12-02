@@ -1,13 +1,13 @@
 abilities
 board
 
-ability 1 up
+ability 1 A
 move a down
 move B up
-ability 2 down
+ability 2 B
 move a down
 move C up
-ability 3 down
+ability 3 C
 move a down
 move D up
-ability 4 up
+ability 4 D
