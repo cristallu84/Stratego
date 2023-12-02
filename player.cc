@@ -57,7 +57,7 @@ if (mine){
 }
 }
 
-Card Player::getCard(int ID){
+Card& Player::getCard(int ID){
     return Abilities[ID - 1];
 }
 
@@ -108,6 +108,12 @@ void Player::setAbility(std::string s){ //adds abilities to hand
             abil = {CardType::Polarize, false};
         } else if (c == 'S'){//Scan card 
             abil = {CardType::Scan, false};
+        } else if (c == 'd'){ //Diagonal card
+            abil = {CardType::Diagonal, false};
+        }else if (c == 'p'){ //PlayerSwap card
+            abil = {CardType::PlayerSwap, false};
+        }else if (c == 'm'){ //Move S port card
+            abil = {CardType::MoveSPort, false};
         }
 
         Abilities.emplace_back(abil);

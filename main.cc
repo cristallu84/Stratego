@@ -147,8 +147,7 @@ int main(int argc, char* argv[]) {
                     } else if (cmd == "ability") {
                         int ID; 
                         iss >> ID; // will be 1-5 
-                        Card c = g.getPlayer(player).getCard(ID);
-
+                        Card &c = g.getPlayer(player).getCard(ID);
                         if (c.type == CardType::Firewall && c.used == false){ //going to get r and c
                             int row; 
                             int col;
@@ -190,6 +189,28 @@ int main(int argc, char* argv[]) {
                             s->execute();
                             c.used = true;
 
+                        }else if (c.type == CardType::Diagonal && c.used == false){
+                            char link;
+                            iss >> link;
+                            Link& l = g.findCell(link).getLink();
+                            std::unique_ptr<Diagonal> Di = std::make_unique<Diagonal>(l);
+                            Di->execute();
+                            c.used = true;
+                        }else if (c.type == CardType::PlayerSwap && c.used == false){
+                            std::unique_ptr<PlayerSwap> Ps = std::make_unique<PlayerSwap>(g.getPlayer(1), g.getPlayer(2));
+                            Ps->execute();
+                            c.used = true;
+                        }else if (c.type == CardType::MoveSPort && c.used == false){
+                            int portRow;
+                            int portCol;
+                            int newRow;
+                            int newCol;
+                            iss >> portRow >> portCol >> newRow >> newCol;
+                            Cell& port = g.findCoord(portRow, portCol);
+                            Cell& location = g.findCoord(newRow, newCol);
+                            std::unique_ptr<MoveSPort> Ps = std::make_unique<MoveSPort>(port, location);
+                            Ps->execute();
+                            c.used = true;
                         }else{
                             cout << "Please enter a valid ability." << endl; 
                         }

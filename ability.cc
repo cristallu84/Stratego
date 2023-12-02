@@ -80,3 +80,21 @@ void Scan::execute() {
     link.revealbool(); //need to use reveal on the cell which is in grid 
 }
 
+
+Diagonal::Diagonal(Link & link): link{link} {}
+void Diagonal::execute(){link.giveDiagonal();}
+
+
+PlayerSwap::PlayerSwap(Player& Player1, Player& Player2): Player1{Player1}, Player2{Player2} {}
+void PlayerSwap::execute(){
+    Player temp = Player1; 
+    Player1 = Player2; 
+    Player2 = temp; 
+}
+
+MoveSPort::MoveSPort(Cell & sPort, Cell& location): sPort{sPort}, location{location} {}
+void MoveSPort::execute(){
+    char type = sPort.getType();
+    sPort.setType('n');
+    location.setType(type);
+}

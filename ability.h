@@ -74,11 +74,11 @@ class PlayerSwap: public Ability{
 };
 
 class MoveSPort: public Ability{
-    Cell& cell; 
-    int turn;
+    Cell& sPort; 
+    Cell& location;
 
     public: 
-        MoveSPort(Cell & cell, int turn);
+        MoveSPort(Cell & sPort, Cell& location);
         void execute() override; 
 };
 #endif

@@ -20,14 +20,15 @@ class Cell{
         Cell(); //default ctor
         bool isLink(); //Returns true if a Link occupies the cell
         char getType() const; //Returns the type that occupies the link (a-h, A-H for link, w/m for firewall, n for empty)
-        char getFireWall() const; //Returns w/m for firewall,  and n if no firewall
+        char getFireWall() const; //Returns w/m for firewall, and n if no firewall
         void setFireWall(int n); // Updates firewall
         int getRow() const; //Returns the value of row
         int getCol() const; //Returns the value of col
         Link& getLink() const; //Returns a reference to the link that it points to
         void download(); //downloads the link at the cell (detaches a link object from the link ptr)
         void upload(std::unique_ptr<Link> l); //uploads a link to the cell (attaches a link object to the link ptr)
-        void attach(Observer *o);
+        void setType(char type); //sets the celltype to be the char type
+        void attach(Observer *o); //attaches observer o to the cell 
         void notifyObservers(); //Alert observers of the new state of the cell 
         
         Cell(const Cell& other);

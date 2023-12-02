@@ -188,6 +188,7 @@ void Grid::move(char l, string dir){
     int c = cell.getCol(); 
     Link& link = cell.getLink(); 
     int length = link.getMoveL();
+    
 
     if (dir == "up"){
         r = r - length;
@@ -197,6 +198,22 @@ void Grid::move(char l, string dir){
         c = c - length;
     } else if (dir == "right"){
         c = c + length;
+    }   else if (link.isDiagonal()){
+        if (dir == "up-right"){
+        r = r + length;
+        c = c + length;
+        }else if (dir == "up-left"){
+        r = r + length;
+        c = c - length;
+        }else if (dir == "down-right"){
+        r = r - length;
+        c = c + length;
+        }else if (dir == "down-left"){
+        r = r - length;
+        c = c - length;
+        }
+    }else{
+        //invalid move
     }
 
     if (outBound(r, c, this->getTurn())) { throw out_bounds(); }
@@ -327,7 +344,13 @@ std::vector<std::string> Grid::printAbilities() {
             cards.emplace_back("Polarize");
         } else if (cardtype == CardType::Scan) {
             cards.emplace_back("Scan");
-        }       
+        } else if (cardtype == CardType::Diagonal){
+            cards.emplace_back("Diagonal");
+        } else if (cardtype == CardType::PlayerSwap){
+            cards.emplace_back("PlayerSwap");
+        } else if (cardtype == CardType::MoveSPort){
+            cards.emplace_back("MoveSPort");
+        }         
         cardused ? cards.emplace_back("Used") : cards.emplace_back("Unused");
     }
     return cards;

@@ -8,7 +8,10 @@ enum class CardType {
     Firewall, 
     Download,
     Polarize, 
-    Scan
+    Scan,
+    Diagonal,
+    PlayerSwap,
+    MoveSPort
 };
 
 struct Card { //Represent the ability cards that Player holds
@@ -48,7 +51,7 @@ class Player{
 
         void polarizeUpdate(char newtype, int ID, bool mine);
 
-        Card getCard(int ID); 
+        Card& getCard(int ID); 
         std::string getMyLink(const int n);
         std::string getOppLink(const int n);
         void usedAbility(const char c);

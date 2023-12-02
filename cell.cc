@@ -67,6 +67,11 @@ celltype = link->getName();
 this->notifyObservers();
 }
 
+void Cell::setType(char type){
+    celltype = type;
+    this->notifyObservers();
+}
+
 void Cell::attach(Observer *o){
     observers.emplace_back(o);
 }
