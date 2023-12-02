@@ -6,6 +6,7 @@
 #include <random>
 #include <vector>
 #include <ctime>
+#include <chrono>
 #include "game.h"
 #include "exceptions.h"
 
@@ -14,8 +15,8 @@ using namespace std;
 // Produces a vector of random placements
 vector<string> randomPlacements() {
     vector<string> d = {"V1", "V2", "V3", "V4", "D1", "D2", "D3", "D4"};
-    unsigned random = unsigned(time(0));
-    shuffle(begin(d), end(d), default_random_engine(random));
+    unsigned seed = chrono::system_clock::now().time_since_epoch().count();
+    shuffle(begin(d), end(d), default_random_engine(seed));
     return d;
 }
 
