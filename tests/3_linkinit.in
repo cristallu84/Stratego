@@ -1,18 +1,13 @@
--ability1 DDDDD
--ability2 DDDDD
--link1 default_placement
--link2 default_placement
--link2 backwards_placement
--abilities
--board
+abilities
+board
 
--ability 1 A
--move a S
--move B N
--ability 2 B
--move a S
--move C N
--ability 3 C
--move a S
--move D N
--ability 4 D
+ability 1 up
+move a down
+move B up
+ability 2 down
+move a down
+move C up
+ability 3 down
+move a down
+move D up
+ability 4 up
