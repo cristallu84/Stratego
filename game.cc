@@ -1,11 +1,63 @@
 #include <iostream>
 #include <stdexcept>
-#include "exceptions.h"
 #include "game.h"
 
 using namespace std;
 
-// TODO: Add further init procedures
+// Checks if the coordinates given are within the board
+bool Grid::outBound(int row, int col, int player) {
+    if (col < 0 || col >= gridSize) {
+        return true;
+    } else if (player == 1 && row < 0) {
+        return true;
+    } else if (player == 2 && row >= gridSize) {
+        return true;
+    }
+    return false;
+}
+
+// Checks if the link exists
+bool Grid::isLink(char c) {
+    if ((c >= 'a' && c <= 'h')
+        || (c >= 'A' && c <= 'H')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// Checks if the link is currently on the board
+bool Grid::linkOnBoard(char l) {
+    try {
+        Cell & c = this->findCell(l);
+    } catch (const not_on_board& e) {
+        return false;
+    }
+    return true;
+}
+
+bool Grid::linkOfPlayer(char l, int p) {
+    if (p == 1) {
+        for (int i = 'a'; i <= 'h'; ++i) {
+            if (l == i) {
+                return true;
+            }
+        }
+        return false; 
+    } else {
+        for (int i = 'A'; i <= 'H'; ++i) {
+            if (l == i) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+
+
+// --------- Exceptions helpers above --------------
+
+
 Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
 Grid::~Grid() {
@@ -14,7 +66,6 @@ Grid::~Grid() {
     delete textDisplay;
 }
 
-// TODO: implement grid initition
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
 
     gridSize = n;
@@ -106,6 +157,7 @@ Cell& Grid::findCell(char l) {
             }
         }
     }
+    throw not_on_board();
     // case where cell is not found
 }
 
@@ -126,6 +178,11 @@ void Grid::nextTurn() {
 }
 
 void Grid::move(char l, string dir){
+
+    if (!(isLink(l))) { throw not_link(); }
+    if (!(linkOfPlayer(l, this->getTurn()))) { throw not_your_link(); }
+    if (!(linkOnBoard(l))) { throw not_on_board(); }
+
     Cell& cell = this->findCell(l);
     int r = cell.getRow();
     int c = cell.getCol(); 
@@ -142,17 +199,17 @@ void Grid::move(char l, string dir){
         c = c + length;
     }
 
+    if (outBound(r, c, this->getTurn())) { throw out_bounds(); }
+
     //check for edge of board 
     if (r >= gridSize){
         this->download(cell, 1);
+        return;
         //p1 will download the cell
-    }else if(r < 0){
+    } else if (r < 0){
         this->download(cell, 2);
+        return;
         //p2 will download the cell 
-    }
-
-    if (c < 0 || c >= gridSize){
-        cout << "error";
     }
 
     Cell& nextcell = theGrid[r][c];

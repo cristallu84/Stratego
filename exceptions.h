@@ -13,7 +13,7 @@ public:
 class out_bounds : public std::exception {
 public:
     const char* what() const noexcept override {
-        return "The cell selected is outside of the grid.";
+        return "STAY ON THE GRID >:(";
     }
 };
 
