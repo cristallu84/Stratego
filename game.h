@@ -28,7 +28,7 @@ class Grid{
         void move(char l, string dir); 
         void reveal(Cell& c);
         void download(Cell& c, int player); //downloads a link in cell c, increases the number of downloads for each player and reveals it 
-        void battle(Cell& init, Cell& fighter); // Handles the battle feature
+        bool battle(Cell& init, Cell& fighter); // Handles the battle feature
         std::vector<std::string> printAbilities(); 
         Player& getPlayer(int n);
 

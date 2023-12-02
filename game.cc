@@ -198,7 +198,7 @@ void Grid::move(char l, string dir){
         }else{
             //error
         }
-    } else if (nexttype == 'n' && cell.isLink()) { //nextcell is empty and cell hasn't been downloaded yet
+    } else if (cell.isLink()) { //nextcell is empty and cell hasn't been downloaded yet
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 
         cell.download(); //link is removed from the current cell
     }
@@ -220,7 +220,7 @@ void Grid::download(Cell& c, int player) {
 
 
 // TODO: Move fighter to init cell if fighter wins
-void Grid::battle(Cell& init, Cell& fighter) { //need to update this
+bool Grid::battle(Cell& init, Cell& fighter) { //need to update this
     // init = battle initiating player cell and link
     //get strength of both links at the cells 
     int l1 = init.getLink().getStrength();
@@ -242,13 +242,15 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
         pFighter = 1;
     }
 
-    if (l2 > l1) {
-        // fighter wins - pFighter downloads the init
+    if (l2 > l1) { 
+        // fighter wins - pFighter downloads the init link
         this->download(init, pFighter);
-    }else { //l1 > l2 or its a tie
-        // init wins
+        return false;
+    }else { //l1 > l2 or tie 
+        // init wins- pInit downloads the fighter link
         this->download(fighter, pInit);
-    }
+        return true;
+    }   
 }
 
 
