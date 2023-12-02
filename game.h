@@ -16,6 +16,11 @@ class Grid{
     Player player2; 
     int whoseTurn; 
 
+    bool outBound(int row, int col, int player);
+    bool isLink(char c);
+    bool linkOnBoard(char l);
+    bool linkOfPlayer(char l, int p);
+
     public:
         Grid();
         ~Grid();
