@@ -145,13 +145,16 @@ void Grid::move(char l, string dir){
     //check for edge of board 
     if (r >= gridSize){
         this->download(cell, 1);
+        return;
         //p1 will download the cell
     }else if(r < 0){
         this->download(cell, 2);
+        return;
         //p2 will download the cell 
     }
 
     if (c < 0 || c >= gridSize){
+        return;
         cout << "error";
     }
 
