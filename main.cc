@@ -233,6 +233,18 @@ int main(int argc, char* argv[]) {
                         cout << "Game ended" << endl;
                         break;
                     }
+
+                    if (g.getPlayer(player).gameState() == "Won") {
+                        cout << "Player " << player << "wins!" << endl;
+                        break;
+                    } if (g.getPlayer(player).gameState() == "Lost") {
+                        g.nextTurn();
+                        int player = g.getTurn();
+                        cout << "Player " << player << "wins!" << endl;
+                        break;
+                    } else {
+                        continue;
+                    }
                 }
             }
             catch (ios::failure) {}
