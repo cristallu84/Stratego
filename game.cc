@@ -29,7 +29,7 @@ bool Grid::isLink(char c) {
 // Checks if the link is currently on the board
 bool Grid::linkOnBoard(char l) {
     try {
-        Cell & c = this->findCell(l);
+        this->findCell(l);
     } catch (const not_on_board& e) {
         return false;
     }
@@ -252,6 +252,11 @@ void Grid::move(char l, string dir){
     Cell& nextcell = theGrid[r][c];
     char nexttype = nextcell.getType();
     int player = this->getTurn(); //1 if p1 and 2 if p2
+    //player tries to move onto a cell that is occupied by one of their links
+    if (nextcell.isLink() && ((nexttype <= 'h' && player == 1) || (nexttype >= 'A' && player == 2))){
+        throw cell_occupied();
+    }
+
 
     //check for firewall
     if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 

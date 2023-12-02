@@ -118,19 +118,19 @@ int main(int argc, char* argv[]) {
                         try {
                             g.move(c, d);
                         } catch (const not_link& e) {
-                            cout << "Error: " << e.what() << endl;
+                            cerr << "Error: " << e.what() << endl;
                             g.nextTurn();
                         } catch (const not_your_link& e) {
-                            cout << "Error: " << e.what() << endl;
+                            cerr << "Error: " << e.what() << endl;
                             g.nextTurn();
                         } catch (const not_on_board& e) {
-                            cout << "Error: " << e.what() << endl;
+                            cerr << "Error: " << e.what() << endl;
                             g.nextTurn();
                         } catch (const out_bounds& e) {
-                            cout << "Error: " << e.what() << endl;
+                            cerr << "Error: " << e.what() << endl;
                             g.nextTurn();
                         } catch (...) {
-                            cout << "Error: " << "Be better bro B)" << endl;
+                            cerr << "Error: " << "Be better bro B)" << endl;
                             g.nextTurn();
                         }
 

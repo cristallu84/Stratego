@@ -2,7 +2,6 @@ Invalid Input
     - adding invalid ability/invalid link at cmd line
         - adding more than 2 types of an ability cmd line
     * invalid input for ability (ID is wrong, or gave a link when we need coords, etc)
-    - 
 
 Wrong Player
     * moving other player's link 
@@ -16,7 +15,7 @@ Can't do the action
     * never used the ability card (diagonal) (in game.cc)
 
 Cell is occupied 
-    * moving a link onto a cell with a link thats a battle babe
+    * moving a link onto a cell with your own link 
     * moving an s port on an nonempty cell
     * moving a firewall onto a nonempty cell
 
