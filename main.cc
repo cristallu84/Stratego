@@ -8,6 +8,8 @@
 #include <ctime>
 #include <chrono>
 #include "game.h"
+#include "window.h"
+#include "graphicsdisplay.h"
 
 using namespace std;
 
@@ -26,6 +28,8 @@ int main(int argc, char* argv[]) {
     vector<string> p2_links;
     bool ability1 = false;
     bool ability2 = false;
+    bool graphics = false;
+    Xwindow window;
 
     // Handle cmd line
     for (int i = 0; i < argc; ++i) {
@@ -67,7 +71,7 @@ int main(int argc, char* argv[]) {
             ++i;
 
         } else if (arg == "-graphics") {
-            // TODO: enable graphical interface
+            graphics = true;
         }
     };
     
@@ -85,7 +89,7 @@ int main(int argc, char* argv[]) {
         g.getPlayer(2).setAbility(s);
     }
 
-    g.init(8, p1_links, p2_links);
+    g.init(8, p1_links, p2_links, graphics, window);
 
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
