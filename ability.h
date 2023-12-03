@@ -2,6 +2,7 @@
 #define __ABILITY_H__
 #include "cell.h"
 #include "player.h"
+#include "exceptions.h"
 
 class Ability{
 public: 

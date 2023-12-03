@@ -3,14 +3,14 @@
 
 #include <stdexcept>
 
-class already_exists : public std::exception {
+class cell_occupied : public std::exception {  
 public:
     const char* what() const noexcept override {
-        return "The firewall is already present at the specified position.";
+        return "Chosen cell is already occupied"; 
     }
 };
 
-class out_bounds : public std::exception {
+class out_bounds : public std::exception { 
 public:
     const char* what() const noexcept override {
         return "STAY ON THE GRID >:(";
@@ -42,6 +42,26 @@ class not_diagonal_link : public std::exception {
 public:
     const char* what() const noexcept override {
         return "This link does not have a diagonal ability";
+    }
+};
+
+class invalid_input: public std::exception {
+public:
+    const char* what() const noexcept override {
+        return "Input is invalid, try again";
+    }
+};
+
+class wrong_player: public std::exception{
+public:
+    const char* what() const noexcept override {
+        return "Only your opponent can do that";
+    }
+};
+class cant_use_card: public std::exception{
+public:
+    const char* what() const noexcept override {
+        return "Ability card does not exist or has already been used";
     }
 };
 

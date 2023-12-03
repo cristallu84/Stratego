@@ -1,0 +1,21 @@
+Invalid Input 
+    - adding invalid ability/invalid link at cmd line
+        - adding more than 2 types of an ability cmd line
+    * invalid input for ability (ID is wrong, or gave a link when we need coords, etc)
+
+Wrong Player
+    * moving other player's link 
+    * moving onto own serverport
+    * moving into own border 
+    * can only use Download ability on opp link 
+    * can only use linkboost/diagonal on your own link 
+
+Can't do the action 
+    * ability card is already used
+    * never used the ability card (diagonal) (in game.cc)
+
+Cell is occupied 
+    * moving a link onto a cell with your own link 
+    * moving an s port on an nonempty cell
+    * moving a firewall onto a nonempty cell
+

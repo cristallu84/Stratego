@@ -29,7 +29,7 @@ bool Grid::isLink(char c) {
 // Checks if the link is currently on the board
 bool Grid::linkOnBoard(char l) {
     try {
-        Cell & c = this->findCell(l);
+        this->findCell(l);
     } catch (const not_on_board& e) {
         return false;
     }
@@ -167,6 +167,9 @@ Cell& Grid::findCell(char l) {
 }
 
 Cell& Grid::findCoord(int r, int c){
+    if (!((r >= 0 && r <= 7) && (c >= 0 && c <= 7))){
+       throw invalid_input();
+    }
     return theGrid[r][c]; 
 }
 
@@ -183,18 +186,28 @@ void Grid::nextTurn() {
 }
 
 void Grid::move(char l, string dir){
-
+    //checks if l is a link 
     if (!(isLink(l))) { throw not_link(); }
-    if (!(linkOfPlayer(l, this->getTurn()))) { throw not_your_link(); }
+    //checks if the link that wants to be moved belongs to the player
+    if (!(linkOfPlayer(l, this->getTurn()))) { throw not_your_link(); } 
+    //checks if the link exists on the board (has not been downloaded)
     if (!(linkOnBoard(l))) { throw not_on_board(); }
-
+    //checks if the direction entered is valid 
+    if (dir != "up" && 
+        dir != "down" && 
+        dir !="left" &&
+        dir != "right" &&
+        dir != "up-right" &&
+        dir != "up=left" &&
+        dir != "down-right" &&
+        dir != "down-up"){ throw invalid_input(); }
+    
     Cell& cell = this->findCell(l);
     int r = cell.getRow();
     int c = cell.getCol(); 
     Link& link = cell.getLink(); 
     int length = link.getMoveL();
     
-
     if (dir == "up"){
         r = r - length;
     } else if (dir == "down"){
@@ -203,7 +216,7 @@ void Grid::move(char l, string dir){
         c = c - length;
     } else if (dir == "right"){
         c = c + length;
-    }   else if (link.isDiagonal()){
+    } else if (link.isDiagonal()){
         if (dir == "up-right"){
         r = r - length;
         c = c + length;
@@ -217,26 +230,38 @@ void Grid::move(char l, string dir){
         r = r + length;
         c = c - length;
         }
-    }else{
+    }else{ //they're trying to move diagonally, but the link can't do that
         throw not_diagonal_link(); 
     }
-
+    //the link is being moved outside of the grid 
     if (outBound(r, c, this->getTurn())) { throw out_bounds(); }
 
-    //check for edge of board 
-    if (r >= gridSize){
-        this->download(cell, 1);
+    //check for the north and south borders of the board
+    if (r >= gridSize){ //reaches the player2's border
+        if (this->getTurn() == 2){
+            this->download(cell, 1); //p1 will download the cell
         return;
-        //p1 will download the cell
-    } else if (r < 0){
-        this->download(cell, 2);
-        return;
-        //p2 will download the cell 
+        }else{ //player 2 is trying to move into its own border
+            throw wrong_player();
+        }
+    } else if (r < 0){ //reaches player1's border
+        if (this->getTurn() == 1){
+            this->download(cell, 2);  //p2 will download the cell 
+            return;
+        }else{ //player 1 is trying to move into its own border
+            throw wrong_player();
+        }
+        
     }
 
     Cell& nextcell = theGrid[r][c];
     char nexttype = nextcell.getType();
     int player = this->getTurn(); //1 if p1 and 2 if p2
+    //player tries to move onto a cell that is occupied by one of their links
+    if (nextcell.isLink() && ((nexttype <= 'h' && player == 1) || (nexttype >= 'A' && player == 2))){
+        throw cell_occupied();
+    }
+
 
     //check for firewall
     if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 
@@ -245,18 +270,16 @@ void Grid::move(char l, string dir){
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 2); //player 2 downloads it 
             }//if it is not a virus, it will continue to check if the cell is empty
-        } else {
-            //error
-        }
+        } 
+        //else player1 goes through his own firewall or its a Data - nothing occurs
     } else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
         if (player != 2) { //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 1); //player 1 downloads it 
             } //if it is not a virus, it will continue to check if the cell is empty
-        } else {
-            //error
         }
+        //player 2 goes through his own firewall or its a Data - nothing occurs
     }
 
     //check for link 
@@ -268,14 +291,14 @@ void Grid::move(char l, string dir){
     if (nexttype == 's') {
         if (player != 1) { //if the player that goes through the firewall is p2
             this->download(cell, 1); //player 1 downloads it 
-        } else {
-            //error
+        } else { //player 1 is trying to go into its own server port
+            throw wrong_player();
         }
     } else if (nexttype == 'S') {
         if (player != 2){ //if the player that goes through the firewall is p2
             this->download(cell, 2); //player 2 downloads it 
-        }else{
-            //error
+        }else{ //player 2 is trying to go into its own server port
+            throw wrong_player();
         }
     } else if (cell.isLink()) { //nextcell is empty and cell hasn't been downloaded yet
         nextcell.upload(make_unique<Link>(link)); //link is attached to the next cell 

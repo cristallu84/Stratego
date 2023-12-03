@@ -1,7 +1,14 @@
 #include "ability.h"
 
-Firewall::Firewall(Cell &c, int turn) : cell{c}, turn{turn} {}
-void Firewall::execute() { cell.setFireWall(turn); }
+Firewall::Firewall(Cell &c, int turn): cell{c}, turn{turn} {}
+
+void Firewall::execute() {
+    if (cell.getType() != 'n' && cell.getFireWall() != 'n'){
+        throw cell_occupied();
+    }else{
+        cell.setFireWall(turn);
+    }
+}
 
 Linkboost::Linkboost(Link & l): link{l} {}
 void Linkboost::execute() {link.giveBoost(); }
@@ -96,5 +103,9 @@ MoveSPort::MoveSPort(Cell & sPort, Cell& location): sPort{sPort}, location{locat
 void MoveSPort::execute(){
     char type = sPort.getType();
     sPort.setType('n');
-    location.setType(type);
+    if (location.getType() != 'n'){
+        throw cell_occupied();
+    }else{
+        location.setType(type);
+    }
 }
