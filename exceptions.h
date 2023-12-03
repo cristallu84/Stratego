@@ -65,4 +65,11 @@ public:
     }
 };
 
+class incorrect_init: public std::exception {
+    public:
+        const char* what() const noexcept override {
+            return "Game initialized incorrectly, default settings will be applied for ";
+        }
+};
+
 #endif

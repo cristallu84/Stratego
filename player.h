@@ -2,6 +2,7 @@
 #define __PLAYER_H__
 #include <vector>
 #include <string>
+#include "exceptions.h"
 
 enum class CardType {
     Linkboost,
