@@ -73,7 +73,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
     textDisplay = new TextDisplay(n);
 
     if (graphics) {
-        graphicsDisplay = new GraphicsDisplay(window, n);
+        graphicsDisplay = new GraphicsDisplay(window, n, whoseTurn);
     }
     // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
     // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
@@ -146,10 +146,14 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             theGrid[i][j].attach(textDisplay);
-            // theGrid[i][j].attach(graphicsDisplay);
+            theGrid[i][j].attach(graphicsDisplay);
             theGrid[i][j].notifyObservers();
         }
-    }    
+    }
+
+    player1.attach(graphicsDisplay);
+    player2.attach(graphicsDisplay);
+    player1.notifyObservers();   
 }
 
 
@@ -180,8 +184,10 @@ int Grid::getTurn() const { return whoseTurn; }
 void Grid::nextTurn() {
     if (this->getTurn() == 1) {
         whoseTurn = 2;
+        player2.notifyObservers();
     } else {
         whoseTurn = 1;
+        player1.notifyObservers();
     }
 }
 

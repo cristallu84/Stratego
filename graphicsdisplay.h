@@ -4,15 +4,22 @@
 #include <vector>
 #include "observer.h"
 #include "window.h"
-class Cell;
+#include "player.h"
+#include "string.h"
 
-class GraphicsDisplay: public Observer {
+class Cell;
+class Player;
+
+class GraphicsDisplay: public Observer, public PlayerObserver {
   Xwindow *window;
   const int gridSize;
+  int playerturn;
+
  public:
-  GraphicsDisplay(Xwindow &window, int n);
+  GraphicsDisplay(Xwindow &window, int n, int playerturn);
 
   void notify(Cell &c) override;
+  void notifyPlayer(Player &p) override;
 
   ~GraphicsDisplay();
 };

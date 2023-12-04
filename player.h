@@ -2,6 +2,8 @@
 #define __PLAYER_H__
 #include <vector>
 #include <string>
+#include "subject.h"
+#include "observer.h"
 
 enum class CardType {
     Linkboost,
@@ -23,6 +25,7 @@ class Player{
     std::vector<Card> Abilities; 
     std::vector<std::string> MyLinks;
     std::vector<std::string> OppLinks;
+    std::vector<PlayerObserver*> observers;
     
     int MyD;
     int MyV;
@@ -59,6 +62,9 @@ class Player{
         void revealed(int index, std::string piece);
         void setAbility(std::string s);
         void addLink(std::string s);
+        
+        void attach(PlayerObserver *o);
+        void notifyObservers();
 };
 
 #endif

@@ -125,3 +125,13 @@ void Player::setAbility(std::string s){ //adds abilities to hand
 void Player::addLink(std::string s){
     MyLinks.emplace_back(s);
 }
+
+void Player::attach(PlayerObserver *o){
+    observers.emplace_back(o);
+}
+
+void Player::notifyObservers(){
+    for (auto o: observers){
+        o->notifyPlayer(*this);
+    }
+}
