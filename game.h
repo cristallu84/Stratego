@@ -11,7 +11,7 @@ class Grid{
     std::vector<std::vector<Cell>> theGrid; 
     int gridSize;
     TextDisplay *textDisplay; 
-    GraphicsDisplay *graphicsDisplay;
+    // GraphicsDisplay *graphicsDisplay;
     Player player1;
     Player player2; 
     int whoseTurn; 
@@ -25,7 +25,11 @@ class Grid{
         Grid();
         ~Grid();
 
-        void init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window);
+        // void init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window);
+
+        void init(int n, vector<string> p1_links, vector<string> p2_links);
+        void initAbilities(std::vector<std::string>& file_links);
+
         Cell& findCell(char l); // Returns the cell with link l
         Cell& findCoord(int r, int c); //Returns the cell at row r and col c
         int getTurn() const; // Returns the turn

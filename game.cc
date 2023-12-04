@@ -4,6 +4,42 @@
 
 using namespace std;
 
+void Grid::initAbilities(std::vector<std::string>& file_links) {
+
+    std::cout << "huh" << endl;
+
+    if (file_links.size() != 8) { throw incorrect_init(); }
+
+
+    int countD = 0;
+    int countV = 0;
+
+    vector<bool> virus = {false, false, false, false};
+    vector<bool> data = {false, false, false, false};
+
+    for (string element: file_links) {
+        
+        if (countD > 4 || countV > 4) { throw incorrect_init(); }
+        
+        char type = element[0];
+        char strength = element[1];
+
+        if (type != 'D' || type != 'V') {
+            throw incorrect_init();
+        } else if (strength > 52 || strength < 48) {
+            throw incorrect_init();
+        } else if (type == 'D') {
+            if (data[strength - 1]) { throw incorrect_init(); }
+            data[strength - 1] = true; 
+            ++countD;
+        } else if (type == 'V') {
+            if (virus[strength - 1]) { throw incorrect_init(); }
+            virus[strength - 1] = true; 
+            ++countV;
+        }
+    }
+}
+
 // Checks if the coordinates given are within the board
 bool Grid::outBound(int row, int col, int player) {
     if (col < 0 || col >= gridSize) {
@@ -58,23 +94,27 @@ bool Grid::linkOfPlayer(char l, int p) {
 // --------- Exceptions helpers above --------------
 
 
-Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, graphicsDisplay{}, player1{}, player2{}, whoseTurn{1} {}
+// Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, graphicsDisplay{}, player1{}, player2{}, whoseTurn{1} {}
+Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
+
 
 Grid::~Grid() {
     theGrid.clear();
     gridSize = 0;
     delete textDisplay;
-    delete graphicsDisplay;
+    // delete graphicsDisplay;
 }
 
-void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window) {
+// void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window) {
+void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
 
     gridSize = n;
     textDisplay = new TextDisplay(n);
 
-    if (graphics) {
-        graphicsDisplay = new GraphicsDisplay(window, n);
-    }
+    // if (graphics) {
+    //     graphicsDisplay = new GraphicsDisplay(window, n);
+    // }
+    
     // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
     // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
 
@@ -460,3 +500,6 @@ ostream &operator<<(ostream &out, const Grid &g) {
     
     return out;
 };
+
+
+

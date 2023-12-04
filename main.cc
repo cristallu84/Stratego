@@ -29,33 +29,37 @@ int main(int argc, char* argv[]) {
     bool ability1 = false;
     bool ability2 = false;
     bool graphics = false;
-    Xwindow window;
+    // Xwindow window;
 
     // Handle cmd line
     for (int i = 0; i < argc; ++i) {
+
 		string arg = argv[i];
         if (arg == "-ability1") {
-             ++i;
             // Set ability of P1
             string s = argv[i + 1];
+
+            ++i;
+                
             try {
                 g.getPlayer(1).setAbility(s);
-            } catch (const invalid_argument& e) {
-                cout << e.what() << "player 1 abilities." << endl;
+            } catch (const incorrect_init& e) {
+                std::cout << e.what() << "player 1 abilities." << endl;
             }
 
         } else if (arg == "-ability2") {
-             ++i;
             // Set ability of P2
             string s = argv[i + 1];
+             ++i;
+
             try {
                 g.getPlayer(2).setAbility(s);
-            } catch (const invalid_argument& e) {
+            } catch (const incorrect_init& e) {
                 cout << e.what() << "player 2 abilities." << endl;
             }    
                 
         } else if (arg == "-link1" || arg == "-link2") {
-            ++i;
+            
             // Clear the vectors before pushing back data into
             if (arg == "-link1") {
                 p1_links.clear();
@@ -73,32 +77,35 @@ int main(int argc, char* argv[]) {
 
             // Determines which links to push back data into
             vector<string>& current_links = (arg == "-link1") ? p1_links : p2_links;
+            
+            
             vector<string> file_links;
 
             while (iss >> s) {
+                // cout << s << endl;
                 file_links.emplace_back(s);
             }
 
-            try {
-                for (string element: file_links) {
-                    char type = element[0];
-                    char strength = element[1];
+            ++i;
 
-                    if (type != 'D' || type != 'V') {
-                        throw incorrect_init();
-                    } else if (strength > 52 || strength < 48) {
-                        throw incorrect_init();
-                    }
-                }
+            bool correct = true;
+      
+            try {
+
+                g.initAbilities(file_links);
+
             } catch (const incorrect_init& e) {
-                string temp = (arg == "-link1") ? "player 1" : "player 2";
-                cout << e.what() << temp << " link assignment." << endl;
+                correct = false;
+                string temp = (arg == "-link1") ? "player 1's" : "player 2's";
+                cout << e.what() << temp << " link assignments." << endl;
+            }  
+
+            if (correct) {
+                current_links = file_links;
             }
 
-            current_links = file_links;
-
         } else if (arg == "-graphics") {
-            graphics = true;
+            // graphics = true;
         }
     };
     
@@ -116,7 +123,9 @@ int main(int argc, char* argv[]) {
         g.getPlayer(2).setAbility(s);
     }
 
-    g.init(8, p1_links, p2_links, graphics, window);
+    // g.init(8, p1_links, p2_links, graphics, window);
+    g.init(8, p1_links, p2_links);
+
 
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
@@ -308,7 +317,7 @@ int main(int argc, char* argv[]) {
                 }
             } catch (ios::failure) {
             } catch (std::exception& e) {
-                cout << e.what() << endl;
+                cout << "ERROR: " << e.what() << endl;
             } catch (...) {
                 cout << "Error occured" << endl;
             }
