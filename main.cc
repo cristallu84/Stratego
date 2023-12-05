@@ -200,8 +200,8 @@ int main(int argc, char* argv[]) {
                             Cell& cell = g.findCell(cellname);
 
                             //player is trying to use download on their own link:
-                            if ((cellname <= 'h' && player == 1 && cellname >= 'a') || 
-                                (cellname >= 'A' && player == 2 && cellname >= 'H')) {
+                            if ((cellname >= 'a' && cellname <= 'h' && player == 1) || 
+                                (cellname >= 'A' && cellname <= 'H'&& player == 2)) {
                                 throw wrong_player();
                             }  
 
