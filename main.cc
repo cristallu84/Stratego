@@ -156,25 +156,6 @@ int main(int argc, char* argv[]) {
 
                         g.move(c,d);
 
-                        // try {
-                        //     g.move(c, d);
-                        // } catch (const not_link& e) {
-                        //     cerr << "Error: " << e.what() << endl;
-                        //     g.nextTurn();
-                        // } catch (const not_your_link& e) {
-                        //     cerr << "Error: " << e.what() << endl;
-                        //     g.nextTurn();
-                        // } catch (const not_on_board& e) {
-                        //     cerr << "Error: " << e.what() << endl;
-                        //     g.nextTurn();
-                        // } catch (const out_bounds& e) {
-                        //     cerr << "Error: " << e.what() << endl;
-                        //     g.nextTurn();
-                        // } catch (...) {
-                        //     cerr << "Error: " << "Be better bro B)" << endl;
-                        //     g.nextTurn();
-                        // }
-
                         g.nextTurn();
                         cout << g << endl;
 
