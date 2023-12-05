@@ -9,7 +9,8 @@ Player::Player():
     OppD{0},
     OppV{0},
     MyAbil{5},
-    OppAbil{5}
+    OppAbil{5},
+    Turn{false}
 {
     std::vector<std::string> v(8,"?");
     OppLinks = v;
@@ -48,6 +49,14 @@ void Player::incrOppV(){++OppV;}
 void Player::decrMyAbil(){--MyAbil;}
 
 void Player::decrOppAbil(){--OppAbil;}
+
+void Player::switchTurn() {
+    if (Turn) {
+        Turn == false;
+    } else {
+        Turn == true;
+    }
+}
 
 void Player::polarizeUpdate(char newtype, int ID, bool mine){
 if (mine){

@@ -151,6 +151,9 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
         }
     }
 
+    // Switches player1 turn on for graphics display
+    player1.switchTurn();
+
     player1.attach(graphicsDisplay);
     player2.attach(graphicsDisplay);
     player1.notifyObservers();   
@@ -184,9 +187,13 @@ int Grid::getTurn() const { return whoseTurn; }
 void Grid::nextTurn() {
     if (this->getTurn() == 1) {
         whoseTurn = 2;
+        player1.switchTurn();
+        player2.switchTurn();
         player2.notifyObservers();
     } else {
         whoseTurn = 1;
+        player1.switchTurn();
+        player2.switchTurn();
         player1.notifyObservers();
     }
     // Flips revealed cells for graphic display

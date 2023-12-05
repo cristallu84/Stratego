@@ -34,6 +34,8 @@ class Player{
     int MyAbil;
     int OppAbil;
 
+    bool Turn;
+
     public: 
         Player(); 
         std::string gameState(); //returns whether player has won, lost or none
@@ -44,6 +46,7 @@ class Player{
         int getOppV();
         int getMyAbil();
         int getOppAbil();
+        bool getTurn();
         
         void incrMyD();
         void incrMyV();
@@ -51,6 +54,7 @@ class Player{
         void incrOppV();
         void decrMyAbil();
         void decrOppAbil();
+        void switchTurn();
 
         void polarizeUpdate(char newtype, int ID, bool mine);
 
