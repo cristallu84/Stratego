@@ -275,6 +275,7 @@ void Grid::move(char l, string dir){
     int c = cell.getCol(); 
     Link& link = cell.getLink(); 
     int length = link.getMoveL();
+    int turn = this->getTurn(); //1 if p1 and 2 if p2
     
     if (dir == "up"){
         r = r - length;
@@ -303,18 +304,18 @@ void Grid::move(char l, string dir){
     }
 
     //the link is being moved outside of the grid 
-    if (outBound(r, c, this->getTurn())) { throw out_bounds(); }
+    if (outBound(r, c, turn)) { throw out_bounds(); }
 
     //check for the north and south borders of the board
     if (r >= gridSize){ //reaches the player2's border
-        if (this->getTurn() == 1){
+        if (turn == 1){
             this->download(cell, 1); //p1 will download the cell
         return;
         }else{ //player 2 is trying to move into its own border
             throw wrong_player();
         }
     } else if (r < 0){ //reaches player1's border
-        if (this->getTurn() == 2){
+        if (turn == 2){
             this->download(cell, 2);  //p2 will download the cell 
             return;
         }else{ //player 1 is trying to move into its own border
@@ -325,16 +326,15 @@ void Grid::move(char l, string dir){
 
     Cell& nextcell = theGrid[r][c];
     char nexttype = nextcell.getType();
-    int player = this->getTurn(); //1 if p1 and 2 if p2
     //player tries to move onto a cell that is occupied by one of their links
-    if (nextcell.isLink() && ((nexttype <= 'h' && player == 1) || (nexttype >= 'A' && player == 2))){
+    if (nextcell.isLink() && ((nexttype <= 'h' && turn == 1) || (nexttype >= 'A' && turn == 2))){
         throw cell_occupied();
     }
 
 
     //check for firewall
     if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 
-        if (player != 1){ //if the player that goes through the firewall is an opp
+        if (turn != 1){ //if the player that goes through the firewall is an opp
             this->reveal(cell);
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 2); //player 2 downloads it 
@@ -342,7 +342,7 @@ void Grid::move(char l, string dir){
         } 
         //else player1 goes through his own firewall or its a Data - nothing occurs
     } else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
-        if (player != 2) { //if the player that goes through the firewall is an opp
+        if (turn != 2) { //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
                 this->download(cell, 1); //player 1 downloads it 
@@ -357,14 +357,14 @@ void Grid::move(char l, string dir){
     }
 
     //check for serverport
-    if (nexttype == 's') {
-        if (player != 1) { //if the player that goes through the firewall is p2
+    if (nexttype == 's') { //p1 serverport
+        if (turn != 1) { //if the player that goes through the firewall is not p1
             this->download(cell, 1); //player 1 downloads it 
         } else { //player 1 is trying to go into its own server port
             throw wrong_player();
         }
-    } else if (nexttype == 'S') {
-        if (player != 2){ //if the player that goes through the firewall is p2
+    } else if (nexttype == 'S') { //p2 serverport 
+        if (turn != 2){ //if the player that goes through the firewall is p2
             this->download(cell, 2); //player 2 downloads it 
         }else{ //player 2 is trying to go into its own server port
             throw wrong_player();
@@ -386,7 +386,7 @@ void Grid::reveal(Cell& c){
 
 void Grid::download(Cell& c, int player) {
     std::unique_ptr<Download> d = std::make_unique<Download>(c, player, player1, player2);
-    d->execute();
+    d->execute(); 
 }
 
 // TODO: Move fighter to init cell if fighter wins
