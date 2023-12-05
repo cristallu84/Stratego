@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
             vector<string> file_links;
 
             while (iss >> s) {
-                // cout << s << endl;
+                cout << s << endl;
                 file_links.emplace_back(s);
             }
 

@@ -22,7 +22,7 @@ void Grid::initAbilities(std::vector<std::string>& file_links) {
         char type = element[0];
         char strength = element[1];
 
-        if (type != 'D' || type != 'V') {
+        if (type != 'D' && type != 'V') {
             throw incorrect_init();
         } else if (strength > 52 || strength < 48) {
             throw incorrect_init();
