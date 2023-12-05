@@ -7,7 +7,7 @@
 #include <vector>
 #include <ctime>
 #include <chrono>
-#include "game.h"
+#include "grid.h"
 #include "window.h"
 #include "graphicsdisplay.h"
 
