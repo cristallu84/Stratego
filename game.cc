@@ -333,7 +333,7 @@ void Grid::move(char l, string dir){
 
 
     //check for firewall
-    if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p1 
+    if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p1 
         if (turn != 1){ //if the player that goes through the firewall is an opp
             this->reveal(cell);
             if (link.getType() == 'V'){ //if it is a virus
@@ -341,7 +341,7 @@ void Grid::move(char l, string dir){
             }//if it is not a virus, it will continue to check if the cell is empty
         } 
         //else player1 goes through his own firewall or its a Data - nothing occurs
-    } else if (nextcell.getFireWall() == 'm'){ //if the cell is occupied by a firewall from p2
+    } else if (nextcell.getFireWall() == 'w'){ //if the cell is occupied by a firewall from p2
         if (turn != 2) { //if the player that goes through the firewall is an opp
             this->reveal(cell); //reveal the link
             if (link.getType() == 'V'){ //if it is a virus
