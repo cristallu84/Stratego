@@ -6,8 +6,6 @@ using namespace std;
 
 void Grid::initAbilities(std::vector<std::string>& file_links) {
 
-    std::cout << "huh" << endl;
-
     if (file_links.size() != 8) { throw incorrect_init(); }
 
 
