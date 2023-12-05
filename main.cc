@@ -320,9 +320,8 @@ int main(int argc, char* argv[]) {
             } catch (...) {
                 cout << "Error occured" << endl;
             }
-
+            
             if (in != &cin) delete in;
-            break;
         }
     }
     catch (ios::failure) {}
