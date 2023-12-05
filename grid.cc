@@ -97,15 +97,17 @@ Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, graphicsDisplay{}, player1
 Grid::~Grid() {
     theGrid.clear();
     gridSize = 0;
+    delete graphicsDisplay;
+    delete textDisplay;
 }
 
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow& window) {
 
     gridSize = n;
-    unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
+    textDisplay = new TextDisplay(n);
 
     if (graphics) {
-        unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(window, n, whoseTurn);
+        graphicsDisplay = new GraphicsDisplay(window, n, whoseTurn);
     }
 
     // Player 1 initialization
@@ -175,7 +177,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            theGrid[i][j].attach(textDisplay.get());
+            theGrid[i][j].attach(textDisplay);
             if (graphics){
                 theGrid[i][j].attach(graphicsDisplay);
             }
