@@ -321,6 +321,17 @@ int main(int argc, char* argv[]) {
             }
 
             if (in != &cin) delete in;
+
+            cout << "Play again? (Y/N)" << endl;
+            string playAgain;
+            cin >> playAgain;
+            if (playAgain == "Y" || playAgain == "y") {
+                cout << "Playing again!" << endl;
+                continue;
+            } else {
+                cout << "Exiting the game" << endl;
+                break;
+            }
         }
     }
     catch (ios::failure) {}
