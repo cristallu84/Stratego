@@ -4,6 +4,8 @@
 #include <string>
 #include "subject.h"
 #include "observer.h"
+#include <iostream>
+#include "exceptions.h"
 
 enum class CardType {
     Linkboost,

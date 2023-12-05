@@ -108,6 +108,28 @@ void Player::revealed(int index, std::string piece){
 
 void Player::setAbility(std::string s){ //adds abilities to hand 
     
+    if (s.length() != 5) { throw incorrect_init();  } 
+
+    std::string allowedAbilities = "LPFSDdpm";
+
+    std::vector<int> count = {0, 0, 0, 0, 0, 0, 0, 0};
+
+    // check if abilities is wrong and then throw
+    for (char c: s) {
+
+        if (allowedAbilities.find(c) == std::string::npos) {
+
+            throw incorrect_init();
+        } else {
+
+            ++count[allowedAbilities.find(c)];
+        
+            if (count[allowedAbilities.find(c)] >= 2) {
+                throw incorrect_init();
+            }
+        }
+    }
+
     for (char c: s) {
         Card abil;
 

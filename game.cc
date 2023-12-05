@@ -4,6 +4,42 @@
 
 using namespace std;
 
+void Grid::initAbilities(std::vector<std::string>& file_links) {
+
+    std::cout << "huh" << endl;
+
+    if (file_links.size() != 8) { throw incorrect_init(); }
+
+
+    int countD = 0;
+    int countV = 0;
+
+    vector<bool> virus = {false, false, false, false};
+    vector<bool> data = {false, false, false, false};
+
+    for (string element: file_links) {
+        
+        if (countD > 4 || countV > 4) { throw incorrect_init(); }
+        
+        char type = element[0];
+        char strength = element[1];
+
+        if (type != 'D' || type != 'V') {
+            throw incorrect_init();
+        } else if (strength > 52 || strength < 48) {
+            throw incorrect_init();
+        } else if (type == 'D') {
+            if (data[strength - 1]) { throw incorrect_init(); }
+            data[strength - 1] = true; 
+            ++countD;
+        } else if (type == 'V') {
+            if (virus[strength - 1]) { throw incorrect_init(); }
+            virus[strength - 1] = true; 
+            ++countV;
+        }
+    }
+}
+
 // Checks if the coordinates given are within the board
 bool Grid::outBound(int row, int col, int player) {
     if (col < 0 || col >= gridSize) {
@@ -75,6 +111,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
     if (graphics) {
         graphicsDisplay = new GraphicsDisplay(window, n, whoseTurn);
     }
+    
     // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
     // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
 
@@ -166,8 +203,15 @@ Cell& Grid::findCell(char l) {
             }
         }
     }
-    throw not_on_board();
-    // case where cell is not found
+
+    // Case link is not on the board
+    if ((l >= 'a' && l <= 'h') ||
+    (l >= 'A' && l <= 'H')) {
+        throw not_on_board();
+    }
+
+    // Case link does not exist
+    throw not_link();
 }
 
 Cell& Grid::findCoord(int r, int c){
@@ -207,10 +251,13 @@ void Grid::nextTurn() {
 void Grid::move(char l, string dir){
     //checks if l is a link 
     if (!(isLink(l))) { throw not_link(); }
+
     //checks if the link that wants to be moved belongs to the player
     if (!(linkOfPlayer(l, this->getTurn()))) { throw not_your_link(); } 
+    
     //checks if the link exists on the board (has not been downloaded)
     if (!(linkOnBoard(l))) { throw not_on_board(); }
+    
     //checks if the direction entered is valid 
     if (dir != "up" && 
         dir != "down" && 
@@ -219,7 +266,7 @@ void Grid::move(char l, string dir){
         dir != "up-right" &&
         dir != "up=left" &&
         dir != "down-right" &&
-        dir != "down-up"){ throw invalid_input(); }
+        dir != "down-up") { throw invalid_input(); }
     
     Cell& cell = this->findCell(l);
     int r = cell.getRow();
@@ -229,29 +276,30 @@ void Grid::move(char l, string dir){
     
     if (dir == "up"){
         r = r - length;
-    } else if (dir == "down"){
+    } else if (dir == "down") {
         r = r + length;
-    } else if (dir == "left"){
+    } else if (dir == "left") {
         c = c - length;
-    } else if (dir == "right"){
+    } else if (dir == "right") {
         c = c + length;
-    } else if (link.isDiagonal()){
-        if (dir == "up-right"){
-        r = r - length;
-        c = c + length;
-        }else if (dir == "up-left"){
-        r = r - length;
-        c = c - length;
-        }else if (dir == "down-right"){
-        r = r + length;
-        c = c + length;
-        }else if (dir == "down-left"){
-        r = r + length;
-        c = c - length;
+    } else if (link.isDiagonal()) {
+        if (dir == "up-right") {
+            r = r - length;
+            c = c + length;
+        } else if (dir == "up-left") {
+            r = r - length;
+            c = c - length;
+        } else if (dir == "down-right") {
+            r = r + length;
+            c = c + length;
+        } else if (dir == "down-left") {
+            r = r + length;
+            c = c - length;
         }
-    }else{ //they're trying to move diagonally, but the link can't do that
+    } else { //they're trying to move diagonally, but the link can't do that
         throw not_diagonal_link(); 
     }
+
     //the link is being moved outside of the grid 
     if (outBound(r, c, this->getTurn())) { throw out_bounds(); }
 
@@ -467,3 +515,6 @@ ostream &operator<<(ostream &out, const Grid &g) {
     
     return out;
 };
+
+
+
