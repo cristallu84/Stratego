@@ -157,12 +157,12 @@ int main(int argc, char* argv[]) {
                     g.nextTurn();
                     cout << g << endl;
 
-                } else if (cmd == "abilities") {
+                    } else if (cmd == "abilities") {
 
-                    vector<string> cards = g.printAbilities();
-                    for (std::vector<std::string>::size_type i = 0; i < cards.size(); i += 2) {
-                        cout << cards[i] << " - " << cards[i + 1] << endl;
-                    }
+                        vector<string> cards = g.printAbilities();
+                        for (std::vector<std::string>::size_type i = 0; i < cards.size(); i += 2) {
+                            cout << cards[i] << " - " << cards[i + 1] << endl;
+                        }
 
                 } else if (cmd == "ability") {
                     int ID; 
