@@ -284,12 +284,10 @@ int main(int argc, char* argv[]) {
                                 g.getPlayer(1).decrMyAbil();
                                 g.getPlayer(2).decrOppAbil();
                                 g.getPlayer(1).notifyObservers();
-                                g.getPlayer(2).notifyObservers();
                             }
                             if (player == 2) {
                                 g.getPlayer(2).decrMyAbil();
                                 g.getPlayer(1).decrOppAbil();
-                                g.getPlayer(1).notifyObservers();
                                 g.getPlayer(2).notifyObservers();
                             }
                         }
