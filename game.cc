@@ -6,8 +6,6 @@ using namespace std;
 
 void Grid::initAbilities(std::vector<std::string>& file_links) {
 
-    std::cout << "huh" << endl;
-
     if (file_links.size() != 8) { throw incorrect_init(); }
 
 
@@ -388,7 +386,7 @@ void Grid::download(Cell& c, int player) {
 }
 
 // TODO: Move fighter to init cell if fighter wins
-bool Grid::battle(Cell& init, Cell& fighter) { //need to update this
+void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     // init = battle initiating player cell and link
     //get strength of both links at the cells 
     int l1 = init.getLink().getStrength();
@@ -413,11 +411,9 @@ bool Grid::battle(Cell& init, Cell& fighter) { //need to update this
     if (l2 > l1) { 
         // fighter wins - pFighter downloads the init link
         this->download(init, pFighter);
-        return false;
     }else { //l1 > l2 or tie 
         // init wins- pInit downloads the fighter link
         this->download(fighter, pInit);
-        return true;
     }   
 }
 
