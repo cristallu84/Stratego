@@ -230,13 +230,13 @@ int Grid::getTurn() const { return whoseTurn; }
 void Grid::nextTurn() {
     if (this->getTurn() == 1) {
         whoseTurn = 2;
-        player1.switchTurn();
-        player2.switchTurn();
+        player1.setTurn(2);
+        player2.setTurn(2);
         player2.notifyObservers();
     } else {
         whoseTurn = 1;
-        player1.switchTurn();
-        player2.switchTurn();
+        player1.setTurn(1);
+        player2.setTurn(1);
         player1.notifyObservers();
     }
     // Flips revealed cells for graphic display

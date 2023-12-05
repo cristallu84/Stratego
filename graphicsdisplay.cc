@@ -15,28 +15,26 @@ GraphicsDisplay::GraphicsDisplay(Xwindow &window, int n, int playerturn) : windo
         window.fillRectangle(100, i * cellSize + 100, 297, 1, Xwindow::Black);
     }
 
-    window.drawString(225, 20, "Player 1");
-    window.drawString(160, 40, "D: X");
-    window.drawString(215, 40, "V: X");
-    window.drawString(265, 40, "Abilities: X");
-
-    // window.drawString(177, 50, "0");  + 17
+    window.drawString(225, 25, "Player 1");
+    window.drawString(160, 50, "D: X");
+    window.drawString(215, 50, "V: X");
+    window.drawString(265, 50, "Abilities: X");
 
     for (int i = 0; i < 8; i++) {
         char letter = 'a' + i;
         string s{letter};
-        window.drawString(95 + i * 40, 60, s + ": ");
+        window.drawString(95 + i * 40, 75, s + ": ");
     }
 
-    window.drawString(225, 420, "Player 2");
-    window.drawString(160, 440, "D: X");
-    window.drawString(215, 440, "V: X");
-    window.drawString(265, 440, "Abilities: X");
+    window.drawString(225, 425, "Player 2");
+    window.drawString(160, 450, "D: X");
+    window.drawString(215, 450, "V: X");
+    window.drawString(265, 450, "Abilities: X");
 
     for (int i = 0; i < 8; i++) {
         char letter = 'A' + i;
         string s{letter};
-        window.drawString(95 + i * 40, 460, s + ": ");
+        window.drawString(95 + i * 40, 475, s + ": ");
     }
 }
 
@@ -49,58 +47,45 @@ void GraphicsDisplay::notifyPlayer(Player &p) {
     string OppAbil = to_string(p.getOppAbil());
 
     if (p.getTurn() == 1) {
-        window->drawString(177, 40, MyD);
-        window->drawString(232, 40, MyV);
-        window->drawString(330, 40, MyAbil);
+        window->drawString(177, 50, MyD);
+        window->drawString(232, 50, MyV);
+        window->drawString(330, 50, MyAbil);
 
         for (int i = 0; i < 8; i++) {
-            window->drawString(110 + i * 40, 60, p.getMyLink(i));
+            window->drawString(110 + i * 40, 75, p.getMyLink(i));
         }
 
-        window->drawString(177, 440, OppD);
-        window->drawString(232, 440, OppV);
-        window->drawString(330, 440, OppAbil);
+        window->drawString(177, 450, OppD);
+        window->drawString(232, 450, OppV);
+        window->drawString(330, 450, OppAbil);
 
         for (int i = 0; i < 8; i++) {
-            window->drawString(110 + i * 40, 460, p.getOppLink(i));
+            window->drawString(110 + i * 40, 475, p.getOppLink(i));
             if (p.getOppLink(i) == "?") {
-                window->drawString(115 + i * 40, 460, " ");
+                window->drawString(115 + i * 40, 475, " ");
             }
         } 
 
-        //vector<string> cards = p.printAbilities();
-        //for (std::vector<std::string>::size_type i = 0; i < cards.size(); i += 2) {
-        //    window->drawString(20 + i * 50, 80, cards[i] + " - " + cards[i + 1]);
-        //}
-
     } else {
-        window->drawString(177, 40, OppD);
-        window->drawString(232, 40, OppV);
-        window->drawString(330, 40, OppAbil);
+        window->drawString(177, 50, OppD);
+        window->drawString(232, 50, OppV);
+        window->drawString(330, 50, OppAbil);
 
         for (int i = 0; i < 8; i++) {
-            window->drawString(110 + i * 40, 60, p.getOppLink(i));
+            window->drawString(110 + i * 40, 75, p.getOppLink(i));
             if (p.getOppLink(i) == "?") {
-                window->drawString(115 + i * 40, 60, " ");
+                window->drawString(115 + i * 40, 75, " ");
             }
         }
 
-        window->drawString(177, 440, MyD);
-        window->drawString(232, 440, MyV);
-        window->drawString(330, 440, MyAbil);
+        window->drawString(177, 450, MyD);
+        window->drawString(232, 450, MyV);
+        window->drawString(330, 450, MyAbil);
 
         for (int i = 0; i < 8; i++) {
-            window->drawString(110 + i * 40, 460, p.getMyLink(i));
+            window->drawString(110 + i * 40, 475, p.getMyLink(i));
         }
     }
-
-    //    std::vector<Card> Abilities; 
-    //std::vector<std::string> MyLinks;
-    //std::vector<std::string> OppLinks;
-    //std::vector<PlayerObserver*> observers;
-    
-    // window.drawString(232, 50, "1");
-    // window.drawString(272, 50, "1");
 }
 
 void GraphicsDisplay::notify(Cell &c) {

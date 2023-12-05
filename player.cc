@@ -52,13 +52,7 @@ void Player::decrMyAbil(){--MyAbil;}
 
 void Player::decrOppAbil(){--OppAbil;}
 
-void Player::switchTurn() {
-    if (Turn == 1) {
-        Turn = 2;
-    } else {
-        Turn = 1;
-    }
-}
+void Player::setTurn(int n) { Turn = n; }
 
 void Player::polarizeUpdate(char newtype, int ID, bool mine){
 if (mine){

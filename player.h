@@ -56,7 +56,7 @@ class Player{
         void incrOppV();
         void decrMyAbil();
         void decrOppAbil();
-        void switchTurn();
+        void setTurn(int n);
 
         void polarizeUpdate(char newtype, int ID, bool mine);
 
