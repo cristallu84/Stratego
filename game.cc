@@ -411,11 +411,9 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     if (l2 > l1) { 
         // fighter wins - pFighter downloads the init link
         this->download(init, pFighter);
-        return false;
     }else { //l1 > l2 or tie 
         // init wins- pInit downloads the fighter link
         this->download(fighter, pInit);
-        return true;
     }   
 }
 
