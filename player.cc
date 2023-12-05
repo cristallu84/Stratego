@@ -10,7 +10,7 @@ Player::Player():
     OppV{0},
     MyAbil{5},
     OppAbil{5},
-    Turn{false}
+    Turn{1}
 {
     std::vector<std::string> v(8,"?");
     OppLinks = v;
@@ -38,6 +38,8 @@ int Player::getMyAbil(){return MyAbil;}
 
 int Player::getOppAbil(){return OppAbil;}
 
+int Player::getTurn(){return Turn;}
+
 void Player::incrMyD(){++MyD;}
 
 void Player::incrMyV(){++MyV;}
@@ -51,10 +53,10 @@ void Player::decrMyAbil(){--MyAbil;}
 void Player::decrOppAbil(){--OppAbil;}
 
 void Player::switchTurn() {
-    if (Turn) {
-        Turn == false;
+    if (Turn == 1) {
+        Turn = 2;
     } else {
-        Turn == true;
+        Turn = 1;
     }
 }
 

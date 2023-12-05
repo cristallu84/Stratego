@@ -34,7 +34,7 @@ class Player{
     int MyAbil;
     int OppAbil;
 
-    bool Turn;
+    int Turn;
 
     public: 
         Player(); 
@@ -46,7 +46,7 @@ class Player{
         int getOppV();
         int getMyAbil();
         int getOppAbil();
-        bool getTurn();
+        int getTurn();
         
         void incrMyD();
         void incrMyV();

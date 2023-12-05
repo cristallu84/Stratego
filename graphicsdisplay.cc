@@ -48,7 +48,7 @@ void GraphicsDisplay::notifyPlayer(Player &p) {
     string MyAbil = to_string(p.getMyAbil());
     string OppAbil = to_string(p.getOppAbil());
 
-    if (playerturn == 1) {
+    if (p.getTurn() == 1) {
         window->drawString(177, 50, MyD);
         window->drawString(232, 50, MyV);
         window->drawString(330, 50, MyAbil);
@@ -63,6 +63,9 @@ void GraphicsDisplay::notifyPlayer(Player &p) {
 
         for (int i = 0; i < 8; i++) {
             window->drawString(110 + i * 40, 475, p.getOppLink(i));
+            if (p.getOppLink(i) == "?") {
+                window->drawString(115 + i * 40, 475, " ");
+            }
         }
     } else {
         window->drawString(177, 50, OppD);
@@ -71,6 +74,9 @@ void GraphicsDisplay::notifyPlayer(Player &p) {
 
         for (int i = 0; i < 8; i++) {
             window->drawString(110 + i * 40, 75, p.getOppLink(i));
+            if (p.getOppLink(i) == "?") {
+                window->drawString(115 + i * 40, 75, " ");
+            }
         }
 
         window->drawString(177, 450, MyD);
