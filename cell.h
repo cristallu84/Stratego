@@ -7,7 +7,7 @@
 #include <vector>
 #include <memory>
 
-class Cell{ 
+class Cell : public Subject { 
     char celltype; //a-h for link of p1, A-H for link of p2, s or S for server port, n for empty 
     char firewall; //m for player1, w for player 2, n for empty
     int row; 

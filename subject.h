@@ -25,4 +25,6 @@ class Subject {
       }
 };
 
+inline Subject::~Subject() {}
+
 #endif

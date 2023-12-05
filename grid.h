@@ -10,8 +10,8 @@
 class Grid{
     std::vector<std::vector<Cell>> theGrid; 
     int gridSize;
-    TextDisplay *textDisplay; 
-    GraphicsDisplay *graphicsDisplay;
+    std::unique_ptr<TextDisplay> textDisplay; 
+    std::unique_ptr<GraphicsDisplay> graphicsDisplay;
     Player player1;
     Player player2; 
     int whoseTurn; 

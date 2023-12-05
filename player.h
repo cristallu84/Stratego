@@ -23,7 +23,7 @@ struct Card { //Represent the ability cards that Player holds
     bool used; 
 };
 
-class Player{
+class Player : public Subject {
     std::vector<Card> Abilities; 
     std::vector<std::string> MyLinks;
     std::vector<std::string> OppLinks;

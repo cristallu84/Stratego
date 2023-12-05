@@ -92,22 +92,20 @@ bool Grid::linkOfPlayer(char l, int p) {
 // --------- Exceptions helpers above --------------
 
 
-Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, graphicsDisplay{}, player1{}, player2{}, whoseTurn{1} {}
+Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{nullptr}, graphicsDisplay{nullptr}, player1{}, player2{}, whoseTurn{1} {}
 
 Grid::~Grid() {
     theGrid.clear();
     gridSize = 0;
-    delete graphicsDisplay;
-    delete textDisplay;
 }
 
 void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow& window) {
 
     gridSize = n;
-    textDisplay = new TextDisplay(n);
+    textDisplay = std::make_unique<TextDisplay>(n);
 
     if (graphics) {
-        graphicsDisplay = new GraphicsDisplay(window, n, whoseTurn);
+        graphicsDisplay = std::make_unique<GraphicsDisplay>(window, n, whoseTurn);
     }
 
     // Player 1 initialization
@@ -177,16 +175,16 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            theGrid[i][j].attach(textDisplay);
+            theGrid[i][j].attach(textDisplay.get());
             if (graphics){
-                theGrid[i][j].attach(graphicsDisplay);
+                theGrid[i][j].attach(graphicsDisplay.get());
             }
             theGrid[i][j].notifyObservers();
         }
     }
     if (graphics){
-        player1.attach(graphicsDisplay);
-        player2.attach(graphicsDisplay);
+        player1.attach(graphicsDisplay.get());
+        player2.attach(graphicsDisplay.get());
     }
 
     player1.notifyObservers();   
