@@ -248,7 +248,8 @@ int main(int argc, char* argv[]) {
                             iss >> link;
                             
                             //player is trying to use linkboost on their opponent's link 
-                            if ((link <= 'h' && player == 2) || (link >= 'A' && player == 1)){
+                            if ((link >= 'a' && link <= 'h' && player == 2) 
+                            || (link >= 'A' && link <= 'H' && player == 1)){
                                 throw wrong_player();
                             }
                             

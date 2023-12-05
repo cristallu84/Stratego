@@ -266,9 +266,9 @@ void Grid::move(char l, string dir){
         dir !="left" &&
         dir != "right" &&
         dir != "up-right" &&
-        dir != "up=left" &&
+        dir != "up-left" &&
         dir != "down-right" &&
-        dir != "down-up") { throw invalid_input(); }
+        dir != "down-left") { throw invalid_input(); }
     
     Cell& cell = this->findCell(l);
     int r = cell.getRow();
