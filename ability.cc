@@ -3,7 +3,7 @@
 Firewall::Firewall(Cell &c, int turn): cell{c}, turn{turn} {}
 
 void Firewall::execute() {
-    if (cell.getType() != 'n' && cell.getFireWall() != 'n'){
+    if (cell.getType() != 'n' || cell.getFireWall() != 'n'){
         throw cell_occupied();
     }else{
         cell.setFireWall(turn);
