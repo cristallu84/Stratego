@@ -124,7 +124,7 @@ void Player::setAbility(std::string s){ //adds abilities to hand
 
             ++count[allowedAbilities.find(c)];
         
-            if (count[allowedAbilities.find(c)] >= 2) {
+            if (count[allowedAbilities.find(c)] > 2) {
                 throw incorrect_init();
             }
         }
