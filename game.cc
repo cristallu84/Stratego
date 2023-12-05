@@ -94,9 +94,7 @@ bool Grid::linkOfPlayer(char l, int p) {
 // --------- Exceptions helpers above --------------
 
 
-// Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, graphicsDisplay{}, player1{}, player2{}, whoseTurn{1} {}
-Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, player1{}, player2{}, whoseTurn{1} {}
-
+Grid::Grid() : theGrid{}, gridSize{0}, textDisplay{}, graphicsDisplay{}, player1{}, player2{}, whoseTurn{1} {}
 
 Grid::~Grid() {
     theGrid.clear();
@@ -105,15 +103,14 @@ Grid::~Grid() {
     // delete graphicsDisplay;
 }
 
-// void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window) {
-void Grid::init(int n, vector<string> p1_links, vector<string> p2_links) {
+void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window) {
 
     gridSize = n;
     textDisplay = new TextDisplay(n);
 
-    // if (graphics) {
-    //     graphicsDisplay = new GraphicsDisplay(window, n);
-    // }
+    if (graphics) {
+        graphicsDisplay = new GraphicsDisplay(window, n);
+    }
     
     // unique_ptr<TextDisplay> textDisplay = make_unique<TextDisplay>(n);
     // unique_ptr<GraphicsDisplay> graphicsDisplay = make_unique<GraphicsDisplay>(n);
