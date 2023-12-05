@@ -66,13 +66,13 @@ void GraphicsDisplay::notifyPlayer(Player &p) {
             if (p.getOppLink(i) == "?") {
                 window->drawString(115 + i * 40, 460, " ");
             }
-        }
+        } 
 
         //vector<string> cards = p.printAbilities();
         //for (std::vector<std::string>::size_type i = 0; i < cards.size(); i += 2) {
         //    window->drawString(20 + i * 50, 80, cards[i] + " - " + cards[i + 1]);
         //}
-        
+
     } else {
         window->drawString(177, 40, OppD);
         window->drawString(232, 40, OppV);
