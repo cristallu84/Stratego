@@ -82,4 +82,3 @@ void Cell::notifyObservers(){
         o->notify(*this);
     }
 }
-

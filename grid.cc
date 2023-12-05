@@ -480,6 +480,3 @@ ostream &operator<<(ostream &out, const Grid &g) {
     
     return out;
 };
-
-
-

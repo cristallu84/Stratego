@@ -302,11 +302,13 @@ int main(int argc, char* argv[]) {
 
                     if (g.getPlayer(player).gameState() == "Won") {
                         cout << "Player " << player << " wins!" << endl;
+                        throw game_quit();
                         break;
                     } if (g.getPlayer(player).gameState() == "Lost") {
                         g.nextTurn();
                         int player = g.getTurn();
                         cout << "Player " << player << " wins!" << endl;
+                        throw game_quit();
                         break;
                     } else {
                         continue;
