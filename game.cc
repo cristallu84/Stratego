@@ -326,8 +326,9 @@ void Grid::move(char l, string dir){
 
     Cell& nextcell = theGrid[r][c];
     char nexttype = nextcell.getType();
-    //player tries to move onto a cell that is occupied by one of their links
-    if (nextcell.isLink() && ((nexttype <= 'h' && turn == 1) || (nexttype >= 'A' && turn == 2))){
+    //player tries to move onto a cell that is occupied by one of their own links
+    if (nextcell.isLink() && ((nexttype >= 'a' && nexttype <= 'h' && turn == 1) 
+    || (nexttype >= 'A' && nexttype <= 'H' && turn == 2))){
         throw cell_occupied();
     }
 
