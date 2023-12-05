@@ -129,6 +129,7 @@ int main(int argc, char* argv[]) {
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
     string s;
+    bool print = true; 
 
     try {
         while (1) {
@@ -141,9 +142,10 @@ int main(int argc, char* argv[]) {
                 cout << "Game has been exited" << endl;;
                 break;
             }
-
-            cout << g << endl;
-
+            if (print){
+                cout << g << endl;
+            }
+            print = true;
 
             try {
 
@@ -204,6 +206,8 @@ int main(int argc, char* argv[]) {
                                 (cellname >= 'A' && cellname <= 'H'&& player == 2)) {
                                 throw wrong_player();
                             }  
+                            if (player == 1) player = 2;
+                            else player = 1; 
 
                             std::unique_ptr<Download> d = std::make_unique<Download>(cell, player, g.getPlayer(1), g.getPlayer(2));
                             d->execute();
@@ -313,8 +317,10 @@ int main(int argc, char* argv[]) {
                 break;
             } catch (std::exception& e) {
                     cout << "ERROR: " << e.what() << endl;
+                    print = false;
             } catch (...) {
                 cout << "Error occured" << endl;
+                print = false;
             }
 
             if (in != &cin) delete in;
