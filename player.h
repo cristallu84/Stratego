@@ -38,7 +38,6 @@ class Player{
         Player(); 
         std::string gameState(); //returns whether player has won, lost or none
         
-        
         int getMyD(); 
         int getMyV();
         int getOppD();

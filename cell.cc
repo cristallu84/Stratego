@@ -6,7 +6,7 @@ firewall{firewall},
 row{row}, 
 col{col}, 
 link{std::move(link)}, 
-observers{} {}
+observers{} {}  
 
 Cell::Cell() : celltype{'n'}, firewall{'n'}, row{ 0 }, col{ 0 }, link{ nullptr }, observers{} {}
 

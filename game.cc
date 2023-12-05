@@ -90,7 +90,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
         // Creating a link
         char type = p1_links[i][0];
         int strength = p1_links[i][1];
-        unique_ptr<Link> link = make_unique<Link>('a' + i, type, strength, false, 1);
+        unique_ptr<Link> link = make_unique<Link>('a' + i, type, strength, true, false, 1);
 
         // Server ports
         if (i == n/2 - 1 || i == n/2) {
@@ -113,7 +113,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
         char type = p2_links[i][0];
         int strength = p2_links[i][1];
         char name = 'A' + i;
-        unique_ptr<Link> link = make_unique<Link>(name, type, strength, false, 1);
+        unique_ptr<Link> link = make_unique<Link>(name, type, strength, false, false, 1);
 
         // Server ports
         if (i == n/2 - 1|| i == n/2) {
@@ -188,6 +188,15 @@ void Grid::nextTurn() {
     } else {
         whoseTurn = 1;
         player1.notifyObservers();
+    }
+    // Flips revealed cells for graphic display
+    for (int i = 0; i < gridSize; i++) {
+        for (int j = 0; j < gridSize; j++) {
+            if (theGrid[i][j].getType() != 'n' && theGrid[i][j].getType() != 's' && theGrid[i][j].getType() != 'S') {
+                theGrid[i][j].getLink().revealbool();
+                theGrid[i][j].notifyObservers();
+            }
+        }
     }
 }
 
@@ -325,7 +334,6 @@ void Grid::download(Cell& c, int player) {
     std::unique_ptr<Download> d = std::make_unique<Download>(c, player, player1, player2);
     d->execute();
 }
-
 
 // TODO: Move fighter to init cell if fighter wins
 bool Grid::battle(Cell& init, Cell& fighter) { //need to update this

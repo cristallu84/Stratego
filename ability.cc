@@ -84,7 +84,7 @@ void Scan::execute() {
         index = type - 65;
         Player1.revealed(index, piece); //reveal the cell to player 1
     }
-    link.revealbool(); //need to use reveal on the cell which is in grid 
+    link.permanentRevealBool(); //need to use reveal on the cell which is in grid 
 }
 
 
