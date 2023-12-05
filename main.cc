@@ -159,7 +159,7 @@ int main(int argc, char* argv[]) {
 
                     } else if (cmd == "abilities") {
 
-                        vector<string> cards = g.printAbilities();
+                        vector<string> cards = g.getPlayer(g.getTurn()).printAbilities();
                         for (std::vector<std::string>::size_type i = 0; i < cards.size(); i += 2) {
                             cout << cards[i] << " - " << cards[i + 1] << endl;
                         }
