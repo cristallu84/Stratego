@@ -32,21 +32,26 @@ void TextDisplay::notify(Cell &c){
 std::ostream &operator<<(std::ostream &out, const TextDisplay &td){
     
     int n = td.gridSize + 2;
+    int p = td.gridSize;
+            
 
-    for (int i = 0; i < n; ++i) {
-        out << "=";
-    }
-
-    for (int r = 1; r < n; ++r) {
-        out << "\n";
-        for (int c = 0; c < n; ++c) {
-            if (r == (n - 1)) {
-                out << "="; 
-            } else {
-                int r_temp = r - 1;
-                out << td.theDisplay[r_temp][c];
-            }
+    for (int r = 0; r < n; ++r) {
+        if (r == 1) {
+           out << "\n"; 
         }
+
+        if (r == 0 || r + 1 == n) {
+            for (int i = 0; i < p; ++i) {
+                out << "=";
+            }
+        } else {
+            for (int c = 0; c < p; ++c) {
+                out << td.theDisplay[r - 1][c];
+            }
+            out << "\n";
+        }
+        
     }
+
     return out; 
 }

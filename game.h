@@ -26,6 +26,8 @@ class Grid{
         ~Grid();
 
         void init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window);
+        void initAbilities(std::vector<std::string>& file_links);
+
         Cell& findCell(char l); // Returns the cell with link l
         Cell& findCoord(int r, int c); //Returns the cell at row r and col c
         int getTurn() const; // Returns the turn

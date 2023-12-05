@@ -33,20 +33,33 @@ int main(int argc, char* argv[]) {
 
     // Handle cmd line
     for (int i = 0; i < argc; ++i) {
+
 		string arg = argv[i];
         if (arg == "-ability1") {
             // Set ability of P1
             string s = argv[i + 1];
-            g.getPlayer(1).setAbility(s);
+
             ++i;
+                
+            try {
+                g.getPlayer(1).setAbility(s);
+            } catch (const incorrect_init& e) {
+                std::cout << e.what() << "player 1 abilities." << endl;
+            }
 
         } else if (arg == "-ability2") {
             // Set ability of P2
             string s = argv[i + 1];
-            g.getPlayer(2).setAbility(s);
-            ++i;
-        
+             ++i;
+
+            try {
+                g.getPlayer(2).setAbility(s);
+            } catch (const incorrect_init& e) {
+                cout << e.what() << "player 2 abilities." << endl;
+            }    
+                
         } else if (arg == "-link1" || arg == "-link2") {
+            
             // Clear the vectors before pushing back data into
             if (arg == "-link1") {
                 p1_links.clear();
@@ -64,11 +77,32 @@ int main(int argc, char* argv[]) {
 
             // Determines which links to push back data into
             vector<string>& current_links = (arg == "-link1") ? p1_links : p2_links;
+            
+            
+            vector<string> file_links;
 
-            while (iss >> s){
-                current_links.emplace_back(s);
+            while (iss >> s) {
+                // cout << s << endl;
+                file_links.emplace_back(s);
             }
+
             ++i;
+
+            bool correct = true;
+      
+            try {
+
+                g.initAbilities(file_links);
+
+            } catch (const incorrect_init& e) {
+                correct = false;
+                string temp = (arg == "-link1") ? "player 1's" : "player 2's";
+                cout << e.what() << temp << " link assignments." << endl;
+            }  
+
+            if (correct) {
+                current_links = file_links;
+            }
 
         } else if (arg == "-graphics") {
             graphics = true;
@@ -119,24 +153,26 @@ int main(int argc, char* argv[]) {
                         string d;
                         iss >> c >> d;
 
-                        try {
-                            g.move(c, d);
-                        } catch (const not_link& e) {
-                            cerr << "Error: " << e.what() << endl;
-                            g.nextTurn();
-                        } catch (const not_your_link& e) {
-                            cerr << "Error: " << e.what() << endl;
-                            g.nextTurn();
-                        } catch (const not_on_board& e) {
-                            cerr << "Error: " << e.what() << endl;
-                            g.nextTurn();
-                        } catch (const out_bounds& e) {
-                            cerr << "Error: " << e.what() << endl;
-                            g.nextTurn();
-                        } catch (...) {
-                            cerr << "Error: " << "Be better bro B)" << endl;
-                            g.nextTurn();
-                        }
+                        g.move(c,d);
+
+                        // try {
+                        //     g.move(c, d);
+                        // } catch (const not_link& e) {
+                        //     cerr << "Error: " << e.what() << endl;
+                        //     g.nextTurn();
+                        // } catch (const not_your_link& e) {
+                        //     cerr << "Error: " << e.what() << endl;
+                        //     g.nextTurn();
+                        // } catch (const not_on_board& e) {
+                        //     cerr << "Error: " << e.what() << endl;
+                        //     g.nextTurn();
+                        // } catch (const out_bounds& e) {
+                        //     cerr << "Error: " << e.what() << endl;
+                        //     g.nextTurn();
+                        // } catch (...) {
+                        //     cerr << "Error: " << "Be better bro B)" << endl;
+                        //     g.nextTurn();
+                        // }
 
                         g.nextTurn();
                         cout << g << endl;
@@ -151,11 +187,12 @@ int main(int argc, char* argv[]) {
                     } else if (cmd == "ability") {
                         int ID; 
                         iss >> ID;
-                        //checks that ID inputed is valid 
+
+                        //checks that ID inputed is valid
                         if (!(ID >= 0 && ID <= 5)){
                             throw invalid_input();
                         }
-
+                     
                         Card &c = g.getPlayer(player).getCard(ID);
                         if (c.type == CardType::Firewall && c.used == false){ //going to get r and c
                             int row; 
@@ -169,11 +206,15 @@ int main(int argc, char* argv[]) {
                         } else if (c.type == CardType::Download && c.used == false){
                             char cellname;
                             iss >> cellname;
+
                             Cell& cell = g.findCell(cellname);
+
                             //player is trying to use download on their own link:
-                            if ((cellname <= 'h' && player == 1) || (cellname >= 'A' && player == 2)){
+                            if ((cellname <= 'h' && player == 1 && cellname >= 'a') || 
+                                (cellname >= 'A' && player == 2 && cellname >= 'H')) {
                                 throw wrong_player();
-                            }
+                            }  
+
                             std::unique_ptr<Download> d = std::make_unique<Download>(cell, player, g.getPlayer(1), g.getPlayer(2));
                             d->execute();
                             c.used = true;
@@ -181,16 +222,18 @@ int main(int argc, char* argv[]) {
                         } else if (c.type == CardType::Linkboost && c.used == false){
                             char link;
                             iss >> link;
+                            
                             //player is trying to use linkboost on their opponent's link 
                             if ((link <= 'h' && player == 2) || (link >= 'A' && player == 1)){
                                 throw wrong_player();
                             }
+                            
                             Link& l = g.findCell(link).getLink();
                             std::unique_ptr<Linkboost> L = std::make_unique<Linkboost>(l);
                             L->execute();
                             c.used = true;
 
-                        }else if (c.type == CardType::Polarize && c.used == false){
+                        } else if (c.type == CardType::Polarize && c.used == false){
                             char link;
                             iss >> link;
                             Link& l = g.findCell(link).getLink();
@@ -198,7 +241,7 @@ int main(int argc, char* argv[]) {
                             p->execute();
                             c.used = true;
 
-                        }else if (c.type == CardType::Scan && c.used == false){
+                         }else if (c.type == CardType::Scan && c.used == false){
                             char link;
                             iss >> link;
                             Link& l = g.findCell(link).getLink();
@@ -209,10 +252,12 @@ int main(int argc, char* argv[]) {
                         }else if (c.type == CardType::Diagonal && c.used == false){
                             char link;
                             iss >> link;
+                            
                             //player is trying to use linkboost on their opponent's link 
                             if ((link <= 'h' && player == 2) || (link >= 'A' && player == 1)){
                                 throw wrong_player();
                             }
+                            
                             Link& l = g.findCell(link).getLink();
                             std::unique_ptr<Diagonal> Di = std::make_unique<Diagonal>(l);
                             Di->execute();
@@ -229,13 +274,14 @@ int main(int argc, char* argv[]) {
                             iss >> portRow >> portCol >> newRow >> newCol;
                             Cell& port = g.findCoord(portRow, portCol);
                             Cell& location = g.findCoord(newRow, newCol);
+
                             std::unique_ptr<MoveSPort> Ps = std::make_unique<MoveSPort>(port, location);
                             Ps->execute();
                             c.used = true;
-                        }else{
+                        } else {
                             throw cant_use_card();
                         }
-                
+
                         if (c.used == true) {
                             if (player == 1) {
                                 g.getPlayer(1).decrMyAbil();
@@ -267,7 +313,13 @@ int main(int argc, char* argv[]) {
                         continue;
                     }
                 }
-            }catch (ios::failure) {}
+            } catch (ios::failure) {
+            } catch (std::exception& e) {
+                cout << "ERROR: " << e.what() << endl;
+            } catch (...) {
+                cout << "Error occured" << endl;
+            }
+
             if (in != &cin) delete in;
         }
     }
