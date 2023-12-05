@@ -3,6 +3,14 @@
 
 #include <stdexcept>
 
+class game_quit : public std::exception {  
+public:
+    const char* what() const noexcept override {
+        return "Game exited"; 
+    }
+};
+
+
 class cell_occupied : public std::exception {  
 public:
     const char* what() const noexcept override {
