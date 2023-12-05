@@ -131,6 +131,7 @@ int main(int argc, char* argv[]) {
     string s;
 
     try {
+
         istream *in = nullptr;
         in = &cin; 
 
