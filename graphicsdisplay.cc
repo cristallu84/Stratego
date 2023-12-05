@@ -110,6 +110,11 @@ void GraphicsDisplay::notify(Cell &c) {
 
     if (c.getType() == 's' || c.getType() == 'S') {
         window->fillRectangle(101 + cellSize * column, 101 + cellSize * row, cellSize - 1, cellSize - 1, Xwindow::Powder_Blue);
+        if (c.getType() == 's') {
+            window->drawOverlay(116 + cellSize * column, 123 + cellSize * row, "s");
+        } else {
+            window->drawOverlay(116 + cellSize * column, 123 + cellSize * row, "S");
+        }
     } else if (c.getType() != 'n' && (c.getLink().getRevealed() || c.getLink().getPermanentRevealed())) {
         string s{c.getType()};
 
@@ -126,6 +131,11 @@ void GraphicsDisplay::notify(Cell &c) {
         window->drawOverlay(116 + cellSize * column, 123 + cellSize * row, s);
     } else {
         window->fillRectangle(101 + cellSize * column, 101 + cellSize * row, cellSize - 1, cellSize - 1, Xwindow::Gainsboro);
+        if (c.getFireWall() == 'w') {
+            window->drawOverlay(116 + cellSize * column, 123 + cellSize * row, "w");
+        } else if (c.getFireWall() == 'm') {
+            window->drawOverlay(116 + cellSize * column, 123 + cellSize * row, "m");
+        }
     }
 }
 
