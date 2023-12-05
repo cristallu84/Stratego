@@ -388,7 +388,7 @@ void Grid::download(Cell& c, int player) {
 }
 
 // TODO: Move fighter to init cell if fighter wins
-bool Grid::battle(Cell& init, Cell& fighter) { //need to update this
+void Grid::battle(Cell& init, Cell& fighter) { //need to update this
     // init = battle initiating player cell and link
     //get strength of both links at the cells 
     int l1 = init.getLink().getStrength();
