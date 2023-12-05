@@ -269,6 +269,10 @@ int main(int argc, char* argv[]) {
                             iss >> portRow >> portCol >> newRow >> newCol;
                             Cell& port = g.findCoord(portRow, portCol);
                             Cell& location = g.findCoord(newRow, newCol);
+                            if ((port.getType() == 's' && player == 2) 
+                            || (port.getType() == 'S' && player == 1)){
+                                throw wrong_player();
+                            }
 
                             std::unique_ptr<MoveSPort> Ps = std::make_unique<MoveSPort>(port, location);
                             Ps->execute();

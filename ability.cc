@@ -99,7 +99,7 @@ void PlayerSwap::execute(){
     Player2 = temp; 
 }
 
-MoveSPort::MoveSPort(Cell & sPort, Cell& location): sPort{sPort}, location{location} {}
+MoveSPort::MoveSPort(Cell& sPort, Cell& location): sPort{sPort}, location{location} {}
 void MoveSPort::execute(){
     char type = sPort.getType();
     sPort.setType('n');
