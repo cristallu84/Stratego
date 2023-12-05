@@ -41,7 +41,7 @@ char Cell::getType() const {return celltype;}
 char Cell::getFireWall() const {return firewall;}
 
 void Cell::setFireWall(int n) {
-    firewall = (n == 1) ? 'w' : 'm';
+    firewall = (n == 1) ? 'm' : 'w';
     this->notifyObservers(); 
     
 }
