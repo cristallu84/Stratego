@@ -226,7 +226,6 @@ int main(int argc, char* argv[]) {
                             
                             //player is trying to use linkboost on their opponent's link 
                             if ((link >= 'a' && link <= 'h' && player == 2) || (link >= 'A' && link <= 'H' && player == 1)){
-                                cout << player << endl;
                                 throw wrong_player();
                             }
                             
