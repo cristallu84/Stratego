@@ -206,8 +206,6 @@ int main(int argc, char* argv[]) {
                                 (cellname >= 'A' && cellname <= 'H'&& player == 2)) {
                                 throw wrong_player();
                             }  
-                            if (player == 1) player = 2;
-                            else player = 1; 
 
                             std::unique_ptr<Download> d = std::make_unique<Download>(cell, player, g.getPlayer(1), g.getPlayer(2));
                             d->execute();
