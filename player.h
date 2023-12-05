@@ -67,6 +67,7 @@ class Player{
         void revealed(int index, std::string piece);
         void setAbility(std::string s);
         void addLink(std::string s);
+        std::vector<std::string> printAbilities(); 
         
         void attach(PlayerObserver *o);
         void notifyObservers();

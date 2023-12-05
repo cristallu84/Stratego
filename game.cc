@@ -307,14 +307,14 @@ void Grid::move(char l, string dir){
 
     //check for the north and south borders of the board
     if (r >= gridSize){ //reaches the player2's border
-        if (this->getTurn() == 2){
+        if (this->getTurn() == 1){
             this->download(cell, 1); //p1 will download the cell
         return;
         }else{ //player 2 is trying to move into its own border
             throw wrong_player();
         }
     } else if (r < 0){ //reaches player1's border
-        if (this->getTurn() == 1){
+        if (this->getTurn() == 2){
             this->download(cell, 2);  //p2 will download the cell 
             return;
         }else{ //player 1 is trying to move into its own border
@@ -420,37 +420,6 @@ void Grid::battle(Cell& init, Cell& fighter) { //need to update this
         this->download(fighter, pInit);
     }   
 }
-
-
-std::vector<std::string> Grid::printAbilities() {
-    // Return a vector of strings
-    std::vector<std::string> cards;
-    for (int i = 1; i <= 5; i++){
-        CardType cardtype = this->getPlayer(this->getTurn()).getCard(i).type;
-        bool cardused = this->getPlayer(this->getTurn()).getCard(i).used;
-        if (cardtype == CardType::Linkboost) {
-            cards.emplace_back("Linkboost");
-        } else if (cardtype == CardType::Download) {
-            cards.emplace_back("Download");
-        } else if (cardtype == CardType::Firewall) {
-            cards.emplace_back("Firewall");
-        } else if (cardtype == CardType::Polarize) {
-            cards.emplace_back("Polarize");
-        } else if (cardtype == CardType::Scan) {
-            cards.emplace_back("Scan");
-        } else if (cardtype == CardType::Diagonal){
-            cards.emplace_back("Diagonal");
-        } else if (cardtype == CardType::PlayerSwap){
-            cards.emplace_back("PlayerSwap");
-        } else if (cardtype == CardType::MoveSPort){
-            cards.emplace_back("MoveSPort");
-        }         
-        cardused ? cards.emplace_back("Used") : cards.emplace_back("Unused");
-    }
-    return cards;
-}
-
-
 
 Player& Grid::getPlayer(int n) {
     return (n == 1) ? player1 : player2;
