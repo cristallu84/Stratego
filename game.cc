@@ -101,7 +101,7 @@ Grid::~Grid() {
     delete graphicsDisplay;
 }
 
-void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window) {
+void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow& window) {
 
     gridSize = n;
     textDisplay = new TextDisplay(n);
@@ -191,6 +191,7 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
         player1.attach(graphicsDisplay);
         player2.attach(graphicsDisplay);
     }
+
     player1.notifyObservers();   
 }
 

@@ -29,7 +29,6 @@ int main(int argc, char* argv[]) {
     bool ability1 = false;
     bool ability2 = false;
     bool graphics = false;
-    Xwindow window;
 
     // Handle cmd line
     for (int i = 0; i < argc; ++i) {
@@ -122,8 +121,10 @@ int main(int argc, char* argv[]) {
         string s = "LFDSP";
         g.getPlayer(2).setAbility(s);
     }
+    
+        Xwindow window;
+        g.init(8, p1_links, p2_links, graphics, window);
 
-    g.init(8, p1_links, p2_links, graphics, window);
 
     // Handling playing the game
     cin.exceptions(ios::failbit|ios::eofbit);
@@ -321,17 +322,7 @@ int main(int argc, char* argv[]) {
             }
 
             if (in != &cin) delete in;
-
-            cout << "Play again? (Y/N)" << endl;
-            string playAgain;
-            cin >> playAgain;
-            if (playAgain == "Y" || playAgain == "y") {
-                cout << "Playing again!" << endl;
-                continue;
-            } else {
-                cout << "Exiting the game" << endl;
-                break;
-            }
+            break;
         }
     }
     catch (ios::failure) {}

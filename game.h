@@ -25,7 +25,7 @@ class Grid{
         Grid();
         ~Grid();
 
-        void init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow &window);
+        void init(int n, vector<string> p1_links, vector<string> p2_links, bool graphics, Xwindow& window);
         void initAbilities(std::vector<std::string>& file_links);
 
         Cell& findCell(char l); // Returns the cell with link l
