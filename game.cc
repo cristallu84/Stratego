@@ -181,13 +181,16 @@ void Grid::init(int n, vector<string> p1_links, vector<string> p2_links, bool gr
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             theGrid[i][j].attach(textDisplay);
-            theGrid[i][j].attach(graphicsDisplay);
+            if (graphics){
+                theGrid[i][j].attach(graphicsDisplay);
+            }
             theGrid[i][j].notifyObservers();
         }
     }
-
-    player1.attach(graphicsDisplay);
-    player2.attach(graphicsDisplay);
+    if (graphics){
+        player1.attach(graphicsDisplay);
+        player2.attach(graphicsDisplay);
+    }
     player1.notifyObservers();   
 }
 
