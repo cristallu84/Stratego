@@ -308,7 +308,6 @@ int main(int argc, char* argv[]) {
                         g.nextTurn();
                         int player = g.getTurn();
                         cout << "Player " << player << " wins!" << endl;
-                        throw game_quit();
                         break;
                     } else {
                         continue;
